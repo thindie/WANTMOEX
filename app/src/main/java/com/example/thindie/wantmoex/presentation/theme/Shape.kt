@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.ui.theme
+package com.example.thindie.wantmoex.presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

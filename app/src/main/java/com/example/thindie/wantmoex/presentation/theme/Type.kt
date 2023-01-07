@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.ui.theme
+package com.example.thindie.wantmoex.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
