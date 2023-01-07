@@ -5,7 +5,8 @@ import com.example.thindie.wantmoex.domain.StockRepository
 import javax.inject.Inject
 
 class StockDataRepositoryImpl @Inject constructor(
-    private val stockApiService: StockApiService
+    private val stockApiService: StockApiService,
+    private val mapper: ShareMapper,
 ) : StockRepository {
 
 
