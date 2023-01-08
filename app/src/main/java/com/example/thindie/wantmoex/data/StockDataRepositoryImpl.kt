@@ -9,5 +9,4 @@ class StockDataRepositoryImpl @Inject constructor(
     private val mapper: ShareMapper,
 ) : StockRepository {
 
-
 }
