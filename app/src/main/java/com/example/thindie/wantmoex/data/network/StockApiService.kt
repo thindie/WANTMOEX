@@ -1,7 +1,8 @@
 package com.example.thindie.wantmoex.data.network
 
-import com.example.thindie.wantmoex.data.network.dto.RawHistoryDTO
-import com.example.thindie.wantmoex.data.network.dto.SharesRawDTO
+import com.example.thindie.wantmoex.data.network.dto.history.RawHistoryDTO
+import com.example.thindie.wantmoex.data.network.dto.allShares.SharesRawDTO
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -14,7 +15,7 @@ interface StockApiService {
         @Query(QUERY_PARAM_ISS_META) issMeta: String = "off",
         @Query(QUERY_PARAM_ISS_ONLY) securities: String = "securities",
         @Query(QUERY_PARAM_SECURITIES_COLUMNS) securitiesColumns: String = COLUMNS_ALL_SHARES
-    ): SharesRawDTO
+    ):SharesRawDTO
 
     @GET("history/engines/stock/markets/shares/boards/TQBR/securities/{share}.json?")
     suspend fun getShare(
@@ -24,7 +25,7 @@ interface StockApiService {
         @Query(QUERY_PARAM_HISTORY_COLUMNS) historyColumns: String = COLUMNS_SINGLE_SHARE,
         @Query(QUERY_PARAM_LIMIT) limit: String = "10",
         @Query(QUERY_PARAM_FROM) from: String,
-    ): RawHistoryDTO
+    ):RawHistoryDTO
 
 
     companion object {

@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.data.network.dto
+package com.example.thindie.wantmoex.data.network.dto.allShares
 
 
 import com.google.gson.JsonArray

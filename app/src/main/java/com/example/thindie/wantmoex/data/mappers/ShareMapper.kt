@@ -1,9 +1,9 @@
-package com.example.thindie.wantmoex.data
+package com.example.thindie.wantmoex.data.mappers
 
-import com.example.thindie.wantmoex.data.network.dto.RawHistoryDTO
-import com.example.thindie.wantmoex.data.network.dto.ShareDTO
-import com.example.thindie.wantmoex.data.network.dto.ShareHistoryDTO
-import com.example.thindie.wantmoex.data.network.dto.SharesRawDTO
+import com.example.thindie.wantmoex.data.network.dto.history.RawHistoryDTO
+import com.example.thindie.wantmoex.data.network.dto.allShares.ShareDTO
+import com.example.thindie.wantmoex.data.network.dto.history.ShareHistoryDTO
+import com.example.thindie.wantmoex.data.network.dto.allShares.SharesRawDTO
 import com.example.thindie.wantmoex.domain.entities.Share
 import com.google.gson.JsonArray
 import javax.inject.Inject

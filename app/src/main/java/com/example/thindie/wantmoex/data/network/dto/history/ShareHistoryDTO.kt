@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.data.network.dto
+package com.example.thindie.wantmoex.data.network.dto.history
 
 data class ShareHistoryDTO(
     val id: String,
