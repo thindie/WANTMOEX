@@ -8,7 +8,8 @@ import dagger.Provides
 @Module
 class WMModuleClass {
     @Provides
-    fun provideApi() : StockApiService {
+    fun provideApi(): StockApiService {
         return RetrofitFactory.apiService
     }
+
 }
