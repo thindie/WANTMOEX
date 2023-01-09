@@ -32,16 +32,14 @@ class StockDataRepositoryImpl @Inject constructor(
 
     override suspend fun getAll(): Flow<List<Share>> {
         return flow {
-            this.emit(mutableListOf<Share>())
             this.emit(brandonFlowers(null))
         }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun getSingle(share: Share): Flow<List<Share>> {
         return flow {
-            this.emit(mutableListOf<Share>())
             this.emit(brandonFlowers(share))
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
 }
