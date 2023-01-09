@@ -16,27 +16,32 @@ class StockDataRepositoryImpl @Inject constructor(
     private val mapper: ShareMapper,
 ) : EntityRepository {
 
-    private suspend fun brandonFlowers(share: Share?): Flow<List<Share>> {
-        return if (share == null) flow {
+    private suspend fun brandonFlowers(share: Share?): List<Share> {
+        return if (share == null) {
             val allShares = stockApiService.getTotalShares()
-            emit(mapper.fromRawJsonToList(allShares))
-        }.flowOn(Dispatchers.IO)
-
-        else flow {
+            mapper.fromRawJsonToList(allShares)
+        }
+        else  {
             val history = stockApiService.getShare(
                 share = share.id,
                 from = getCalculateDate()
             )
-            emit(mapper.fromRawJsonToList(history))
-        }.flowOn(Dispatchers.IO)
+            mapper.fromRawJsonToList(history)
+        }
     }
 
     override suspend fun getAll(): Flow<List<Share>> {
-        return brandonFlowers(null)
+        return flow {
+            this.emit(mutableListOf<Share>())
+            this.emit(brandonFlowers(null))
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun getSingle(share: Share): Flow<List<Share>> {
-        return brandonFlowers(share)
+        return flow {
+            this.emit(mutableListOf<Share>())
+            this.emit(brandonFlowers(share))
+        }
     }
 
 }

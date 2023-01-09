@@ -1,9 +1,9 @@
 package com.example.thindie.wantmoex.data.mappers
 
-import com.example.thindie.wantmoex.data.network.dto.history.RawHistoryDTO
 import com.example.thindie.wantmoex.data.network.dto.allShares.ShareDTO
-import com.example.thindie.wantmoex.data.network.dto.history.ShareHistoryDTO
 import com.example.thindie.wantmoex.data.network.dto.allShares.SharesRawDTO
+import com.example.thindie.wantmoex.data.network.dto.history.RawHistoryDTO
+import com.example.thindie.wantmoex.data.network.dto.history.ShareHistoryDTO
 import com.example.thindie.wantmoex.domain.entities.Share
 import com.google.gson.JsonArray
 import javax.inject.Inject
@@ -32,11 +32,14 @@ class ShareMapper @Inject constructor() {
             is SharesRawDTO -> {
 
                 rawJSON.securities.data.forEach {
-                    sharesList.add(
-                        fromShareDtoToShare(
-                            hardCoredMapToDTO(it)
+
+                    if (it[4].toString().contains(IS_SHARE)) {
+                        sharesList.add(
+                            fromShareDtoToShare(
+                                hardCoredMapToDTO(it)
+                            )
                         )
-                    )
+                    }
                 }
                 return sharesList.toList()
             }
@@ -70,5 +73,9 @@ class ShareMapper @Inject constructor() {
             array[3].toString(),
             array[4].asString,
         )
+    }
+
+    companion object {
+        private const val IS_SHARE = "TQBR"
     }
 }
