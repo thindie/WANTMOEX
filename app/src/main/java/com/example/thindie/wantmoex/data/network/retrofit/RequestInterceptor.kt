@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.data.network
+package com.example.thindie.wantmoex.data.network.retrofit
 
 import okhttp3.Interceptor
 import okhttp3.Response

@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.data.network
+package com.example.thindie.wantmoex.data.network.retrofit
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitFactory {
 
     private const val BASE_URL = "https://iss.moex.com/iss/"
-    const val BASE_IMAGE_URL = "https://s3-symbol-logo.tradingview.com/%s--big.svg"
+    const val BASE_IMAGE_URL = "https://investmint.ru/wp-content/themes/investmint/images/logo/"
 
 
     val okHttpClient = OkHttpClient()

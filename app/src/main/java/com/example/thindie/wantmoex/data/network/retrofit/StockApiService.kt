@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.data.network
+package com.example.thindie.wantmoex.data.network.retrofit
 
 import com.example.thindie.wantmoex.data.network.dto.allShares.SharesRawDTO
 import com.example.thindie.wantmoex.data.network.dto.history.RawHistoryDTO

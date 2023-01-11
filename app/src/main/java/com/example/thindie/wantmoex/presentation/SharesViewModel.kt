@@ -2,32 +2,22 @@ package com.example.thindie.wantmoex.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.thindie.wantmoex.data.StockDataRepositoryImpl
-import com.example.thindie.wantmoex.di.DaggerWMComponent
 import com.example.thindie.wantmoex.domain.entities.Share
 import com.example.thindie.wantmoex.domain.useCases.GetAllEntitiesUseCase
 import com.example.thindie.wantmoex.domain.useCases.GetSingleEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
+class SharesViewModel @Inject constructor(
+    private val getAllEntitiesUseCase: GetAllEntitiesUseCase,
+    private val getSingleEntity: GetSingleEntity
+) : ViewModel() {
 
-class SharesViewModel : ViewModel() {
-    @Inject
-    lateinit var impl: StockDataRepositoryImpl
-
-    @Inject
-    lateinit var getAllEntitiesUseCase: GetAllEntitiesUseCase
-
-    @Inject
-    lateinit var getSingleEntity: GetSingleEntity
-
-    init {
-        DaggerWMComponent.create().inject(this)
-        loadAllData()
-    }
 
     private val _uiState: MutableStateFlow<SharesUIState> = MutableStateFlow(
         SharesUIState.Loading(
@@ -38,27 +28,31 @@ class SharesViewModel : ViewModel() {
     val uiState: StateFlow<SharesUIState> = _uiState
 
 
-     fun loadAllData() {
-         viewModelScope.launch {
-             delay(10)
-             impl.getAll().collect { shareList ->
-                 _uiState.value = SharesUIState.Success(shareList)
-             }
-         }
+    fun loadAllData() {
+        viewModelScope.launch {
+            _uiState.value = SharesUIState.Loading(emptyList())
+            delay(100)
+            getAllEntitiesUseCase.invoke().collect { shareList ->
+                _uiState.value = SharesUIState.SuccessAllShare(shareList)
+            }
+        }
 
     }
 
     fun loadShare(share: Share) {
         viewModelScope.launch {
-            impl.getSingle(share).collect { shareList ->
-                _uiState.value = SharesUIState.Success(shareList)
+            _uiState.value = SharesUIState.Loading(emptyList())
+            delay(50)
+            getSingleEntity.invoke(share).collect { shareList ->
+                _uiState.value = SharesUIState.SuccessSingle(shareList)
             }
         }
     }
 
 
     sealed class SharesUIState {
-        data class Success(val shares: List<Share>) : SharesUIState()
+        data class SuccessAllShare(val shares: List<Share>) : SharesUIState()
+        data class SuccessSingle(val shares: List<Share>) : SharesUIState()
         data class Loading(val loads: List<Share>) : SharesUIState()
         data class Error(val exception: Throwable) : SharesUIState()
     }
