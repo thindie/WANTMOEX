@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SharesViewModel @Inject constructor(
     private val getAllEntitiesUseCase: GetAllEntitiesUseCase,
-    private val getSingleEntity: GetSingleEntity
+    private val getSingleEntity: GetSingleEntity,
 ) : ViewModel() {
 
 
@@ -27,6 +27,9 @@ class SharesViewModel @Inject constructor(
 
     val uiState: StateFlow<SharesUIState> = _uiState
 
+    init {
+        loadAllData()
+    }
 
     fun loadAllData() {
         viewModelScope.launch {
@@ -39,10 +42,11 @@ class SharesViewModel @Inject constructor(
 
     }
 
+
     fun loadShare(share: Share) {
         viewModelScope.launch {
             _uiState.value = SharesUIState.Loading(emptyList())
-            delay(50)
+            delay(150)
             getSingleEntity.invoke(share).collect { shareList ->
                 _uiState.value = SharesUIState.SuccessSingle(shareList)
             }
@@ -54,6 +58,6 @@ class SharesViewModel @Inject constructor(
         data class SuccessAllShare(val shares: List<Share>) : SharesUIState()
         data class SuccessSingle(val shares: List<Share>) : SharesUIState()
         data class Loading(val loads: List<Share>) : SharesUIState()
-        data class Error(val exception: Throwable) : SharesUIState()
+        data class Error(val exception: Throwable) : SharesUIState() //TODO заглушка
     }
 }
