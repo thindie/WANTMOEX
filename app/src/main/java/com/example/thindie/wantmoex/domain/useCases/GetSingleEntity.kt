@@ -9,6 +9,6 @@ import javax.inject.Inject
 
 class GetSingleEntity @Inject constructor(private val repository: EntityRepository) {
     suspend operator fun invoke(share: Share) : Flow<List<Share>>{
-        return repository.getSingle(share).flowOn(Dispatchers.Default)
+        return repository.getSingle(share).flowOn(Dispatchers.IO)
     }
 }

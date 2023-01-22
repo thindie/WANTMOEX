@@ -9,6 +9,6 @@ import javax.inject.Inject
 
 class GetAllEntitiesUseCase @Inject constructor (private val repository: EntityRepository) {
     suspend operator fun invoke() : Flow<List<Share>>{
-        return repository.getAll().flowOn(Dispatchers.Default)
+        return repository.getAll().flowOn(Dispatchers.IO)
     }
 }
