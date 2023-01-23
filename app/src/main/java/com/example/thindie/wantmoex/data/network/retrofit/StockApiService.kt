@@ -1,7 +1,7 @@
 package com.example.thindie.wantmoex.data.network.retrofit
 
-import com.example.thindie.wantmoex.data.network.dto.multifull.CoinDTO
-import kotlinx.coroutines.flow.Flow
+import com.example.thindie.wantmoex.data.network.dto.multifull.CoinRawMultiFullResponseDTO
+import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinRawTotalVolFullResponseDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,25 +11,24 @@ interface StockApiService {
     suspend fun getTopCoins(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
         @Query(QUERY_PARAM_LIMIT) limit: Int,
-        @Query(QUERY_PARAM_TO_SYMBOLS) tSym: String = CURRENCY
-    ): Flow<CoinDTO>
+        @Query(QUERY_PARAM_TO_SYMBOL) tSym: String = CURRENCY
+    ): CoinRawTotalVolFullResponseDTO
 
     @GET("pricemultifull")
     suspend fun getShare(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
-        @Query(QUERY_PARAM_TSYM) tSyms: String = CURRENCY,
+        @Query(QUERY_PARAM_TO_SYMBOLS) tSyms: String = CURRENCY,
         @Query(QUERY_PARAM_FSYMS) fSyms: String
-    ): CoinDTO
+    ): CoinRawMultiFullResponseDTO
 
 
     companion object {
-        private const val CURRENCY = "USD"
+         const val CURRENCY = "USD"
         private const val QUERY_PARAM_API_KEY = ""
         private const val QUERY_PARAM_FSYMS = "fsyms"
-        private const val QUERY_PARAM_TSYM = "tsym"
+        private const val QUERY_PARAM_TO_SYMBOL = "tsym"
         private const val QUERY_PARAM_TO_SYMBOLS = "tsyms"
         private const val QUERY_PARAM_LIMIT = "limit"
-
     }
 
 

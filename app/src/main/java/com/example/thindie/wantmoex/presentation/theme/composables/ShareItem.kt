@@ -17,12 +17,12 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.thindie.wantmoex.data.network.getImg
-import com.example.thindie.wantmoex.domain.entities.Share
+
+import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.presentation.theme.Shapes
 
 @Composable
-fun ShareItem(share: Share, onClick: (Share) -> Unit) {
+fun ShareItem(coin: Coin, onClick: (Coin) -> Unit) {
 
     Card(
         shape = Shapes.extraLarge,
@@ -35,7 +35,7 @@ fun ShareItem(share: Share, onClick: (Share) -> Unit) {
             Column(modifier = Modifier.padding(start = 20.dp)) {
 
                 Text(
-                    text = share.shortName,
+                    text = coin.shortName,
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -47,20 +47,20 @@ fun ShareItem(share: Share, onClick: (Share) -> Unit) {
                         .clip(shape = Shapes.extraLarge)
                 ) {
                     Text(
-                        text = share.prevPrice, style = MaterialTheme.typography.bodyLarge,
+                        text = coin.prevPrice, style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
                     )
                 }
 
                 Text(
-                    text = share.id, style = MaterialTheme.typography.displaySmall,
-                    modifier = Modifier.clickable { onClick(share) }
+                    text = coin.id, style = MaterialTheme.typography.displaySmall,
+                    modifier = Modifier.clickable { onClick(coin) }
 
                 )
             }
             Spacer(modifier = Modifier.weight(0.3f))
             Image(
-                painter = rememberAsyncImagePainter(getImg(share)),
+                painter = rememberAsyncImagePainter(""),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 colorFilter = ColorFilter.lighting(
@@ -82,7 +82,7 @@ fun ShareItem(share: Share, onClick: (Share) -> Unit) {
 
 
 @Composable
-fun ShareItemExpanded(list: List<Share>, onClick: () -> Unit) {
+fun ShareItemExpanded(list: List<Coin>, onClick: () -> Unit) {
     Surface(
         color = MaterialTheme.colorScheme.surface, modifier = Modifier.fillMaxSize()
     ) {
@@ -105,7 +105,7 @@ fun ShareItemExpanded(list: List<Share>, onClick: () -> Unit) {
                 }
                 Spacer(modifier = Modifier.weight(0.3f))
                 Image(
-                    painter = rememberAsyncImagePainter(getImg(list[0])),
+                    painter = rememberAsyncImagePainter(""),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     colorFilter = ColorFilter.lighting(
