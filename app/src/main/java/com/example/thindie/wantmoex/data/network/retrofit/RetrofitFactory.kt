@@ -4,6 +4,13 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
+
+/**
+ *API HERE:
+* https://min-api.cryptocompare.com/documentation
+*
+ **/
 object RetrofitFactory {
 
     private const val BASE_URL = "https://min-api.cryptocompare.com/data/"
