@@ -10,12 +10,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.thindie.wantmoex.domain.entities.Share
+import com.example.thindie.wantmoex.domain.entities.Coin
 
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun WantMoexList(list: List<Share>, onClick: (Share) -> Unit) {
+fun WantMoexList(list: List<Coin>, onClick: (Coin) -> Unit) {
     Surface(
         color = MaterialTheme.colorScheme.surface, modifier = Modifier.fillMaxSize()
     ) {
@@ -28,8 +28,8 @@ fun WantMoexList(list: List<Share>, onClick: (Share) -> Unit) {
         {
             items(
                 list
-            ) { item: Share ->
-                ShareItem(share = item) {
+            ) { item: Coin ->
+                ShareItem(coin = item) {
                     onClick(item)
                 }
             }

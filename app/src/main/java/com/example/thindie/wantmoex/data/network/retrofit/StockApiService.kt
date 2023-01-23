@@ -15,7 +15,7 @@ interface StockApiService {
     ): CoinRawTotalVolFullResponseDTO
 
     @GET("pricemultifull")
-    suspend fun getShare(
+    suspend fun getCoin(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
         @Query(QUERY_PARAM_TO_SYMBOLS) tSyms: String = CURRENCY,
         @Query(QUERY_PARAM_FSYMS) fSyms: String

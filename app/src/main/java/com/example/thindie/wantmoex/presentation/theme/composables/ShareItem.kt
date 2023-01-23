@@ -35,7 +35,7 @@ fun ShareItem(coin: Coin, onClick: (Coin) -> Unit) {
             Column(modifier = Modifier.padding(start = 20.dp)) {
 
                 Text(
-                    text = coin.shortName,
+                    text = coin.fromSymbol,
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -47,13 +47,13 @@ fun ShareItem(coin: Coin, onClick: (Coin) -> Unit) {
                         .clip(shape = Shapes.extraLarge)
                 ) {
                     Text(
-                        text = coin.prevPrice, style = MaterialTheme.typography.bodyLarge,
+                        text = coin.fromSymbol, style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
                     )
                 }
 
                 Text(
-                    text = coin.id, style = MaterialTheme.typography.displaySmall,
+                    text = coin.fromSymbol, style = MaterialTheme.typography.displaySmall,
                     modifier = Modifier.clickable { onClick(coin) }
 
                 )
@@ -98,7 +98,7 @@ fun ShareItemExpanded(list: List<Coin>, onClick: () -> Unit) {
 
 
                     Text(
-                        text = list[0].id, style = MaterialTheme.typography.displaySmall,
+                        text = list[0].fromSymbol, style = MaterialTheme.typography.displaySmall,
                         modifier = Modifier.clickable { onClick() }
 
                     )
@@ -129,7 +129,7 @@ fun ShareItemExpanded(list: List<Coin>, onClick: () -> Unit) {
                 Row(modifier = modifier) {
                     Column(modifier = modifier) {
                         Text(
-                            text = it.shortName.replace(
+                            text = it.fromSymbol.replace(
                                 "\"", " "
                             ).replace("-", " ").trim(),
                             style = style
@@ -145,7 +145,7 @@ fun ShareItemExpanded(list: List<Coin>, onClick: () -> Unit) {
 
                     Column(modifier = modifier) {
                         Text(
-                            text = it.prevPrice,
+                            text = it.fromSymbol,
                             style = style
                         )
                     }

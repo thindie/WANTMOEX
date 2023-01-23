@@ -55,7 +55,7 @@ fun fromMultiFullToDTO(thisComeFromNetwork: CoinRawMultiFullResponseDTO): List<C
             }
         }
     }
-    return resultList
+    return resultList.toList()
 }
 
 
