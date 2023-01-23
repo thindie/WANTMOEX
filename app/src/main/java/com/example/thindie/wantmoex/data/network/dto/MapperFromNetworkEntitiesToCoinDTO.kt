@@ -29,7 +29,7 @@ fun fromTotalVolFullToDTOList(thisComeFromNetwork: CoinRawTotalVolFullResponseDT
         topCoinList.add(dtoToAdd)
         val coinName = dtoToAdd.fromSymbol
         if(!allCoinsNameContainer.contains(coinName)){
-
+                allCoinsNameContainer.add(coinName)
         }
     }
     return topCoinList.toList()
