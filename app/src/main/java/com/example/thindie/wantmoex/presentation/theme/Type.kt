@@ -10,10 +10,10 @@ import com.example.thindie.wantmoex.R
 
 
 
-private val light = Font (R.font.mit, FontWeight.W300)
-private val regular = Font(R.font.monoidretina, FontWeight.W400)
-private val medium = Font(R.font.droidsansmono, FontWeight.W500)
-private val semibold = Font(R.font.monoidbold, FontWeight.W600)
+private val light = Font (R.font.sf_pro, FontWeight.W300)
+private val regular = Font(R.font.sf_pro, FontWeight.W400)
+private val medium = Font(R.font.sf_pro, FontWeight.W500)
+private val semibold = Font(R.font.sf_pro, FontWeight.W600)
 
 private val WantMoexTypo = FontFamily(fonts = listOf(light, regular, medium, semibold))
 

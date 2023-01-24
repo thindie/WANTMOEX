@@ -7,17 +7,29 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.thindie.wantmoex.R
 import com.example.thindie.wantmoex.domain.entities.Coin
+import kotlinx.coroutines.delay
 
 @Composable
 
 fun CoinListElement(coin: Coin, onClick: (String) -> Unit) {
+
+    var imageState by remember { mutableStateOf(true) }
+
+    LaunchedEffect(key1 = true) {
+        delay(30)
+        imageState = false
+    }
+
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,12 +44,13 @@ fun CoinListElement(coin: Coin, onClick: (String) -> Unit) {
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(model = coin.imageUrl),
+                    painter = if (imageState) painterResource(id = R.drawable.shape)
+                    else rememberAsyncImagePainter(
+                        model = coin.imageUrl
+                    ),
                     contentDescription = "coin Image",
                     modifier = Modifier
                         .size(56.dp)
-
-
                 )
 
                 Column(

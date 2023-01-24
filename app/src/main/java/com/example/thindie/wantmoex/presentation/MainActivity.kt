@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.thindie.wantmoex.presentation.theme.WANTMOEXTheme
+import com.example.thindie.wantmoex.presentation.theme.composables.CoinErrorScreen
 import com.example.thindie.wantmoex.presentation.theme.composables.CoinHomeScreen
 import com.example.thindie.wantmoex.presentation.theme.composables.CoinLoadScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,13 +37,21 @@ class MainActivity : ComponentActivity() {
                                         viewModel.onLoadSingleCoin(coinID)
                                     }
                                 }
-                                is CoinViewModel.CoinViewState.SuccessCoin -> {}
+                                is CoinViewModel.CoinViewState.SuccessCoin -> {
+                                    CoinHomeScreen(
+                                        list = listOf(viewState.coin),
+                                        onClickElement = {})
+                                }
                                 is CoinViewModel.CoinViewState.Loading -> {
                                     CoinLoadScreen() {
                                         viewModel.onLoadCoinsList()
                                     }
                                 }
-                                is CoinViewModel.CoinViewState.Error -> {}
+                                is CoinViewModel.CoinViewState.Error -> {
+                                    CoinErrorScreen() {
+
+                                    }
+                                }
 
                             }
                         }

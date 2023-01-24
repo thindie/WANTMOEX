@@ -28,6 +28,7 @@ class CoinViewModel @Inject constructor(
         get() = _viewState
 
 
+
     fun onLoadCoinsList() {
         viewModelScope.launch {
             getAllEntitiesUseCase.invoke().collect {
@@ -36,9 +37,9 @@ class CoinViewModel @Inject constructor(
                 try {
                     coinList[0]
                     _viewState.value = CoinViewState.SuccessCoinList(coinList)
-                } catch (e: NullPointerException) {
+                } catch (e: IndexOutOfBoundsException) {
                     _viewState.value = CoinViewState.Error(Unit)
-                    delay(1500)
+                    delay(DELAY_TIMEOUT)
                     onLoadCoinsList()
                 }
             }
@@ -70,7 +71,7 @@ class CoinViewModel @Inject constructor(
 
     sealed class CoinViewState {
         data class SuccessCoinList(val coins: List<Coin>) : CoinViewState()
-        data class SuccessCoin(val coins: Coin) : CoinViewState()
+        data class SuccessCoin(val coin : Coin) : CoinViewState()
         data class Loading(val unit: Unit) : CoinViewState()
         data class Error(val unit: Unit) : CoinViewState()
     }
