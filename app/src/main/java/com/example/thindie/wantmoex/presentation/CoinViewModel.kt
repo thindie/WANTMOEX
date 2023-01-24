@@ -1,6 +1,5 @@
 package com.example.thindie.wantmoex.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thindie.wantmoex.domain.entities.Coin
@@ -29,30 +28,26 @@ class CoinViewModel @Inject constructor(
         get() = _viewState
 
 
-    init {
-        onLoadCoinsList()
-        onRefresh()
-    }
-
-    private fun onLoadCoinsList() {
-        val coinList = mutableListOf<Coin>()
+    fun onLoadCoinsList() {
         viewModelScope.launch {
             getAllEntitiesUseCase.invoke().collect {
-                coinList.addAll(it)
+                val coinList = it
+                delay(DELAY_TIMEOUT)
+                try {
+                    coinList[0]
+                    _viewState.value = CoinViewState.SuccessCoinList(coinList)
+                } catch (e: NullPointerException) {
+                    _viewState.value = CoinViewState.Error(Unit)
+                    delay(1500)
+                    onLoadCoinsList()
+                }
             }
-        }
-        viewModelScope.launch {
-            delay(DELAY_TIMEOUT)
-            if (coinList.isEmpty()) {
-                CoinViewState.Error(Unit)
-            }
-
         }
     }
 
     private fun onRefresh() {
         viewModelScope.launch {
-            while(_viewState.value is CoinViewState.SuccessCoinList){
+            while (_viewState.value is CoinViewState.SuccessCoinList) {
                 delay(REFRESH_TIMEOUT)
             }
         }
@@ -67,7 +62,7 @@ class CoinViewModel @Inject constructor(
         }
     }
 
-    companion object{
+    companion object {
         private const val REFRESH_TIMEOUT = 15000L
         private const val DELAY_TIMEOUT = 1500L
     }
