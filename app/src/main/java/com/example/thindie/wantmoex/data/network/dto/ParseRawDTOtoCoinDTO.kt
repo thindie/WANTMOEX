@@ -17,7 +17,7 @@ import com.google.gson.JsonObject
 private val allCoinsNameContainer = mutableListOf<String>()
 
 /**
-* Возращает лист, содержащий в себе модели CoinDTO. Количество моделей ограничено параметром limit
+* Возращает лист, содержащий в себе модели CoinDTO. Количество моделей ограничено параметром limit в
  * сетевом запросе /GET totalVolFull.
 */
 fun fromTotalVolFullToDTOList(thisComeFromNetwork: CoinRawTotalVolFullResponseDTO): List<CoinDTO> {
@@ -36,8 +36,9 @@ fun fromTotalVolFullToDTOList(thisComeFromNetwork: CoinRawTotalVolFullResponseDT
 }
 
 /**
- * Возвращает лист, содержащий в себе на данном этапе реализации модель CoinDTO за индексом "ноль"
- * сетевой запрос /GET multiFull.
+ * Возвращает лист, содержащий в себе на данном этапе реализации модель CoinDTO за индексом "ноль".
+ * сетевой запрос /GET multiFull. По сути метод занимается локализацией заранее неизвестного объекта Json,
+ * опираясь на поименный список всех возможных объектов данной реализации.
  */
 fun fromMultiFullToDTO(thisComeFromNetwork: CoinRawMultiFullResponseDTO): List<CoinDTO> {
     val resultList: MutableList<CoinDTO> = mutableListOf()

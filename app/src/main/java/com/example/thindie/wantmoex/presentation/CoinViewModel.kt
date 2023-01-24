@@ -31,6 +31,7 @@ class CoinViewModel @Inject constructor(
 
     init {
         onLoadCoinsList()
+        onRefresh()
     }
 
     private fun onLoadCoinsList() {
@@ -45,12 +46,11 @@ class CoinViewModel @Inject constructor(
             if (coinList.isEmpty()) {
                 CoinViewState.Error(Unit)
             }
-            Log.d("SERVICE_TAG", coinList.toString())
+
         }
     }
 
-    fun onRefresh() {
-
+    private fun onRefresh() {
         viewModelScope.launch {
             while(_viewState.value is CoinViewState.SuccessCoinList){
                 delay(REFRESH_TIMEOUT)
@@ -64,12 +64,11 @@ class CoinViewModel @Inject constructor(
             val coin: Coin? = doSingleCoinRequestUseCase.invoke(fsym)
             _viewState.value =
                 if (coin == null) CoinViewState.Error(Unit) else CoinViewState.SuccessCoin(coin)
-            Log.d("SERVICE_TAG", coin.toString())
         }
     }
 
     companion object{
-        private const val REFRESH_TIMEOUT = 5000L
+        private const val REFRESH_TIMEOUT = 15000L
         private const val DELAY_TIMEOUT = 1500L
     }
 

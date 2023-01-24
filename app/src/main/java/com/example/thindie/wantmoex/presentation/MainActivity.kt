@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                 viewModel.onLoadSingleCoin("BTC")
+
 
             }
         }

@@ -62,10 +62,10 @@ class CoinsRepositoryImpl @Inject constructor(
                 fromDBtoCoin(it)
             }
         }
+
+        delay(HAVE_TO_DELAY_OR_IT_CRUSHES)
+
         if (resultList.isNullOrEmpty()) {
-
-            delay(HAVE_TO_DELAY_OR_IT_CRUSHES)
-
             val listDTO = rawNetWorkData?.let { fromMultiFullToDTO(it) }
             if (listDTO != null && listDTO.isNotEmpty()) {
                 val listDBModel = listDTO.map {
