@@ -4,6 +4,6 @@ import androidx.compose.runtime.Composable
 
 @Composable
 
-fun CoinDetailScreen(){
+fun CoinDetailScreen() {
 
 }

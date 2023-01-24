@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.viewState.collect { viewState ->
                     setContent {
-                        WANTMOEXTheme() {
+                        WANTMOEXTheme {
                             when (viewState) {
                                 is CoinViewModel.CoinViewState.SuccessCoinList -> {
                                     CoinHomeScreen(list = viewState.coins) { coinID ->
@@ -43,12 +43,12 @@ class MainActivity : ComponentActivity() {
                                         onClickElement = {})
                                 }
                                 is CoinViewModel.CoinViewState.Loading -> {
-                                    CoinLoadScreen() {
+                                    CoinLoadScreen {
                                         viewModel.onLoadCoinsList()
                                     }
                                 }
                                 is CoinViewModel.CoinViewState.Error -> {
-                                    CoinErrorScreen() {
+                                    CoinErrorScreen {
 
                                     }
                                 }

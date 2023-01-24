@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 data class CoinRawTotalVolFullResponseDTO(
     @SerializedName("Data")
-    val jsonData : List<CoinRootDTO>?,
+    val jsonData: List<CoinRootDTO>?,
 )

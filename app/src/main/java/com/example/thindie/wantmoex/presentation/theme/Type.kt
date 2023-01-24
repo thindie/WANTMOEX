@@ -9,8 +9,7 @@ import androidx.compose.ui.unit.sp
 import com.example.thindie.wantmoex.R
 
 
-
-private val light = Font (R.font.sf_pro, FontWeight.W300)
+private val light = Font(R.font.sf_pro, FontWeight.W300)
 private val regular = Font(R.font.sf_pro, FontWeight.W400)
 private val medium = Font(R.font.sf_pro, FontWeight.W500)
 private val semibold = Font(R.font.sf_pro, FontWeight.W600)

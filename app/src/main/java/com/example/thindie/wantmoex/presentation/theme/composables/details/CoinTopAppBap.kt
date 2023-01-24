@@ -58,7 +58,7 @@ fun CoinTopAppBar(title: String, onClick: () -> Unit, updated: String) {
 @Composable
 @Preview
 fun PreviewTopAppBar() {
-    WANTMOEXTheme() {
+    WANTMOEXTheme {
         CoinTopAppBar(title = "ABCDe", updated = "dsa", onClick = {})
     }
 }

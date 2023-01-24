@@ -9,10 +9,10 @@ import dagger.hilt.components.SingletonComponent
 
 
 @Module
-    @InstallIn(SingletonComponent::class)
-    class NetworkModule {
-        @Provides
-        fun provideStockApiService(): StockApiService {
-            return RetrofitFactory.apiService
-        }
+@InstallIn(SingletonComponent::class)
+class NetworkModule {
+    @Provides
+    fun provideStockApiService(): StockApiService {
+        return RetrofitFactory.apiService
     }
+}

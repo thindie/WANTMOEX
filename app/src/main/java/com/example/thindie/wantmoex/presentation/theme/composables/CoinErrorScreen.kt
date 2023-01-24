@@ -1,18 +1,14 @@
 package com.example.thindie.wantmoex.presentation.theme.composables
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -27,20 +23,20 @@ fun CoinErrorScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
     Surface(modifier = modifier.fillMaxSize()) {
 
 
-            val currentTimeOut by rememberUpdatedState(newValue = onTimeout)
+        val currentTimeOut by rememberUpdatedState(newValue = onTimeout)
 
-            LaunchedEffect(true) {
+        LaunchedEffect(true) {
 
-                delay(WAIT_TIME)
-                currentTimeOut()
-            }
-
-            Image(painterResource(id = R.drawable.no_data), contentDescription = null)
-            CircularProgressIndicator(
-                strokeWidth = 70.dp,
-                modifier = Modifier
-                    .scale(0.1f)
-
-            )
+            delay(WAIT_TIME)
+            currentTimeOut()
         }
+
+        Image(painterResource(id = R.drawable.no_data), contentDescription = null)
+        CircularProgressIndicator(
+            strokeWidth = 70.dp,
+            modifier = Modifier
+                .scale(0.1f)
+
+        )
     }
+}

@@ -123,4 +123,5 @@ data class CoinDTO(
     val totalTopTierVolume24HourTo: String,
     @SerializedName("IMAGEURL")
     @Expose
-    val imageUrl: String)
+    val imageUrl: String
+)

@@ -78,13 +78,13 @@ class CoinsRepositoryImpl @Inject constructor(
             }
         }
 
-    return resultList?.get(INDEX) ?: throw Exception("DATA ISNT COLLECTED in getSingle")
-}
+        return resultList?.get(INDEX) ?: throw Exception("DATA ISNT COLLECTED in getSingle")
+    }
 
 
-companion object {
-    private const val LIMIT = 30
-    private const val HAVE_TO_DELAY_OR_IT_CRUSHES = 1000L
-    private const val INDEX = 0
-}
+    companion object {
+        private const val LIMIT = 30
+        private const val HAVE_TO_DELAY_OR_IT_CRUSHES = 1000L
+        private const val INDEX = 0
+    }
 }

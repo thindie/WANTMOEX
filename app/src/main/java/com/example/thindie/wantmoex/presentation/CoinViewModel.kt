@@ -28,7 +28,6 @@ class CoinViewModel @Inject constructor(
         get() = _viewState
 
 
-
     fun onLoadCoinsList() {
         viewModelScope.launch {
             getAllEntitiesUseCase.invoke().collect {
@@ -71,7 +70,7 @@ class CoinViewModel @Inject constructor(
 
     sealed class CoinViewState {
         data class SuccessCoinList(val coins: List<Coin>) : CoinViewState()
-        data class SuccessCoin(val coin : Coin) : CoinViewState()
+        data class SuccessCoin(val coin: Coin) : CoinViewState()
         data class Loading(val unit: Unit) : CoinViewState()
         data class Error(val unit: Unit) : CoinViewState()
     }

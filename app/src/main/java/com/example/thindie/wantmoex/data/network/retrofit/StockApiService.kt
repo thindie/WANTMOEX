@@ -23,7 +23,7 @@ interface StockApiService {
 
 
     companion object {
-         const val CURRENCY = "USD"
+        const val CURRENCY = "USD"
         private const val QUERY_PARAM_API_KEY = ""
         private const val QUERY_PARAM_FSYMS = "fsyms"
         private const val QUERY_PARAM_TO_SYMBOL = "tsym"

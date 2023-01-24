@@ -5,11 +5,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-
 /**
  *API HERE:
-* https://min-api.cryptocompare.com/documentation
-*
+ * https://min-api.cryptocompare.com/documentation
+ *
  **/
 object RetrofitFactory {
 

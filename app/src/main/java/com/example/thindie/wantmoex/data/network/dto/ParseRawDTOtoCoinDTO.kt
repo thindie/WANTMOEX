@@ -10,16 +10,16 @@ import com.google.gson.JsonObject
 
 
 /**
-*  Список содержит в себе наименования Криптовалют. наполняется в fromTotalVolFullToDTOList,
+ *  Список содержит в себе наименования Криптовалют. наполняется в fromTotalVolFullToDTOList,
  *  при первичном сетевом запросе. необходим для fromMultiFullToDTO
  *
-*/
+ */
 private val allCoinsNameContainer = mutableListOf<String>()
 
 /**
-* Возращает лист, содержащий в себе модели CoinDTO. Количество моделей ограничено параметром limit в
+ * Возращает лист, содержащий в себе модели CoinDTO. Количество моделей ограничено параметром limit в
  * сетевом запросе /GET totalVolFull.
-*/
+ */
 fun fromTotalVolFullToDTOList(thisComeFromNetwork: CoinRawTotalVolFullResponseDTO): List<CoinDTO> {
     val topCoinList: MutableList<CoinDTO> = mutableListOf()
 
@@ -28,8 +28,8 @@ fun fromTotalVolFullToDTOList(thisComeFromNetwork: CoinRawTotalVolFullResponseDT
         val dtoToAdd = getCoinDTOFromCoinFullInfo(coinFullInfo)
         topCoinList.add(dtoToAdd)
         val coinName = dtoToAdd.fromSymbol
-        if(!allCoinsNameContainer.contains(coinName)){
-                allCoinsNameContainer.add(coinName)
+        if (!allCoinsNameContainer.contains(coinName)) {
+            allCoinsNameContainer.add(coinName)
         }
     }
     return topCoinList.toList()
@@ -51,14 +51,14 @@ fun fromMultiFullToDTO(thisComeFromNetwork: CoinRawMultiFullResponseDTO): List<C
             if (eachKey == alreadyKnownCoinName) {
                 val revealDeepJsonObject: JsonObject? =
                     knownJsonObject.getAsJsonObject(alreadyKnownCoinName)
-                val coinFullInfoDTO = Gson().fromJson(revealDeepJsonObject, CoinFullInfoDTO::class.java)
+                val coinFullInfoDTO =
+                    Gson().fromJson(revealDeepJsonObject, CoinFullInfoDTO::class.java)
                 resultList.add(getCoinDTOFromCoinFullInfo(coinFullInfoDTO))
             }
         }
     }
     return resultList.toList()
 }
-
 
 
 private fun getCoinDTOFromCoinFullInfo(coinFullInfoDTO: CoinFullInfoDTO): CoinDTO {
