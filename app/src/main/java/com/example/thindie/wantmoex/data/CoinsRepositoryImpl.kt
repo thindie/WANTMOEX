@@ -52,6 +52,8 @@ class CoinsRepositoryImpl @Inject constructor(
         }
     }
 
+
+
     override suspend fun getSingle(fromSymbol: String): Coin {
         var resultList: List<Coin>? = null
         var rawNetWorkData: CoinRawMultiFullResponseDTO? = null
@@ -76,9 +78,17 @@ class CoinsRepositoryImpl @Inject constructor(
                 }
                 return listCoin[INDEX]
             }
+            try {
+                resultList = listOf(appDataBase.coinListDao().getCoin(fromSymbol)).map {
+                    fromDBtoCoin(it)
+                }
+            } catch (e: Exception) {
+                resultList = appDataBase.coinListDao().getAllCoins().map { fromDBtoCoin(it) }
+            }
+
         }
 
-        return resultList?.get(INDEX) ?: throw Exception("DATA ISNT COLLECTED in getSingle")
+        return resultList?.get(INDEX) ?: throw Exception(SERIOUS_EXCEPTION)
     }
 
 
@@ -86,5 +96,6 @@ class CoinsRepositoryImpl @Inject constructor(
         private const val LIMIT = 30
         private const val HAVE_TO_DELAY_OR_IT_CRUSHES = 1000L
         private const val INDEX = 0
+        private const val SERIOUS_EXCEPTION = "it cannot happen"
     }
 }

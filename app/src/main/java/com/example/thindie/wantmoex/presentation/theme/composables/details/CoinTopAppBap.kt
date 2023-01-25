@@ -47,7 +47,7 @@ fun CoinTopAppBar(title: String, onClick: () -> Unit, updated: String) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = updated, style = MaterialTheme.typography.labelSmall)
+
             }
         }
 

@@ -64,7 +64,7 @@ class CoinViewModel @Inject constructor(
 
     companion object {
         private const val REFRESH_TIMEOUT = 15000L
-        private const val DELAY_TIMEOUT = 1500L
+        private const val DELAY_TIMEOUT = 50L
     }
 
 
