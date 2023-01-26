@@ -6,8 +6,9 @@ import com.example.thindie.wantmoex.domain.entities.News
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class GetAllActualNewsUseCase(
+class GetAllActualNewsUseCase @Inject constructor(
     private val cryptoNewsRepository: CryptoNewsRepository,
     @DispatchersModule.IODispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
