@@ -4,7 +4,6 @@ import com.example.thindie.wantmoex.di.DispatchersModule
 import com.example.thindie.wantmoex.domain.CryptoCoinRepository
 import com.example.thindie.wantmoex.domain.entities.Coin
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject

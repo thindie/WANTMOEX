@@ -6,7 +6,6 @@ import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.domain.useCases.DoSingleCoinRequestUseCase
 import com.example.thindie.wantmoex.domain.useCases.GetAllCryptoCoinsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

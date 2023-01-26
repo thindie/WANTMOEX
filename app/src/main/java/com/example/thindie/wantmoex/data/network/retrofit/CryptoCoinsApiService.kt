@@ -23,7 +23,7 @@ interface CryptoCoinsApiService {
     ): CoinRawMultiFullResponseDTO
 
     @GET("v2/news/")
-    suspend fun  getLastestNews(
+    suspend fun getLastestNews(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
         @Query(QUERY_PARAM_CATEGORIES, encoded = true) topCoinFirst: String = String.format(
             "%s${COMMA}%s", BTC,

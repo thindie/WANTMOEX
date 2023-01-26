@@ -17,7 +17,7 @@ class DataBaseModule {
     }
 
     @Provides
-    fun provideFavouriteCoinsDataBase(application: Application): FavouriteCoinsDataBase{
+    fun provideFavouriteCoinsDataBase(application: Application): FavouriteCoinsDataBase {
         return FavouriteCoinsDataBase.getInstance(application)
     }
 }

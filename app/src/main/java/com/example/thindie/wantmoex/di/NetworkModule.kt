@@ -1,7 +1,7 @@
 package com.example.thindie.wantmoex.di
 
-import com.example.thindie.wantmoex.data.network.retrofit.RetrofitFactory
 import com.example.thindie.wantmoex.data.network.retrofit.CryptoCoinsApiService
+import com.example.thindie.wantmoex.data.network.retrofit.RetrofitFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

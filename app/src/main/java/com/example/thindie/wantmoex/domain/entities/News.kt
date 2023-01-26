@@ -1,8 +1,6 @@
 package com.example.thindie.wantmoex.domain.entities
 
-import com.google.gson.annotations.SerializedName
-
-data class News (
+data class News(
     val body: String,
     val categories: String,
     val downVotes: String,

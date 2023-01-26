@@ -7,12 +7,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.example.thindie.wantmoex.data.mappers.getHowLongAgo
-
 import com.example.thindie.wantmoex.domain.entities.Coin
-import com.example.thindie.wantmoex.presentation.theme.composables.CoinDetailScreen
 import com.example.thindie.wantmoex.presentation.composables.details.CoinList
 import com.example.thindie.wantmoex.presentation.composables.details.CoinTopAppBar
 import com.example.thindie.wantmoex.presentation.composables.details.animateTextByDotsOnStateBased
+import com.example.thindie.wantmoex.presentation.theme.composables.CoinDetailScreen
 
 private const val MORE_THAN_ONE = 1
 private const val THE_ONE = 0

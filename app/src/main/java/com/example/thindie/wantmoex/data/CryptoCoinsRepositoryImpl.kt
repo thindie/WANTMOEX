@@ -11,7 +11,6 @@ import com.example.thindie.wantmoex.data.storage.AppDataBase
 import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinsDataBase
 import com.example.thindie.wantmoex.domain.CryptoCoinRepository
 import com.example.thindie.wantmoex.domain.entities.Coin
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

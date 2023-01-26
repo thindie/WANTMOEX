@@ -12,8 +12,8 @@ interface FavouriteCoinDao {
     suspend fun getAllFavouriteCoins(): List<FavouriteCoinDBModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavouriteCoin(coin : FavouriteCoinDBModel)
+    suspend fun insertFavouriteCoin(coin: FavouriteCoinDBModel)
 
     @Query("DELETE FROM favouriteCoinsTable WHERE id=:favouriteCoinID")
-    fun deleteFavouriteCoin(favouriteCoinID : Int)
+    fun deleteFavouriteCoin(favouriteCoinID: Int)
 }
