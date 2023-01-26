@@ -3,7 +3,6 @@ package com.example.thindie.wantmoex.data.network.retrofit
 import com.example.thindie.wantmoex.data.network.dto.lastNews.NewsRawDTO
 import com.example.thindie.wantmoex.data.network.dto.multifull.CoinRawMultiFullResponseDTO
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinRawTotalVolFullResponseDTO
-import com.example.thindie.wantmoex.domain.CryptoNewsRepository
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -27,7 +26,7 @@ interface CryptoCoinsApiService {
     suspend fun  getLastestNews(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
         @Query(QUERY_PARAM_CATEGORIES, encoded = true) topCoinFirst: String = String.format(
-            "%s${DOT}%s", BTC,
+            "%s${COMMA}%s", BTC,
             ETH
         ),
         @Query(QUERY_PARAM_LANGUAGE) lang: String = LANGUAGE,
@@ -43,7 +42,7 @@ interface CryptoCoinsApiService {
         private const val LANGUAGE = "EN"
         private const val QUERY_PARAM_LANGUAGE = "lang"
         private const val BTC = "BTC"
-        private const val DOT = ","
+        private const val COMMA = ","
         private const val ETH = "ETH"
         private const val QUERY_PARAM_CATEGORIES = "categories"
 

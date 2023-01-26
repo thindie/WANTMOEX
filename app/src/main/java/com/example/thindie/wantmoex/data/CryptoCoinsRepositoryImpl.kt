@@ -15,8 +15,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
+@Singleton
 class CryptoCoinsRepositoryImpl @Inject constructor(
     private val cryptoCoinsApiService: CryptoCoinsApiService,
     private val appDataBase: AppDataBase,
@@ -66,8 +67,6 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
             }
         }
 
-        delay(HAVE_TO_DELAY_OR_IT_CRUSHES)
-
         if (resultList.isNullOrEmpty()) {
             val listDTO = rawNetWorkData?.let { fromMultiFullToDTO(it) }
             if (listDTO != null && listDTO.isNotEmpty()) {
@@ -95,8 +94,7 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
 
     companion object {
         private const val LIMIT = 30
-        private const val HAVE_TO_DELAY_OR_IT_CRUSHES = 200L
         private const val INDEX = 0
-        private const val SERIOUS_EXCEPTION = "it cannot happen obiviously"
+        private const val SERIOUS_EXCEPTION = "it cannot happen obviously"
     }
 }
