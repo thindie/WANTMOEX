@@ -1,7 +1,6 @@
 package com.example.thindie.wantmoex.data.network.dto
 
 
-import com.example.thindie.wantmoex.data.network.dto.lastNews.NewsSourceInfoDTO
 import com.google.gson.annotations.SerializedName
 
 data class NewsItselfDTO(
@@ -23,8 +22,6 @@ data class NewsItselfDTO(
     val publishedOn: Int?,
     @SerializedName("source")
     val source: String?,
-    @SerializedName("source_info")
-    val newsSourceInfoDTO: NewsSourceInfoDTO?,
     @SerializedName("tags")
     val tags: String?,
     @SerializedName("title")

@@ -1,11 +1,12 @@
 package com.example.thindie.wantmoex.data.network.retrofit
 
+import com.example.thindie.wantmoex.data.network.dto.lastNews.NewsRawDTO
 import com.example.thindie.wantmoex.data.network.dto.multifull.CoinRawMultiFullResponseDTO
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinRawTotalVolFullResponseDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface StockApiService {
+interface CryptoCoinsApiService {
 
     @GET("top/totalvolfull")
     suspend fun getTopCoins(
@@ -21,14 +22,37 @@ interface StockApiService {
         @Query(QUERY_PARAM_FSYMS) fSyms: String
     ): CoinRawMultiFullResponseDTO
 
+    @GET("v2/news/")
+    suspend fun getLastestNews(
+        @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
+        @Query(QUERY_PARAM_CATEGORIES, encoded = true) topCoinFirst: String = String.format(
+            "%s${DOT}%s", BTC,
+            ETH
+        ),
+        @Query(QUERY_PARAM_LANGUAGE) lang: String = LANGUAGE,
+
+        ): NewsRawDTO
 
     companion object {
-        const val CURRENCY = "USD"
+
         private const val QUERY_PARAM_API_KEY = ""
+        const val CURRENCY = "USD"
+
+        //NEWS
+        private const val LANGUAGE = "EN"
+        private const val QUERY_PARAM_LANGUAGE = "lang"
+        private const val BTC = "BTC"
+        private const val DOT = ","
+        private const val ETH = "ETH"
+        private const val QUERY_PARAM_CATEGORIES = "categories"
+
+        //COINS
         private const val QUERY_PARAM_FSYMS = "fsyms"
         private const val QUERY_PARAM_TO_SYMBOL = "tsym"
         private const val QUERY_PARAM_TO_SYMBOLS = "tsyms"
         private const val QUERY_PARAM_LIMIT = "limit"
+
+
     }
 
 

@@ -27,5 +27,5 @@ object RetrofitFactory {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val apiService: StockApiService = retrofit.create(StockApiService::class.java)
+    val apiService: CryptoCoinsApiService = retrofit.create(CryptoCoinsApiService::class.java)
 }

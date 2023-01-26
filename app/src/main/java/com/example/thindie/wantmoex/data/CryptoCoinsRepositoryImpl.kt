@@ -6,8 +6,9 @@ import com.example.thindie.wantmoex.data.network.dto.fromMultiFullToDTO
 import com.example.thindie.wantmoex.data.network.dto.fromTotalVolFullToDTOList
 import com.example.thindie.wantmoex.data.network.dto.multifull.CoinRawMultiFullResponseDTO
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinRawTotalVolFullResponseDTO
-import com.example.thindie.wantmoex.data.network.retrofit.StockApiService
+import com.example.thindie.wantmoex.data.network.retrofit.CryptoCoinsApiService
 import com.example.thindie.wantmoex.data.storage.AppDataBase
+import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinsDataBase
 import com.example.thindie.wantmoex.domain.CryptoCoinRepository
 import com.example.thindie.wantmoex.domain.entities.Coin
 import kotlinx.coroutines.delay
@@ -17,8 +18,9 @@ import javax.inject.Inject
 
 
 class CryptoCoinsRepositoryImpl @Inject constructor(
-    private val stockApiService: StockApiService,
-    private val appDataBase: AppDataBase
+    private val cryptoCoinsApiService: CryptoCoinsApiService,
+    private val appDataBase: AppDataBase,
+    private val favouriteCoinsDataBase: FavouriteCoinsDataBase
 ) : CryptoCoinRepository {
 
 
@@ -26,7 +28,7 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
         var resultList: List<Coin>? = null
         var rawNetWorkData: CoinRawTotalVolFullResponseDTO? = null
         try {
-            rawNetWorkData = stockApiService.getTopCoins(limit = LIMIT)
+            rawNetWorkData = cryptoCoinsApiService.getTopCoins(limit = LIMIT)
         } catch (e: Exception) {
             resultList = appDataBase.coinListDao().getAllCoins().map { fromDBtoCoin(it) }
         }
@@ -57,7 +59,7 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
         var resultList: List<Coin>? = null
         var rawNetWorkData: CoinRawMultiFullResponseDTO? = null
         try {
-            rawNetWorkData = stockApiService.getCoin(fSyms = fromSymbol)
+            rawNetWorkData = cryptoCoinsApiService.getCoin(fSyms = fromSymbol)
         } catch (e: Exception) {
             resultList = listOf(appDataBase.coinListDao().getCoin(fromSymbol)).map {
                 fromDBtoCoin(it)
