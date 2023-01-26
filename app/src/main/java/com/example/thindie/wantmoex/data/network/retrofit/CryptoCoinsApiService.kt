@@ -3,6 +3,7 @@ package com.example.thindie.wantmoex.data.network.retrofit
 import com.example.thindie.wantmoex.data.network.dto.lastNews.NewsRawDTO
 import com.example.thindie.wantmoex.data.network.dto.multifull.CoinRawMultiFullResponseDTO
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinRawTotalVolFullResponseDTO
+import com.example.thindie.wantmoex.domain.CryptoNewsRepository
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -23,7 +24,7 @@ interface CryptoCoinsApiService {
     ): CoinRawMultiFullResponseDTO
 
     @GET("v2/news/")
-    suspend fun getLastestNews(
+    suspend fun  getLastestNews(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
         @Query(QUERY_PARAM_CATEGORIES, encoded = true) topCoinFirst: String = String.format(
             "%s${DOT}%s", BTC,

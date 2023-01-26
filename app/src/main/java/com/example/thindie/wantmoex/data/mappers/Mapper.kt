@@ -1,8 +1,10 @@
 package com.example.thindie.wantmoex.data.mappers
 
 import com.example.thindie.wantmoex.data.network.dto.CoinDTO
+import com.example.thindie.wantmoex.data.network.dto.NewsItselfDTO
 import com.example.thindie.wantmoex.data.storage.CoinDBModel
 import com.example.thindie.wantmoex.domain.entities.Coin
+import com.example.thindie.wantmoex.domain.entities.News
 
 fun fromDBtoCoin(coinDBModel: CoinDBModel): Coin {
     return Coin(
@@ -30,5 +32,23 @@ fun fromDTOtoCoinDBModel(coinDTO: CoinDTO): CoinDBModel {
         coinDTO.lowDay,
         coinDTO.lastMarket,
         coinDTO.imageUrl,
+    )
+}
+
+fun fromNewsItselfDTOtoNews(newsItselfDTO: NewsItselfDTO): News {
+    return News(
+        newsItselfDTO.body ?: "",
+        newsItselfDTO.categories?: "",
+        newsItselfDTO.downvotes?: "",
+        newsItselfDTO.guid?: "",
+        newsItselfDTO.id?: "",
+        newsItselfDTO.imageurl?: "",
+        newsItselfDTO.lang?: "",
+        newsItselfDTO.publishedOn?: 0,
+        newsItselfDTO.source?: "",
+        newsItselfDTO.tags?: "",
+        newsItselfDTO.title?: "",
+        newsItselfDTO.upvotes?: "",
+        newsItselfDTO.url?: "",
     )
 }
