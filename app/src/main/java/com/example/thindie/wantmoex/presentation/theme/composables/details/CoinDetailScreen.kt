@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Payments
-import androidx.compose.material.icons.filled.PriceCheck
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -96,14 +95,16 @@ fun CoinDetailScreen(coin: Coin, onClickBack: () -> Unit, modifier: Modifier) {
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier.padding(startPadding)
                 ) {
-                    Icon(imageVector = Icons.Default.Payments,
+                    Icon(
+                        imageVector = Icons.Default.Payments,
                         contentDescription = "decor",
-                    tint = MaterialTheme.colorScheme.tertiary)
+                        tint = MaterialTheme.colorScheme.tertiary
+                    )
                 }
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start,
-                    modifier = Modifier.padding(start = 8.dp, bottom = 8.dp, top =8.dp)
+                    modifier = Modifier.padding(start = 8.dp, bottom = 8.dp, top = 8.dp)
                 ) {
                     Text(
                         text = PRICE.plus(DOT).plus(coin.price),

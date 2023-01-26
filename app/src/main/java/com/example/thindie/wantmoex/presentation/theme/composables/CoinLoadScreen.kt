@@ -3,6 +3,7 @@ package com.example.thindie.wantmoex.presentation.theme.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
@@ -19,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.example.thindie.wantmoex.R
 import kotlinx.coroutines.delay
 
-private const val WAIT_TIME: Long = 2000
+private const val WAIT_TIME: Long = 3000
 
 @Composable
 
@@ -35,11 +36,12 @@ fun CoinLoadScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
                 currentTimeOut()
             }
 
-            Image(painterResource(id = R.drawable.cryptobrand), contentDescription = null)
+            Image(painterResource(id = R.drawable.crypto), contentDescription = null)
             CircularProgressIndicator(
-                strokeWidth = 5.dp,
+                strokeWidth = 3.dp,
                 modifier = Modifier
-                    .scale(0.5f)
+                    .scale(0.3f)
+                    .padding(bottom = 25.dp)
 
             )
         }

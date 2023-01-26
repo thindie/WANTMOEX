@@ -9,7 +9,7 @@ private const val PUNTO = "."
 private const val DELAY = 300L
 
 
-suspend fun playWithTitle(title: String, state: MutableState<String>) {
+suspend fun animateTextByDotsOnStateBased(title: String, state: MutableState<String>) {
     val innerTitle = title.plus(LOLONIMATION)
     var doValue: String
     for (i in 0..1) {

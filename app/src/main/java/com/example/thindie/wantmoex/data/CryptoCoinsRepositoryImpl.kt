@@ -8,7 +8,7 @@ import com.example.thindie.wantmoex.data.network.dto.multifull.CoinRawMultiFullR
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinRawTotalVolFullResponseDTO
 import com.example.thindie.wantmoex.data.network.retrofit.StockApiService
 import com.example.thindie.wantmoex.data.storage.AppDataBase
-import com.example.thindie.wantmoex.domain.EntityRepository
+import com.example.thindie.wantmoex.domain.CryptoCoinRepository
 import com.example.thindie.wantmoex.domain.entities.Coin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 
-class CoinsRepositoryImpl @Inject constructor(
+class CryptoCoinsRepositoryImpl @Inject constructor(
     private val stockApiService: StockApiService,
     private val appDataBase: AppDataBase
-) : EntityRepository {
+) : CryptoCoinRepository {
 
 
     override suspend fun getAll(): Flow<List<Coin>> {
@@ -51,7 +51,6 @@ class CoinsRepositoryImpl @Inject constructor(
             }
         }
     }
-
 
 
     override suspend fun getSingle(fromSymbol: String): Coin {
@@ -94,8 +93,8 @@ class CoinsRepositoryImpl @Inject constructor(
 
     companion object {
         private const val LIMIT = 30
-        private const val HAVE_TO_DELAY_OR_IT_CRUSHES = 1000L
+        private const val HAVE_TO_DELAY_OR_IT_CRUSHES = 200L
         private const val INDEX = 0
-        private const val SERIOUS_EXCEPTION = "it cannot happen"
+        private const val SERIOUS_EXCEPTION = "it cannot happen obiviously"
     }
 }

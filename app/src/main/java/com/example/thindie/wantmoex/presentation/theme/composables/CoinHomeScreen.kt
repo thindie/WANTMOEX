@@ -11,7 +11,7 @@ import com.example.thindie.wantmoex.data.mappers.getHowLongAgo
 import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.presentation.theme.composables.details.CoinList
 import com.example.thindie.wantmoex.presentation.theme.composables.details.CoinTopAppBar
-import com.example.thindie.wantmoex.presentation.theme.composables.details.playWithTitle
+import com.example.thindie.wantmoex.presentation.theme.composables.details.animateTextByDotsOnStateBased
 
 private const val MORE_THAN_ONE = 1
 private const val THE_ONE = 0
@@ -30,7 +30,7 @@ fun CoinHomeScreen(list: List<Coin>, onClickElement: (String) -> Unit, onClickBa
     }
 
     LaunchedEffect(key1 = scaffoldShowList) {
-        playWithTitle(title.value, title)
+        animateTextByDotsOnStateBased(title.value, title)
     }
 
     Scaffold(
@@ -46,7 +46,7 @@ fun CoinHomeScreen(list: List<Coin>, onClickElement: (String) -> Unit, onClickBa
 
     ) {
         if (scaffoldShowList) {
-            title.value = TITLE;
+            title.value = TITLE
             CoinList(modifier = Modifier.padding(it), onClickElement, list)
         } else {
             CoinDetailScreen(

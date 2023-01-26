@@ -64,7 +64,7 @@ fun fromMultiFullToDTO(thisComeFromNetwork: CoinRawMultiFullResponseDTO): List<C
 private fun getCoinDTOFromCoinFullInfo(coinFullInfoDTO: CoinFullInfoDTO): CoinDTO {
     val rawCoinDto = Gson().fromJson(coinFullInfoDTO.jsonObject, CoinDTO::class.java)
     val imgUrlTail = rawCoinDto.imageUrl
-    return rawCoinDto.copy(imageUrl = RetrofitFactory.BASE_IMAGE_URL.plus(imgUrlTail))
+    return rawCoinDto.copy(imageUrl = RetrofitFactory.BASE_URL_FOR_COIN_IMAGE.plus(imgUrlTail))
 }
 
 
