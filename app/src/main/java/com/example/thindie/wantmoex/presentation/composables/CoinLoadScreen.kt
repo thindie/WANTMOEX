@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.presentation.theme.composables
+package com.example.thindie.wantmoex.presentation.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
