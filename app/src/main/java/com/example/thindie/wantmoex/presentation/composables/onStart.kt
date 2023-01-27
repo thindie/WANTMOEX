@@ -8,10 +8,13 @@ import com.example.thindie.wantmoex.presentation.CoinViewModel
 
 
 private const val START_TIME = 2000L
+
 @Composable
 
-fun StartScreen(viewModel: CoinViewModel = viewModel()) {
+fun CoinScreen(viewModel: CoinViewModel = viewModel()) {
     val coinViewState by viewModel.viewState.collectAsStateWithLifecycle()
+
+
 
     when (coinViewState) {
         is CoinViewModel.CoinViewState.SuccessCoinList -> {
