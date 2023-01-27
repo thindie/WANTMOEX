@@ -3,8 +3,7 @@ package com.example.thindie.wantmoex.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thindie.wantmoex.domain.entities.Coin
-import com.example.thindie.wantmoex.domain.useCases.DoSingleCoinRequestUseCase
-import com.example.thindie.wantmoex.domain.useCases.GetAllCryptoCoinsUseCase
+import com.example.thindie.wantmoex.domain.useCases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +15,9 @@ import javax.inject.Inject
 class CoinViewModel @Inject constructor(
     private val getAllCryptoCoinsUseCase: GetAllCryptoCoinsUseCase,
     private val doSingleCoinRequestUseCase: DoSingleCoinRequestUseCase,
+    private val doAddCoinToFavoritesUseCase: DoAddCoinToFavoritesUseCase,
+    private val doDeleteCoinFromFavoritesUseCase: DoDeleteCoinFromFavoritesUseCase,
+    private val getAllFavoriteCoinsUseCase: GetAllFavoriteCoinsUseCase
 ) : ViewModel() {
 
 
@@ -28,6 +30,33 @@ class CoinViewModel @Inject constructor(
     fun onLoadCoinsList() {
         viewModelScope.launch {
             getAllCryptoCoinsUseCase.invoke().collect {
+                val coinList = it
+                try {
+                    coinList[0]
+                    _viewState.value = CoinViewState.SuccessCoinList(coinList)
+                } catch (e: IndexOutOfBoundsException) {
+                    _viewState.value = CoinViewState.Error
+                    onLoadCoinsList()
+                }
+            }
+        }
+    }
+
+    fun onAddToFavorites(coinNames: List<String>){
+        viewModelScope.launch {
+            doAddCoinToFavoritesUseCase.invoke(coinNames)
+        }
+    }
+
+    fun onDeleteFromFavorites(coinNames: List<String>){
+        viewModelScope.launch {
+            doDeleteCoinFromFavoritesUseCase.invoke(coinNames)
+        }
+    }
+
+    fun onLoadFavorites() {
+        viewModelScope.launch {
+            getAllFavoriteCoinsUseCase.invoke().collect {
                 val coinList = it
                 try {
                     coinList[0]
