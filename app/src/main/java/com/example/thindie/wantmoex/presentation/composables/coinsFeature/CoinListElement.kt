@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.presentation.composables.util
+package com.example.thindie.wantmoex.presentation.composables.coinsFeature
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

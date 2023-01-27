@@ -16,7 +16,7 @@ import com.example.thindie.wantmoex.presentation.theme.WANTMOEXTheme
 
 @Composable
 
-fun CoinTopAppBar(title: String, onClick: () -> Unit, updated: String) {
+fun CoinTopAppBar(title: String, onClick: () -> Unit ) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,13 +55,5 @@ fun CoinTopAppBar(title: String, onClick: () -> Unit, updated: String) {
         }
 
 
-    }
-}
-
-@Composable
-@Preview
-fun PreviewTopAppBar() {
-    WANTMOEXTheme {
-        CoinTopAppBar(title = "ABCDe", updated = "dsa", onClick = {})
     }
 }

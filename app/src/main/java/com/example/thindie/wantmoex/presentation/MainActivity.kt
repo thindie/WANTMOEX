@@ -33,11 +33,12 @@ class MainActivity : ComponentActivity() {
                         WANTMOEXTheme {
                             when (viewState) {
                                 is CoinViewModel.CoinViewState.SuccessCoinList -> {
-                                    CoinHomeScreen(list = viewState.coins, { coinID ->
-                                        viewModel.onLoadSingleCoin(coinID)
-                                    }) {
-                                        viewModel.onLoadCoinsList()
-                                    }
+                                    CoinHomeScreen(
+                                        list = viewState.coins,
+                                        onClickElement = { coinID ->
+                                            viewModel.onLoadSingleCoin(coinID)
+                                        },
+                                        onClickBack = { viewModel.onLoadCoinsList() })
                                 }
                                 is CoinViewModel.CoinViewState.SuccessCoin -> {
                                     CoinHomeScreen(

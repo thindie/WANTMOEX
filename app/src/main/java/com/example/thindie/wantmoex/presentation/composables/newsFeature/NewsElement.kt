@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.presentation.composables.coinsFeature
+package com.example.thindie.wantmoex.presentation.composables.newsFeature
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -11,8 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.thindie.wantmoex.data.mappers.getHowLongAgo
-import com.example.thindie.wantmoex.domain.entities.Coin
+import com.example.thindie.wantmoex.domain.entities.News
 
 
 private const val UPDATED = "Last updated"
@@ -23,8 +22,9 @@ private const val TODAY_HIGHEST_PRICE = "Today's highest"
 private const val TODAY_LOWEST_PRICE = "Today's lowest"
 private const val DOT = " • "
 
+
 @Composable
-fun CoinDetailScreen(coin: Coin, onClickBack: () -> Unit, modifier: Modifier) {
+fun NewsElement(news: News, onClickBack: () -> Unit) {
 
     val paddingValues = PaddingValues(
         start = 16.dp,
@@ -34,10 +34,15 @@ fun CoinDetailScreen(coin: Coin, onClickBack: () -> Unit, modifier: Modifier) {
     )
     val startPadding = PaddingValues(start = 16.dp)
 
+    val modifier = Modifier
     Column(modifier = modifier) {
         ElevatedCard(
             modifier = modifier.padding(paddingValues)
         ) {
+            Image(
+                painter = rememberAsyncImagePainter(model = news.imageUrl),
+                contentDescription = "coin image"
+            )
             Row(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
@@ -45,30 +50,27 @@ fun CoinDetailScreen(coin: Coin, onClickBack: () -> Unit, modifier: Modifier) {
                     .padding(paddingValues)
                     .fillMaxWidth()
             ) {
-                Image(
-                    painter = rememberAsyncImagePainter(model = coin.imageUrl),
-                    contentDescription = "coin image"
-                )
+
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start,
                 ) {
                     Text(
-                        text = coin.fromSymbol,
-                        style = MaterialTheme.typography.displayMedium,
+                        text = news.title,
+                        style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier.padding(startPadding)
                     )
-                    Text(
-                        text = UPDATED.plus(DOT).plus(getHowLongAgo(coin.lastUpdate)),
-                        style = MaterialTheme.typography.labelLarge,
-                        modifier = Modifier.padding(startPadding)
-                    )
-                    Text(
-                        text = ON_MARKET.plus(DOT).plus(coin.lastMarket),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.padding(startPadding)
-                    )
+                    /* Text(
+                         text = news.body,
+                         style = MaterialTheme.typography.labelLarge,
+                         modifier = Modifier.padding(startPadding)
+                     )
+                     Text(
+                         text = news.tags,
+                         style = MaterialTheme.typography.labelSmall,
+                         color = MaterialTheme.colorScheme.secondary,
+                         modifier = Modifier.padding(startPadding)
+                     )*/
                 }
 
             }
@@ -107,19 +109,13 @@ fun CoinDetailScreen(coin: Coin, onClickBack: () -> Unit, modifier: Modifier) {
                     modifier = Modifier.padding(start = 8.dp, bottom = 8.dp, top = 8.dp)
                 ) {
                     Text(
-                        text = PRICE.plus(DOT).plus(coin.price),
-                        style = MaterialTheme.typography.titleLarge,
+                        text = news.body,
+                        style = MaterialTheme.typography.labelLarge,
                         modifier = Modifier.padding(startPadding)
                     )
                     Text(
-                        text = TODAY_HIGHEST_PRICE.plus(DOT).plus(coin.highDay),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.padding(startPadding)
-                    )
-                    Text(
-                        text = TODAY_LOWEST_PRICE.plus(DOT).plus(coin.lowDay),
-                        style = MaterialTheme.typography.labelLarge,
+                        text = news.tags,
+                        style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier.padding(startPadding)
                     )
@@ -127,5 +123,9 @@ fun CoinDetailScreen(coin: Coin, onClickBack: () -> Unit, modifier: Modifier) {
             }
         }
     }
-
 }
+
+
+
+
+
