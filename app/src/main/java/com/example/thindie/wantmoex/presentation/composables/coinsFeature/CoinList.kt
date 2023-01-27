@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.presentation.composables.details
+package com.example.thindie.wantmoex.presentation.composables.util
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
