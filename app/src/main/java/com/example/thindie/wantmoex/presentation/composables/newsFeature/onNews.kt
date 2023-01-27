@@ -1,6 +1,5 @@
 package com.example.thindie.wantmoex.presentation.composables.newsFeature
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -12,6 +11,8 @@ import com.example.thindie.wantmoex.presentation.composables.CoinLoadScreen
 private const val WAIT_TIME = 300L
 @Composable
 fun NewsHomeScreen(newsViewModel: NewsViewModel = viewModel()) {
+
+
     val newsViewState by newsViewModel.viewState.collectAsStateWithLifecycle()
 
     when (newsViewState) {
