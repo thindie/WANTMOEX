@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.thindie.wantmoex.presentation.composables.CoinErrorScreen
 import com.example.thindie.wantmoex.presentation.composables.CoinHomeScreen
 import com.example.thindie.wantmoex.presentation.composables.CoinLoadScreen
+import com.example.thindie.wantmoex.presentation.composables.StartScreen
 import com.example.thindie.wantmoex.presentation.theme.WANTMOEXTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: CoinViewModel by viewModels()
+   // private val viewModel: CoinViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,36 +29,10 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-                viewModel.viewState.collect { viewState ->
+
                     setContent {
-                        WANTMOEXTheme {
-                            when (viewState) {
-                                is CoinViewModel.CoinViewState.SuccessCoinList -> {
-                                    CoinHomeScreen(
-                                        list = viewState.coins,
-                                        onClickElement = { coinID ->
-                                            viewModel.onLoadSingleCoin(coinID)
-                                        },
-                                        onClickBack = { viewModel.onLoadCoinsList() })
-                                }
-                                is CoinViewModel.CoinViewState.SuccessCoin -> {
-                                    CoinHomeScreen(
-                                        list = listOf(viewState.coin),
-                                        onClickElement = {},
-                                        onClickBack = { viewModel.onLoadCoinsList() })
-                                }
-                                is CoinViewModel.CoinViewState.Loading -> {
-                                    CoinLoadScreen {
-                                        viewModel.onLoadCoinsList()
-                                    }
-                                }
-                                is CoinViewModel.CoinViewState.Error -> {
-                                    CoinErrorScreen {
-
-                                    }
-                                }
-
-                            }
+                        WANTMOEXTheme{
+                            StartScreen()
                         }
                     }
                 }
@@ -65,7 +40,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
 
 
