@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import com.example.thindie.wantmoex.presentation.composables.CoinScreen
 import com.example.thindie.wantmoex.presentation.theme.WANTMOEXTheme
-import com.example.thindie.wantmoex.route.Route
+
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     private val viewModel: CoinViewModel by viewModels()
-    @Inject lateinit var route: Route
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             WANTMOEXTheme {
-                CoinScreen(viewModel, route)
+                CoinScreen(viewModel )
             }
         }
     }

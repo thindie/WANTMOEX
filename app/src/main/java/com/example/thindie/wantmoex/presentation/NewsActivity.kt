@@ -6,7 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import com.example.thindie.wantmoex.presentation.composables.newsFeature.NewsHomeScreen
-import com.example.thindie.wantmoex.presentation.ui.theme.WANTMOEXTheme
+import com.example.thindie.wantmoex.presentation.theme.WANTMOEXTheme
+
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

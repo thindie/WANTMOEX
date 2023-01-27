@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme" parent="Theme.WANTMOEX">
+
+    </style>
+    <style name="Theme.WANTMOEX" parent="Theme"/>
+</resources>
