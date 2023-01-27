@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,11 +38,10 @@ fun CoinLoadScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
             }
 
             Image(painterResource(id = R.drawable.crypto), contentDescription = null)
-            CircularProgressIndicator(
-                strokeWidth = 3.dp,
+            LinearProgressIndicator(
                 modifier = Modifier
                     .scale(0.3f)
-                    .padding(bottom = 25.dp)
+                    .padding(bottom = 350.dp)
 
             )
         }
