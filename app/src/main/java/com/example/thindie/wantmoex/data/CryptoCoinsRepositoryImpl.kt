@@ -8,8 +8,10 @@ import com.example.thindie.wantmoex.data.network.dto.multifull.CoinRawMultiFullR
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinRawTotalVolFullResponseDTO
 import com.example.thindie.wantmoex.data.network.retrofit.CryptoCoinsApiService
 import com.example.thindie.wantmoex.data.storage.AppDataBase
+import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinDBModel
 import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinsDataBase
 import com.example.thindie.wantmoex.domain.CryptoCoinRepository
+import com.example.thindie.wantmoex.domain.FavouriteCoinsRepository
 import com.example.thindie.wantmoex.domain.entities.Coin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,7 +23,7 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
     private val cryptoCoinsApiService: CryptoCoinsApiService,
     private val appDataBase: AppDataBase,
     private val favouriteCoinsDataBase: FavouriteCoinsDataBase
-) : CryptoCoinRepository {
+) : CryptoCoinRepository, FavouriteCoinsRepository {
 
 
     override suspend fun getAll(): Flow<List<Coin>> {
@@ -90,6 +92,36 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
         return resultList?.get(INDEX) ?: throw Exception(SERIOUS_EXCEPTION)
     }
 
+
+    override suspend fun getAllFavoriteCoins(): Flow<List<Coin>> {
+        val listOfCoinNames = favouriteCoinsDataBase.coinFavouriteListDao().getAllFavouriteCoins()
+            .map { it.fromSymbol }
+        return flow {
+            getAll().collect {
+                val filteredList = it.filter { coin ->
+                    listOfCoinNames.contains(coin.fromSymbol)
+                }
+                emit(filteredList)
+            }
+        }
+    }
+
+    override suspend fun deleteFromFavoriteCoins(deleteCoins: List<String>) {
+        val listOfID = favouriteCoinsDataBase.coinFavouriteListDao().getAllFavouriteCoins()
+        listOfID.forEach {
+            if (deleteCoins.contains(it.fromSymbol)) {
+                favouriteCoinsDataBase.coinFavouriteListDao().deleteFavouriteCoin(it.id)
+            }
+        }
+
+    }
+
+    override suspend fun addToFavoriteCoins(addCoins: List<String>) {
+        addCoins.forEach {
+            favouriteCoinsDataBase.coinFavouriteListDao()
+                .insertFavouriteCoin(FavouriteCoinDBModel(fromSymbol = it, id = 0))
+        }
+    }
 
     companion object {
         private const val LIMIT = 30

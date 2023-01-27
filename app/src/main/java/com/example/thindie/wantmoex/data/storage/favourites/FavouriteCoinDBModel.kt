@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "favouriteCoinsTable")
 data class FavouriteCoinDBModel(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    var id: Int,
     val fromSymbol: String,
 )

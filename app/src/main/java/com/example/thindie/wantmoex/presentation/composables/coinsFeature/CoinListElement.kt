@@ -3,10 +3,9 @@ package com.example.thindie.wantmoex.presentation.composables.coinsFeature
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +68,11 @@ fun CoinListElement(coin: Coin, onClick: (String) -> Unit) {
                             text = " • ".plus(coin.lastMarket),
                             style = MaterialTheme.typography.labelSmall
                         )
+                        Spacer(modifier = Modifier.weight(1f))
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(imageVector = Icons.Default.Star, contentDescription = "")
 
+                        }
                     }
 
                 }
