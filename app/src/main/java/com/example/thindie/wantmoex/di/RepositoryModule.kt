@@ -16,5 +16,5 @@ abstract class RepositoryModule {
     abstract fun bindEntityRepo(cryptoCoinsRepositoryImpl: CryptoCoinsRepositoryImpl): CryptoCoinRepository
 
     @Binds
-    abstract fun bindCryptoNewsRepo(cryptoNewsRepositoryImpl: CryptoNewsRepositoryImpl) : CryptoNewsRepository
+    abstract fun bindCryptoNewsRepo(cryptoNewsRepositoryImpl: CryptoNewsRepositoryImpl): CryptoNewsRepository
 }

@@ -1,6 +1,5 @@
 package com.example.thindie.wantmoex.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thindie.wantmoex.domain.entities.News
@@ -26,7 +25,7 @@ class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: Get
             getAllActualNewsUseCase.invoke().collect {
                 try {
                     it[0]
-                }catch (e : IndexOutOfBoundsException){
+                } catch (e: IndexOutOfBoundsException) {
                     _viewState.value = ViewState.Error
                     onLoadNews()
                 }

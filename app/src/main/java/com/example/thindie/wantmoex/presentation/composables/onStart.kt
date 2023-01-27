@@ -6,6 +6,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.thindie.wantmoex.presentation.CoinViewModel
 
+
+private const val START_TIME = 2000L
 @Composable
 
 fun StartScreen(viewModel: CoinViewModel = viewModel()) {
@@ -27,7 +29,7 @@ fun StartScreen(viewModel: CoinViewModel = viewModel()) {
                 onClickBack = { viewModel.onLoadCoinsList() })
         }
         is CoinViewModel.CoinViewState.Loading -> {
-            CoinLoadScreen {
+            CoinLoadScreen(waitTime = START_TIME) {
                 viewModel.onLoadCoinsList()
             }
         }

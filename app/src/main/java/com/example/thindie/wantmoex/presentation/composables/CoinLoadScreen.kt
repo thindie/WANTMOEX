@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -21,11 +20,11 @@ import androidx.compose.ui.unit.dp
 import com.example.thindie.wantmoex.R
 import kotlinx.coroutines.delay
 
-private const val WAIT_TIME: Long = 3000
+
 
 @Composable
 
-fun CoinLoadScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
+fun CoinLoadScreen(modifier: Modifier = Modifier, waitTime: Long,onTimeout: () -> Unit ) {
     Surface(modifier = modifier.fillMaxSize()) {
         Box(modifier = modifier.clip(CircleShape), contentAlignment = Alignment.Center) {
 
@@ -33,7 +32,7 @@ fun CoinLoadScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
 
             LaunchedEffect(true) {
 
-                delay(WAIT_TIME)
+                delay(waitTime)
                 currentTimeOut()
             }
 

@@ -9,17 +9,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.domain.entities.News
 
-
-private const val UPDATED = "Last updated"
-private const val ON_MARKET = "Last trade on"
-
-private const val PRICE = "Price"
-private const val TODAY_HIGHEST_PRICE = "Today's highest"
-private const val TODAY_LOWEST_PRICE = "Today's lowest"
 private const val DOT = " • "
 
 
@@ -41,6 +35,7 @@ fun NewsElement(news: News, onClickBack: () -> Unit) {
         ) {
             Image(
                 painter = rememberAsyncImagePainter(model = news.imageUrl),
+                contentScale = ContentScale.Fit,
                 contentDescription = "coin image"
             )
             Row(

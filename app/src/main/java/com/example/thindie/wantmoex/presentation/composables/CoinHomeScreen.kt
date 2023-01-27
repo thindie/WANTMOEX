@@ -8,9 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.presentation.composables.coinsFeature.CoinDetailScreen
+import com.example.thindie.wantmoex.presentation.composables.coinsFeature.CoinList
 import com.example.thindie.wantmoex.presentation.composables.newsFeature.NewsHomeScreen
-import com.example.thindie.wantmoex.presentation.composables.util.CoinList
-import com.example.thindie.wantmoex.presentation.composables.util.CoinTopAppBar
 import com.example.thindie.wantmoex.presentation.composables.util.animateTextByDotsOnStateBased
 
 private const val MORE_THAN_ONE = 1
@@ -42,7 +41,7 @@ fun CoinHomeScreen(
         animateTextByDotsOnStateBased(title.value, title)
     }
 
-    if(!showNews){
+    if (!showNews) {
         Scaffold(
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             bottomBar = {},
@@ -67,8 +66,7 @@ fun CoinHomeScreen(
                 );title.value = INITIAL_STRING
             }
         }
-    }
-    else NewsHomeScreen()
+    } else NewsHomeScreen()
 
 
 }
