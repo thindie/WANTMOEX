@@ -25,7 +25,6 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
     private val favouriteCoinsDataBase: FavouriteCoinsDataBase
 ) : CryptoCoinRepository, FavouriteCoinsRepository {
 
-
     override suspend fun getAll(): Flow<List<Coin>> {
         var resultList: List<Coin>? = null
         var rawNetWorkData: CoinRawTotalVolFullResponseDTO? = null
@@ -55,7 +54,6 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
             }
         }
     }
-
 
     override suspend fun getSingle(fromSymbol: String): Coin {
         var resultList: List<Coin>? = null
@@ -91,7 +89,6 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
 
         return resultList?.get(INDEX) ?: throw Exception(SERIOUS_EXCEPTION)
     }
-
 
     override suspend fun getAllFavoriteCoins(): Flow<List<Coin>> {
         val listOfCoinNames = favouriteCoinsDataBase.coinFavouriteListDao().getAllFavouriteCoins()
