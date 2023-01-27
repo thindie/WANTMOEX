@@ -41,7 +41,7 @@ fun CoinLoadScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
             LinearProgressIndicator(
                 modifier = Modifier
                     .scale(0.3f)
-                    .padding(bottom = 350.dp)
+                    .padding(top = 350.dp)
 
             )
         }
