@@ -22,8 +22,6 @@ private const val TITLE = "News "
 @Composable
 fun NewsScreen(
     list: List<News>,
-    onClickFavourites: () -> Unit,
-    onClickBack: () -> Unit
 ) {
 
     val title = remember {
@@ -45,20 +43,13 @@ fun NewsScreen(
         Scaffold(
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             bottomBar = {
-                CoinBottomBar(onFav = {
-                    onClickFavourites()
-                }, onBack = {
-                    onClickBack()
-                }, onNews = {
-                    showNews = !showNews
-                }, tabInCoinList = false)
+                CoinBottomBar(onFav = {/*ITS DONT NEED THERE*/ },
+                    onNews = {/*ITS DONT NEED THERE*/},
+                    onBack = { showNews = !showNews },
+                    tabInCoinList = false)
             },
-            topBar = {
-                CoinTopAppBar(
-                    title = title.value,
-                    onClick = { },
+            topBar = {CoinTopAppBar(title = title.value, onClick = { })
 
-                    )
             }
 
         ) { it ->
@@ -66,7 +57,7 @@ fun NewsScreen(
                 title.value = TITLE
                 LazyColumn(modifier = Modifier.padding(it)) {
                     items(list) {
-                        NewsElement(news = it, {})
+                        NewsElement(news = it)
                     }
                 }
 

@@ -15,14 +15,11 @@ fun CoinStateFun(viewModel: CoinViewModel = viewModel()) {
     val coinViewState by viewModel.viewState.collectAsStateWithLifecycle()
 
 
-
     when (coinViewState) {
         is CoinViewModel.CoinViewState.SuccessCoinList -> {
             CoinScreen(
                 list = (coinViewState as CoinViewModel.CoinViewState.SuccessCoinList).coins,
-                onClickElement = { coinID ->
-                    viewModel.onLoadSingleCoin(coinID)
-                },
+                onClickElement = { coinID -> viewModel.onLoadSingleCoin(coinID) },
                 onClickBack = { viewModel.onLoadCoinsList() },
                 onClickFavourites = { viewModel.onLoadFavorites() },
                )
@@ -30,20 +27,16 @@ fun CoinStateFun(viewModel: CoinViewModel = viewModel()) {
         is CoinViewModel.CoinViewState.SuccessCoin -> {
             CoinScreen(
                 list = listOf((coinViewState as CoinViewModel.CoinViewState.SuccessCoin).coin),
-                onClickElement = {},
+                onClickElement = {/*DOnt NEEDED THERE*/},
                 onClickBack = { viewModel.onLoadCoinsList() },
                 onClickFavourites = { viewModel.onLoadFavorites() },
             )
         }
         is CoinViewModel.CoinViewState.Loading -> {
-            CoinLoadScreen(waitTime = START_TIME) {
-                viewModel.onLoadCoinsList()
-            }
+            CoinLoadScreen(waitTime = START_TIME, onTimeout = viewModel::onLoadCoinsList)
         }
         is CoinViewModel.CoinViewState.Error -> {
-            CoinErrorScreen {
-
-            }
+            CoinErrorScreen { }
         }
 
     }

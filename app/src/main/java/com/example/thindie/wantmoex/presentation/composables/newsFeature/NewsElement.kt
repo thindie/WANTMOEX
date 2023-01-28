@@ -25,7 +25,7 @@ private const val DOT = " • "
 private const val GO_SURF_THIS_ARTICLE_WEB = "Check more in Web"
 
 @Composable
-fun NewsElement(news: News, onClickBack: () -> Unit) {
+fun NewsElement(news: News) {
     val context = LocalContext.current
     val goBrowser: () -> Unit = {
         val urlIntent = Intent(

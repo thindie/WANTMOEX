@@ -29,9 +29,7 @@ fun NewsStateFun(newsViewModel: NewsViewModel = viewModel()) {
         is NewsViewModel.ViewState.SuccessNews -> {
             val newsList = (newsViewState as NewsViewModel.ViewState.SuccessNews).newsList
             newsList.shuffled()
-            NewsScreen(list = newsList, onClickFavourites = {}) {
-
-            }
+            NewsScreen(list = newsList)
         }
     }
 }

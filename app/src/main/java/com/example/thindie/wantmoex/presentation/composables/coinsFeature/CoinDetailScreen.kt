@@ -35,7 +35,7 @@ fun CoinDetailScreen(coin: Coin, onClickBack: () -> Unit, modifier: Modifier) {
     val startPadding = PaddingValues(start = 16.dp)
 
     Column(modifier = modifier) {
-        ElevatedCard(
+        OutlinedCard(
             modifier = modifier.padding(paddingValues)
         ) {
             Row(
@@ -80,7 +80,7 @@ fun CoinDetailScreen(coin: Coin, onClickBack: () -> Unit, modifier: Modifier) {
             }
 
         }
-        ElevatedCard(
+        OutlinedCard(
             modifier = modifier.padding(paddingValues)
         ) {
             Row(

@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             WANTMOEXTheme {
-                CoinStateFun(viewModel )
+                CoinStateFun(viewModel)
             }
         }
     }
