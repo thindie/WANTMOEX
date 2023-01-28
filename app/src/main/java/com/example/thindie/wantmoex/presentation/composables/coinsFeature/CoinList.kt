@@ -10,13 +10,48 @@ import com.example.thindie.wantmoex.domain.entities.Coin
 
 @Composable
 
-fun CoinList(modifier: Modifier, onClickElement: (String) -> Unit, list: List<Coin>) {
-    LazyColumn(
-        modifier = modifier,
-        state = rememberLazyListState()
-    ) {
-        items(list) { coinItem ->
-            CoinListElement(coin = coinItem, onClickElement)
+fun CoinList(
+    modifier: Modifier,
+    onClickElement: (String) -> Unit,
+    list: List<Coin>,
+    listOfFavorites: List<String>?
+) {
+    val state = rememberLazyListState()
+
+    if (listOfFavorites == null) {
+        LazyColumn(
+            modifier = modifier,
+            state = state
+        ) {
+            items(list) { coinItem ->
+                CoinListElement(coin = coinItem, false, showFavoriteSymbol = false, onClickElement)
+            }
+        }
+    } else {
+        LazyColumn(
+            modifier = modifier,
+            state = state
+        ) {
+            items(list) { coinItem ->
+                if (listOfFavorites.contains(coinItem.fromSymbol)) {
+                    CoinListElement(
+                        coin = coinItem,
+                        true,
+                        showFavoriteSymbol = true,
+                        onClickElement
+                    )
+                } else {
+                    CoinListElement(
+                        coin = coinItem,
+                        false,
+                        showFavoriteSymbol = true,
+                        onClickElement
+                    )
+                }
+
+            }
         }
     }
+
+
 }

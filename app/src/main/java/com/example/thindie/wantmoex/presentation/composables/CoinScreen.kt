@@ -24,6 +24,7 @@ private const val INITIAL_STRING = ""
 @Composable
 fun CoinScreen(
     list: List<Coin>,
+    favoriteList: List<String>,
     onClickFavourites: () -> Unit,
     onClickElement: (String) -> Unit,
     onClickBack: () -> Unit,
@@ -33,6 +34,11 @@ fun CoinScreen(
     val title = remember {
         mutableStateOf(TITLE)
     }
+
+    var revealedFavoritesSection by remember {
+        mutableStateOf(false)
+    }
+
     val scaffoldShowList by remember {
         mutableStateOf(list.size > MORE_THAN_ONE)
     }
@@ -52,8 +58,11 @@ fun CoinScreen(
                 CoinBottomBar(
                     onFavorites = { onClickFavourites() },
                     onNews = { showNews = !showNews },
-                    { onClickBack() },
-                    thisBarWithoutCoinList = true
+                    onBack = { onClickBack() },
+                    thisBarWithCoinList = scaffoldShowList,
+                    onClickedShowFavorites = {
+                        revealedFavoritesSection = !revealedFavoritesSection
+                    }
                 )
             },
             topBar = {
@@ -68,7 +77,13 @@ fun CoinScreen(
         ) {
             if (scaffoldShowList) {
                 title.value = TITLE
-                CoinList(modifier = Modifier.padding(it), onClickElement, list)
+
+                if (revealedFavoritesSection) {
+                    CoinList(modifier = Modifier.padding(it), onClickElement, list, favoriteList)
+                } else {
+                    CoinList(modifier = Modifier.padding(it), onClickElement, list, null)
+                }
+
             } else {
                 CoinDetailScreen(
                     list[THE_ONE],

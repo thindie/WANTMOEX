@@ -49,7 +49,8 @@ fun NewsScreen(
                 onFavorites = {/*ITS DONT NEED THERE*/ },
                 onNews = {/*ITS DONT NEED THERE*/ },
                 onBack = { beginTransition<NewsActivity, MainActivity>(context) },
-                thisBarWithoutCoinList = false
+                thisBarWithCoinList = false,
+                onClickedShowFavorites = {}
             )
         },
         topBar = {

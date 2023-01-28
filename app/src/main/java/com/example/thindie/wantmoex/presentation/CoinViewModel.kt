@@ -27,6 +27,11 @@ class CoinViewModel @Inject constructor(
     val viewState: StateFlow<CoinViewState>
         get() = _viewState.asStateFlow()
 
+    private val _favoriteCache: MutableStateFlow<List<String>> =
+        MutableStateFlow(emptyList<String>())
+    val favoriteCache: StateFlow<List<String>>
+        get() = _favoriteCache.asStateFlow()
+
     fun onLoadCoinsList() {
         viewModelScope.launch {
             getAllCryptoCoinsUseCase.invoke().collect {
@@ -64,6 +69,17 @@ class CoinViewModel @Inject constructor(
                 } catch (e: IndexOutOfBoundsException) {
                     _viewState.value = CoinViewState.Error
                     onLoadCoinsList()
+                }
+            }
+        }
+    }
+
+    fun onLoadFavoritesIDs() {
+        viewModelScope.launch {
+            getAllFavoriteCoinsUseCase.invoke().collect {
+                if (it.isNotEmpty()) {
+                    val idList = it.map { coin -> coin.fromSymbol }
+                    _favoriteCache.value = idList
                 }
             }
         }

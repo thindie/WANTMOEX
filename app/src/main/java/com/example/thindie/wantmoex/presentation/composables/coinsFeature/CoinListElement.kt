@@ -15,13 +15,21 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.R
 import com.example.thindie.wantmoex.domain.entities.Coin
+import com.example.thindie.wantmoex.presentation.composables.util.cacheListAdd
+import com.example.thindie.wantmoex.presentation.composables.util.cacheListRemove
 import kotlinx.coroutines.delay
 
 @Composable
 
-fun CoinListElement(coin: Coin, onClick: (String) -> Unit) {
+fun CoinListElement(
+    coin: Coin,
+    isItFavorite: Boolean,
+    showFavoriteSymbol: Boolean,
+    onClick: (String) -> Unit
+) {
 
     var imageState by remember { mutableStateOf(true) }
+    var favoriteState by remember { mutableStateOf(isItFavorite) }
 
     LaunchedEffect(key1 = true) {
         delay(30)
@@ -33,7 +41,7 @@ fun CoinListElement(coin: Coin, onClick: (String) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(88.dp)
-            .clickable { onClick(coin.fromSymbol) }
+
     ) {
         Column(Modifier.fillMaxSize()) {
             Row(
@@ -50,6 +58,7 @@ fun CoinListElement(coin: Coin, onClick: (String) -> Unit) {
                     contentDescription = "coin Image",
                     modifier = Modifier
                         .size(56.dp)
+                        .clickable { onClick(coin.fromSymbol) }
                 )
 
                 Column(
@@ -69,13 +78,26 @@ fun CoinListElement(coin: Coin, onClick: (String) -> Unit) {
                             style = MaterialTheme.typography.labelSmall
                         )
                         Spacer(modifier = Modifier.weight(1f))
-                        IconButton(
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier.padding(bottom = 25.dp)
-                        ) {
-                            Icon(imageVector = Icons.Default.Star, contentDescription = "")
+                        if (showFavoriteSymbol) {
+                            IconButton(
+                                onClick = {
+                                    if (favoriteState) {
+                                        cacheListAdd(coin.fromSymbol)
+                                    } else cacheListRemove(coin.fromSymbol)
+                                    favoriteState = !favoriteState
+                                },
+                                modifier = Modifier.padding(bottom = 25.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Star,
+                                    contentDescription = "",
+                                    tint = if (favoriteState) MaterialTheme.colorScheme.error
+                                    else MaterialTheme.colorScheme.onTertiaryContainer
+                                )
 
+                            }
                         }
+
                     }
 
                 }

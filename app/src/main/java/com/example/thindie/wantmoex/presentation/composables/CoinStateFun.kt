@@ -13,6 +13,7 @@ private const val START_TIME = 100L
 
 fun CoinStateFun(viewModel: CoinViewModel = viewModel()) {
     val coinViewState by viewModel.viewState.collectAsStateWithLifecycle()
+    val favoriteIds by viewModel.favoriteCache.collectAsStateWithLifecycle()
 
     when (coinViewState) {
         is CoinViewModel.CoinViewState.SuccessCoinList -> {
@@ -21,6 +22,7 @@ fun CoinStateFun(viewModel: CoinViewModel = viewModel()) {
                 onClickElement = { coinID -> viewModel.onLoadSingleCoin(coinID) },
                 onClickBack = { viewModel.onLoadCoinsList() },
                 onClickFavourites = { viewModel.onLoadFavorites() },
+                favoriteList =  favoriteIds
             )
         }
         is CoinViewModel.CoinViewState.SuccessCoin -> {
@@ -29,6 +31,7 @@ fun CoinStateFun(viewModel: CoinViewModel = viewModel()) {
                 onClickElement = {/*DOnt NEEDED THERE*/ },
                 onClickBack = { viewModel.onLoadCoinsList() },
                 onClickFavourites = { viewModel.onLoadFavorites() },
+                favoriteList = emptyList()
             )
         }
         is CoinViewModel.CoinViewState.Loading -> {
