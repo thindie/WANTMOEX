@@ -5,11 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
-import com.example.thindie.wantmoex.presentation.composables.newsFeature.NewsHomeScreen
+import com.example.thindie.wantmoex.presentation.composables.newsFeature.NewsStateFun
 import com.example.thindie.wantmoex.presentation.theme.WANTMOEXTheme
 
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewsActivity : ComponentActivity() {
@@ -21,7 +20,7 @@ class NewsActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
         setContent {
             WANTMOEXTheme {
-                NewsHomeScreen(viewModel)
+                NewsStateFun(viewModel)
             }
         }
     }

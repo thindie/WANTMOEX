@@ -26,8 +26,8 @@ interface CryptoCoinsApiService {
     suspend fun getLastestNews(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
         @Query(QUERY_PARAM_CATEGORIES, encoded = true) topCoinFirst: String = String.format(
-            "%s${COMMA}%s", BTC,
-            ETH
+            "%s${COMMA}%s${COMMA}%s${COMMA}%s${COMMA}%s", BTC,
+            ETH, XRP, DOGE, SHIBA
         ),
         @Query(QUERY_PARAM_LANGUAGE) lang: String = LANGUAGE,
 
@@ -44,6 +44,9 @@ interface CryptoCoinsApiService {
         private const val BTC = "BTC"
         private const val COMMA = ","
         private const val ETH = "ETH"
+        private const val XRP = "XRP"
+        private const val DOGE = "DOGE"
+        private const val SHIBA = "SHIBA"
         private const val QUERY_PARAM_CATEGORIES = "categories"
 
         //COINS

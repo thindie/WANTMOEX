@@ -9,7 +9,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.example.thindie.wantmoex.domain.entities.News
-import com.example.thindie.wantmoex.presentation.composables.CoinScreen
+import com.example.thindie.wantmoex.presentation.composables.CoinBottomBar
+import com.example.thindie.wantmoex.presentation.composables.CoinStateFun
 import com.example.thindie.wantmoex.presentation.composables.CoinTopAppBar
 import com.example.thindie.wantmoex.presentation.composables.util.animateTextByDotsOnStateBased
 
@@ -19,9 +20,9 @@ private const val TITLE = "News "
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsList(
+fun NewsScreen(
     list: List<News>,
-    onClickElement: (String) -> Unit,
+    onClickFavourites: () -> Unit,
     onClickBack: () -> Unit
 ) {
 
@@ -43,11 +44,19 @@ fun NewsList(
     if (showNews) {
         Scaffold(
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            bottomBar = {},
+            bottomBar = {
+                CoinBottomBar(onFav = {
+                    onClickFavourites()
+                }, onBack = {
+                    onClickBack()
+                }, onNews = {
+                    showNews = !showNews
+                }, tabInCoinList = false)
+            },
             topBar = {
                 CoinTopAppBar(
                     title = title.value,
-                    onClick = { showNews = !showNews },
+                    onClick = { },
 
                     )
             }
@@ -61,14 +70,8 @@ fun NewsList(
                     }
                 }
 
-            } else {
-                /*CoinDetailScreen(
-                    list[THE_ONE],
-                    { onClickBack() },
-                    modifier = Modifier.padding(it)
-                );title.value = INITIAL_STRING*/
-            }
-        }
-    } else CoinScreen()
-}
 
+            } else CoinStateFun()
+        }
+    }
+}

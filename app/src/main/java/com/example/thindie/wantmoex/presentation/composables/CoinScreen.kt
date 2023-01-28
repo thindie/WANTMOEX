@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.presentation.composables.coinsFeature.CoinDetailScreen
 import com.example.thindie.wantmoex.presentation.composables.coinsFeature.CoinList
-import com.example.thindie.wantmoex.presentation.composables.newsFeature.NewsHomeScreen
+import com.example.thindie.wantmoex.presentation.composables.newsFeature.NewsStateFun
 import com.example.thindie.wantmoex.presentation.composables.util.animateTextByDotsOnStateBased
 
 private const val MORE_THAN_ONE = 1
@@ -19,8 +19,9 @@ private const val INITIAL_STRING = ""
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CoinHomeScreen(
+fun CoinScreen(
     list: List<Coin>,
+    onClickFavourites: () -> Unit,
     onClickElement: (String) -> Unit,
     onClickBack: () -> Unit,
 ) {
@@ -44,12 +45,19 @@ fun CoinHomeScreen(
     if (!showNews) {
         Scaffold(
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            bottomBar = {},
+            bottomBar = {
+                CoinBottomBar(
+                    onFav = { onClickFavourites() },
+                    onNews = { showNews = !showNews },
+                    { onClickBack() },
+                    tabInCoinList = true
+                )
+            },
             topBar = {
                 CoinTopAppBar(
                     title = title.value,
                     onClick = {
-                        showNews = !showNews
+
                     },
                 )
             }
@@ -66,7 +74,7 @@ fun CoinHomeScreen(
                 );title.value = INITIAL_STRING
             }
         }
-    } else NewsHomeScreen()
+    } else NewsStateFun()
 
 
 }

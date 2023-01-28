@@ -11,25 +11,29 @@ private const val START_TIME = 2000L
 
 @Composable
 
-fun CoinScreen(viewModel: CoinViewModel = viewModel()) {
+fun CoinStateFun(viewModel: CoinViewModel = viewModel()) {
     val coinViewState by viewModel.viewState.collectAsStateWithLifecycle()
 
 
 
     when (coinViewState) {
         is CoinViewModel.CoinViewState.SuccessCoinList -> {
-            CoinHomeScreen(
+            CoinScreen(
                 list = (coinViewState as CoinViewModel.CoinViewState.SuccessCoinList).coins,
                 onClickElement = { coinID ->
                     viewModel.onLoadSingleCoin(coinID)
                 },
-                onClickBack = { viewModel.onLoadCoinsList() })
+                onClickBack = { viewModel.onLoadCoinsList() },
+                onClickFavourites = { viewModel.onLoadFavorites() },
+               )
         }
         is CoinViewModel.CoinViewState.SuccessCoin -> {
-            CoinHomeScreen(
+            CoinScreen(
                 list = listOf((coinViewState as CoinViewModel.CoinViewState.SuccessCoin).coin),
                 onClickElement = {},
-                onClickBack = { viewModel.onLoadCoinsList() })
+                onClickBack = { viewModel.onLoadCoinsList() },
+                onClickFavourites = { viewModel.onLoadFavorites() },
+            )
         }
         is CoinViewModel.CoinViewState.Loading -> {
             CoinLoadScreen(waitTime = START_TIME) {

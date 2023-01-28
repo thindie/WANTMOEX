@@ -10,7 +10,7 @@ import com.example.thindie.wantmoex.presentation.composables.CoinLoadScreen
 
 private const val WAIT_TIME = 300L
 @Composable
-fun NewsHomeScreen(newsViewModel: NewsViewModel = viewModel()) {
+fun NewsStateFun(newsViewModel: NewsViewModel = viewModel()) {
 
 
     val newsViewState by newsViewModel.viewState.collectAsStateWithLifecycle()
@@ -29,7 +29,7 @@ fun NewsHomeScreen(newsViewModel: NewsViewModel = viewModel()) {
         is NewsViewModel.ViewState.SuccessNews -> {
             val newsList = (newsViewState as NewsViewModel.ViewState.SuccessNews).newsList
             newsList.shuffled()
-            NewsList(list = newsList, onClickElement = {}) {
+            NewsScreen(list = newsList, onClickFavourites = {}) {
 
             }
         }
