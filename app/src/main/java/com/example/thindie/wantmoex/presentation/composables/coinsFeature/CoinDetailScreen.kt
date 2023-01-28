@@ -3,9 +3,11 @@ package com.example.thindie.wantmoex.presentation.composables.coinsFeature
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Payments
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +26,7 @@ private const val TODAY_LOWEST_PRICE = "Today's lowest"
 private const val DOT = " • "
 
 @Composable
-fun CoinDetailScreen(coin: Coin, onClickBack: () -> Unit, modifier: Modifier) {
+fun CoinDetailScreen(coin: Coin, modifier: Modifier) {
 
     val paddingValues = PaddingValues(
         start = 16.dp,
@@ -71,12 +73,6 @@ fun CoinDetailScreen(coin: Coin, onClickBack: () -> Unit, modifier: Modifier) {
                     )
                 }
 
-            }
-            IconButton(
-                onClick = { onClickBack(); }, modifier = Modifier
-                    .padding(paddingValues)
-            ) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
             }
 
         }

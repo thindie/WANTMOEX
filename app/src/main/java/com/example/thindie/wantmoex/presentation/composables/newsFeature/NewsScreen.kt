@@ -8,11 +8,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.example.thindie.wantmoex.domain.entities.News
+import com.example.thindie.wantmoex.presentation.MainActivity
+import com.example.thindie.wantmoex.presentation.NewsActivity
 import com.example.thindie.wantmoex.presentation.composables.CoinBottomBar
-import com.example.thindie.wantmoex.presentation.composables.CoinStateFun
 import com.example.thindie.wantmoex.presentation.composables.CoinTopAppBar
 import com.example.thindie.wantmoex.presentation.composables.util.animateTextByDotsOnStateBased
+import com.example.thindie.wantmoex.route.beginTransition
 
 private const val MORE_THAN_ONE = 1
 private const val TITLE = "News "
@@ -24,6 +27,8 @@ fun NewsScreen(
     list: List<News>,
 ) {
 
+    val context = LocalContext.current
+
     val title = remember {
         mutableStateOf(TITLE)
     }
@@ -31,38 +36,37 @@ fun NewsScreen(
         mutableStateOf(list.size > MORE_THAN_ONE)
     }
 
-    var showNews by remember {
-        mutableStateOf(true)
-    }
 
     LaunchedEffect(key1 = scaffoldShowList) {
         animateTextByDotsOnStateBased(title.value, title)
     }
 
-    if (showNews) {
-        Scaffold(
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            bottomBar = {
-                CoinBottomBar(onFav = {/*ITS DONT NEED THERE*/ },
-                    onNews = {/*ITS DONT NEED THERE*/},
-                    onBack = { showNews = !showNews },
-                    tabInCoinList = false)
-            },
-            topBar = {CoinTopAppBar(title = title.value, onClick = { })
 
+    Scaffold(
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        bottomBar = {
+            CoinBottomBar(
+                onFavorites = {/*ITS DONT NEED THERE*/ },
+                onNews = {/*ITS DONT NEED THERE*/ },
+                onBack = { beginTransition<NewsActivity, MainActivity>(context) },
+                thisBarWithoutCoinList = false
+            )
+        },
+        topBar = {
+            CoinTopAppBar(title = title.value, onClick = { })
+
+        }
+
+    ) { it ->
+        if (scaffoldShowList) {
+            title.value = TITLE
+            LazyColumn(modifier = Modifier.padding(it)) {
+                items(list) {
+                    NewsElement(news = it)
+                }
             }
 
-        ) { it ->
-            if (scaffoldShowList) {
-                title.value = TITLE
-                LazyColumn(modifier = Modifier.padding(it)) {
-                    items(list) {
-                        NewsElement(news = it)
-                    }
-                }
 
-
-            } else CoinStateFun()
         }
     }
 }

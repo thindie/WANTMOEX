@@ -21,10 +21,9 @@ import com.example.thindie.wantmoex.R
 import kotlinx.coroutines.delay
 
 
-
 @Composable
 
-fun CoinLoadScreen(modifier: Modifier = Modifier, waitTime: Long,onTimeout: () -> Unit ) {
+fun CoinLoadScreen(modifier: Modifier = Modifier, waitTime: Long, onTimeout: () -> Unit) {
     Surface(modifier = modifier.fillMaxSize()) {
         Box(modifier = modifier.clip(CircleShape), contentAlignment = Alignment.Center) {
 

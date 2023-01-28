@@ -11,15 +11,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun CoinBottomBar(
-    onFav: () -> Unit,
+    onFavorites: () -> Unit,
     onNews: () -> Unit,
     onBack: () -> Unit,
-    tabInCoinList: Boolean
+    thisBarWithCoinList: Boolean
 ) {
     val paddingValues = PaddingValues(start = 4.dp, end = 12.dp, top = 12.dp)
 
@@ -35,14 +34,17 @@ fun CoinBottomBar(
             IconButton(onClick = onBack) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
             }
-            if (tabInCoinList) {
+            if (thisBarWithCoinList) {
                 IconButton(onClick = onNews) {
                     Icon(imageVector = Icons.Default.Newspaper, contentDescription = "news")
                 }
-                IconButton(onClick = onFav) {
+                IconButton(onClick = onFavorites) {
                     Icon(imageVector = Icons.Default.Favorite, contentDescription = "fav")
                 }
+                Spacer(modifier = Modifier.weight(0.3f))
             }
+
+
 
         }
 

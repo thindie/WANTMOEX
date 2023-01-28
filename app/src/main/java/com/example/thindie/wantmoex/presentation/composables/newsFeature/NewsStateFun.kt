@@ -8,7 +8,8 @@ import com.example.thindie.wantmoex.presentation.NewsViewModel
 import com.example.thindie.wantmoex.presentation.composables.CoinErrorScreen
 import com.example.thindie.wantmoex.presentation.composables.CoinLoadScreen
 
-private const val WAIT_TIME = 300L
+private const val WAIT_TIME = 100L
+
 @Composable
 fun NewsStateFun(newsViewModel: NewsViewModel = viewModel()) {
 

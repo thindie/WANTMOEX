@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -14,12 +15,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.domain.entities.News
 import com.example.thindie.wantmoex.presentation.theme.Shapes
+import com.example.thindie.wantmoex.route.share
 
 private const val DOT = " • "
 private const val GO_SURF_THIS_ARTICLE_WEB = "Check more in Web"
@@ -31,7 +32,7 @@ fun NewsElement(news: News) {
         val urlIntent = Intent(
             Intent.ACTION_VIEW,
             Uri.parse(news.url)
-        );
+        )
         startActivity(context, urlIntent, null)
     }
 
@@ -112,6 +113,10 @@ fun NewsElement(news: News) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.secondary,
                 )
+                Spacer(modifier = Modifier.weight(0.2f))
+                IconButton(onClick = { share(news.url, news.title, news.imageUrl, context) }) {
+                    Icon(imageVector = Icons.Default.Share, contentDescription = "share")
+                }
             }
 
         }

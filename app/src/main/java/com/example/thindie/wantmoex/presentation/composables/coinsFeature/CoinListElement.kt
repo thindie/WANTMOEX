@@ -69,7 +69,10 @@ fun CoinListElement(coin: Coin, onClick: (String) -> Unit) {
                             style = MaterialTheme.typography.labelSmall
                         )
                         Spacer(modifier = Modifier.weight(1f))
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(
+                            onClick = { /*TODO*/ },
+                            modifier = Modifier.padding(bottom = 25.dp)
+                        ) {
                             Icon(imageVector = Icons.Default.Star, contentDescription = "")
 
                         }

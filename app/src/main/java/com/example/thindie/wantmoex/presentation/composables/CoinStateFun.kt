@@ -7,13 +7,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.thindie.wantmoex.presentation.CoinViewModel
 
 
-private const val START_TIME = 2000L
+private const val START_TIME = 100L
 
 @Composable
 
 fun CoinStateFun(viewModel: CoinViewModel = viewModel()) {
     val coinViewState by viewModel.viewState.collectAsStateWithLifecycle()
-
 
     when (coinViewState) {
         is CoinViewModel.CoinViewState.SuccessCoinList -> {
@@ -22,12 +21,12 @@ fun CoinStateFun(viewModel: CoinViewModel = viewModel()) {
                 onClickElement = { coinID -> viewModel.onLoadSingleCoin(coinID) },
                 onClickBack = { viewModel.onLoadCoinsList() },
                 onClickFavourites = { viewModel.onLoadFavorites() },
-               )
+            )
         }
         is CoinViewModel.CoinViewState.SuccessCoin -> {
             CoinScreen(
                 list = listOf((coinViewState as CoinViewModel.CoinViewState.SuccessCoin).coin),
-                onClickElement = {/*DOnt NEEDED THERE*/},
+                onClickElement = {/*DOnt NEEDED THERE*/ },
                 onClickBack = { viewModel.onLoadCoinsList() },
                 onClickFavourites = { viewModel.onLoadFavorites() },
             )

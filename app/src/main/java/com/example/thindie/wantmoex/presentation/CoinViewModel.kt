@@ -42,13 +42,13 @@ class CoinViewModel @Inject constructor(
         }
     }
 
-    fun onAddToFavorites(coinNames: List<String>){
+    fun onAddToFavorites(coinNames: List<String>) {
         viewModelScope.launch {
             doAddCoinToFavoritesUseCase.invoke(coinNames)
         }
     }
 
-    fun onDeleteFromFavorites(coinNames: List<String>){
+    fun onDeleteFromFavorites(coinNames: List<String>) {
         viewModelScope.launch {
             doDeleteCoinFromFavoritesUseCase.invoke(coinNames)
         }
