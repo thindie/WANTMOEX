@@ -29,12 +29,12 @@ class CoinViewModel @Inject constructor(
     fun onLoadCoinsList() {
         viewModelScope.launch {
             val flowAllCoins: Flow<List<Coin>> = getAllCryptoCoinsUseCase.invoke()
-            val flowFavoriteCoins: Flow<List<Coin>> = getAllFavoriteCoinsUseCase.invoke()
+            val flowFavoriteCoins: Flow<List<String>> = getAllFavoriteCoinsUseCase.invoke()
 
             flowAllCoins.combine(flowFavoriteCoins) { flowAll, flowFavorites ->
                 flowAll.map {
                     try {
-                        fromCoinToUIDeep(it, flowFavorites.contains(it))
+                        fromCoinToUIDeep(it, flowFavorites.contains(it.fromSymbol))
                     } catch (e: IndexOutOfBoundsException) {
                         fromCoinToUILazy(it)
                     }
@@ -53,19 +53,20 @@ class CoinViewModel @Inject constructor(
 
     fun onLoadFavorites() {
         viewModelScope.launch {
-            getAllFavoriteCoinsUseCase.invoke().collect { coinList ->
+            val flowFavoriteCoins: Flow<List<String>> = getAllFavoriteCoinsUseCase.invoke()
+
                 try {
-                    _viewState.value = CoinViewState.SuccessFavoriteList(
-                        coinList.map { coin ->
-                            fromCoinToUIDeep(coin, true)
-                        })
+                     flowFavoriteCoins.collect{ listOfIds ->
+                     val list =   listOfIds.map { fromCoinToUIDeep(doSingleCoinRequestUseCase.invoke(it),true) }
+                         _viewState.value = CoinViewState.SuccessFavoriteList(list)
+                     }
                 } catch (e: IndexOutOfBoundsException) {
                     _viewState.value = CoinViewState.Error
                     onLoadCoinsList()
                 }
             }
         }
-    }
+
 
     fun onLoadSingleCoin(coinTicker: String) {
         viewModelScope.launch {

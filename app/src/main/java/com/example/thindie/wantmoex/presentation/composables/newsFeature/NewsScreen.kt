@@ -43,7 +43,7 @@ fun NewsScreen(
         bottomBar = {
             NewsBottomBar {
 
-                    beginTransition<NewsActivity, MainActivity>(context)
+                beginTransition<NewsActivity, MainActivity>(context)
 
             }
         },

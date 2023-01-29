@@ -16,6 +16,7 @@ import com.example.thindie.wantmoex.domain.FavouriteCoinsRepository
 import com.example.thindie.wantmoex.domain.entities.Coin
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -94,17 +95,12 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
         return resultList?.get(INDEX) ?: throw Exception(SERIOUS_EXCEPTION)
     }
 
-    override suspend fun getAllFavoriteCoins(): Flow<List<Coin>> {
-        val listOfCoinNames = favouriteCoinsDataBase.coinFavouriteListDao().getAllFavouriteCoins()
-            .map { it.fromSymbol }
-        return flow {
-            getAll().collect {
-                val filteredList = it.filter { coin ->
-                    listOfCoinNames.contains(coin.fromSymbol)
-                }
-                emit(filteredList)
-            }
+    override suspend fun getAllFavoriteCoins(): Flow<List<String>> {
+       val coinsIdList =   favouriteCoinsDataBase.coinFavouriteListDao().getAllFavouriteCoins().map{
+            it.fromSymbol
         }
+        return flow { emit(coinsIdList) }
+
     }
 
     override suspend fun deleteFromFavoriteCoins(deleteCoins: List<String>) {

@@ -12,7 +12,7 @@ class GetAllFavoriteCoinsUseCase @Inject constructor(
     private val favouriteCoinsRepository: FavouriteCoinsRepository,
     @DispatchersModule.DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(): Flow<List<Coin>> {
+    suspend operator fun invoke(): Flow<List<String>> {
         return favouriteCoinsRepository.getAllFavoriteCoins().flowOn(defaultDispatcher)
     }
 }

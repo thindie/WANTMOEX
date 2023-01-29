@@ -6,8 +6,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -66,7 +69,7 @@ fun CoinListElement(
                             text = " • ".plus(coin.lastMarket),
                             style = MaterialTheme.typography.labelSmall
                         )
-                        Spacer(modifier = Modifier.weight(0.9f ))
+                        Spacer(modifier = Modifier.weight(0.9f))
                         if (showFavoriteSymbol) {
                             Column(
                                 verticalArrangement = Arrangement.Center,

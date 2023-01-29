@@ -45,11 +45,7 @@ fun CoinFavoriteCoinsScreen(
                 onClickedShowStars = {
                     revealedFavoritesSection = revealedFavoritesSection.not()
                 }) {
-                try {
-                    beginTransition<NewsActivity, MainActivity>(context)
-                } catch (e: Exception) {
-                     ///
-                }
+                beginTransition<NewsActivity, MainActivity>(context)
             }
 
         },
