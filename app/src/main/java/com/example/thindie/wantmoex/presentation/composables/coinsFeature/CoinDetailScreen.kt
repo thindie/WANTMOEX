@@ -15,8 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.data.mappers.getHowLongAgo
-import com.example.thindie.wantmoex.domain.entities.Coin
-import com.example.thindie.wantmoex.presentation.composables.CoinUIModel
+import com.example.thindie.wantmoex.presentation.CoinUIModel
 import com.example.thindie.wantmoex.presentation.composables.util.animateTextByDotsOnStateBased
 
 

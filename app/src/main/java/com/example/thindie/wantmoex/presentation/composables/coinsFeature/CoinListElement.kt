@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.thindie.wantmoex.presentation.composables.CoinUIModel
+import com.example.thindie.wantmoex.presentation.CoinUIModel
 
 @Composable
 

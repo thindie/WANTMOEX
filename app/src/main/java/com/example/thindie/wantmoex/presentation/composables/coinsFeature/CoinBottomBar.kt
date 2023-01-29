@@ -50,8 +50,8 @@ fun CoinBottomBar(
         ) {
             IconButton(onClick = {
                 ///////
-                onBack();
-                starColor = SHOW_STARS_ON_LIST_ELEMENTS;
+                onBack()
+                starColor = SHOW_STARS_ON_LIST_ELEMENTS
                 heartColor = HEART_COLOR
                 //////
             }
@@ -64,7 +64,7 @@ fun CoinBottomBar(
             }
             IconButton(onClick = {
                 ///
-                heartColor = !heartColor;
+                heartColor = !heartColor
                 onClickedShowFavorites()
                 ////
             }) {

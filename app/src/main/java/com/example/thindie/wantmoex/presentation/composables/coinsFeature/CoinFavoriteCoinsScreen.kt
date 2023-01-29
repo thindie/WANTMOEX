@@ -9,9 +9,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.example.thindie.wantmoex.presentation.CoinUIModel
 import com.example.thindie.wantmoex.presentation.MainActivity
 import com.example.thindie.wantmoex.presentation.NewsActivity
-import com.example.thindie.wantmoex.presentation.composables.CoinUIModel
 import com.example.thindie.wantmoex.presentation.composables.util.animateTextByDotsOnStateBased
 import com.example.thindie.wantmoex.route.beginTransition
 

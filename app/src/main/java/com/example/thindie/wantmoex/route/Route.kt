@@ -28,9 +28,7 @@ fun actionShare(uri: String, title: String, contentUri: String, context: Context
     val share = Intent.createChooser(Intent().apply {
         action = Intent.ACTION_SEND
         putExtra(Intent.EXTRA_TEXT, Uri.parse(uri))
-        // (Optional) Here we're setting the title of the content
         putExtra(Intent.EXTRA_TITLE, title)
-        // (Optional) Here we're passing a content URI to an image to be displayed
         data = Uri.parse(contentUri)
         flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
     }, null)

@@ -27,7 +27,7 @@ class DispatchersModule {
     @MainDispatcher
     @Provides
     fun provideDispatchersMain(): CoroutineDispatcher {
-        return Dispatchers.IO
+        return Dispatchers.Main
     }
 
 

@@ -106,7 +106,14 @@ fun NewsElement(news: News) {
                     color = MaterialTheme.colorScheme.secondary,
                 )
                 Spacer(modifier = Modifier.weight(0.2f))
-                IconButton(onClick = { actionShare(news.url, news.title, news.imageUrl, context) }) {
+                IconButton(onClick = {
+                    actionShare(
+                        news.url,
+                        news.title,
+                        news.imageUrl,
+                        context
+                    )
+                }) {
                     Icon(imageVector = Icons.Default.Share, contentDescription = "actionShare")
                 }
             }

@@ -20,12 +20,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, true)
 
-        val addFavorite = {coinName: String -> viewModel.onAddToFavorites(listOf(coinName))}
-        val deleteFavorite = {coinName: String -> viewModel.onDeleteFromFavorites(listOf(coinName))}
+        val addFavorite = { coinName: String -> viewModel.onAddToFavorites(listOf(coinName)) }
+        val deleteFavorite =
+            { coinName: String -> viewModel.onDeleteFromFavorites(listOf(coinName)) }
 
         setContent {
             WANTMOEXTheme {
-                CoinStateFun(viewModel, addFavorite,deleteFavorite)
+                CoinStateFun(viewModel, addFavorite, deleteFavorite)
             }
         }
     }

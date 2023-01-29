@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.thindie.wantmoex.presentation.CoinViewModel
-import com.example.thindie.wantmoex.presentation.composables.fromCoinToUI
 import com.example.thindie.wantmoex.presentation.composables.util.ErrorScreen
 import com.example.thindie.wantmoex.presentation.composables.util.LoadScreen
 
@@ -27,9 +26,7 @@ fun CoinStateFun(
     when (coinViewState) {
         is CoinViewModel.CoinViewState.SuccessCoinList -> {
             CoinScreen(
-                list = (coinViewState as CoinViewModel.CoinViewState.SuccessCoinList).coins.map {
-                    fromCoinToUI(it)
-                },
+                list = (coinViewState as CoinViewModel.CoinViewState.SuccessCoinList).coins,
                 onFavoritesAdded = onFavoritesAdded,
                 onFavoritesDeleted = onFavoritesDeleted,
                 onClickElement = toDetailCoinScreen,
@@ -38,14 +35,13 @@ fun CoinStateFun(
             )
         }
         is CoinViewModel.CoinViewState.SuccessCoin -> {
-            CoinDetailsScreen(coin = fromCoinToUI((coinViewState as CoinViewModel.CoinViewState.SuccessCoin).coin)) {
+            CoinDetailsScreen(coin = (coinViewState as CoinViewModel.CoinViewState.SuccessCoin).coin) {
                 toStartScreen()
             }
         }
         is CoinViewModel.CoinViewState.SuccessFavoriteList -> {
             CoinFavoriteCoinsScreen(
-                list = (coinViewState as CoinViewModel.CoinViewState.SuccessFavoriteList).coins.map(
-                    fromCoinToUI),
+                list = (coinViewState as CoinViewModel.CoinViewState.SuccessFavoriteList).coins,
                 onFavoritesAdded = onFavoritesAdded,
                 onFavoritesDeleted = onFavoritesDeleted,
                 onClickFavourites = toStartScreen,
