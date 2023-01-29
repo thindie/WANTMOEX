@@ -27,23 +27,12 @@ class CoinViewModel @Inject constructor(
     val viewState: StateFlow<CoinViewState>
         get() = _viewState.asStateFlow()
 
-    private val _favoriteCache: MutableStateFlow<List<String>> =
-        MutableStateFlow(emptyList<String>())
-    val favoriteCache: StateFlow<List<String>>
-        get() = _favoriteCache.asStateFlow()
 
     fun onLoadCoinsList() {
         viewModelScope.launch {
             getAllCryptoCoinsUseCase.invoke().collect {
                 val coinList = it
-
-                try {
-                    onLoadFavoritesIDs()
-                } catch (e: IndexOutOfBoundsException) {
-                    _favoriteCache.value = emptyList()
-                }
-
-                try {
+                 try {
                     coinList[0]
                     _viewState.value = CoinViewState.SuccessCoinList(coinList)
                 } catch (e: IndexOutOfBoundsException) {
@@ -72,7 +61,7 @@ class CoinViewModel @Inject constructor(
                 val coinList = it
                 try {
                     coinList[0]
-                    _viewState.value = CoinViewState.SuccessCoinList(coinList)
+                    _viewState.value = CoinViewState.SuccessFavoriteList(coinList)
                 } catch (e: IndexOutOfBoundsException) {
                     _viewState.value = CoinViewState.Error
                     onLoadCoinsList()
@@ -81,20 +70,9 @@ class CoinViewModel @Inject constructor(
         }
     }
 
-    fun onLoadFavoritesIDs() {
+    fun onLoadSingleCoin(coinTicker: String) {
         viewModelScope.launch {
-            getAllFavoriteCoinsUseCase.invoke().collect {
-                if (it.isNotEmpty()) {
-                    val idList = it.map { coin -> coin.fromSymbol }
-                    _favoriteCache.value = idList
-                }
-            }
-        }
-    }
-
-    fun onLoadSingleCoin(fsym: String) {
-        viewModelScope.launch {
-            val coin: Coin? = doSingleCoinRequestUseCase.invoke(fsym)
+            val coin: Coin? = doSingleCoinRequestUseCase.invoke(coinTicker)
             _viewState.value =
                 if (coin == null) CoinViewState.Error else CoinViewState.SuccessCoin(coin)
         }
@@ -102,6 +80,7 @@ class CoinViewModel @Inject constructor(
 
     sealed class CoinViewState {
         data class SuccessCoinList(val coins: List<Coin>) : CoinViewState()
+        data class SuccessFavoriteList(val coins: List<Coin>) : CoinViewState()
         data class SuccessCoin(val coin: Coin) : CoinViewState()
         object Loading : CoinViewState()
         object Error : CoinViewState()

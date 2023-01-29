@@ -9,24 +9,35 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+private const val HEART_COLOR = false
+private const val SHOW_STARS_ON_LIST_ELEMENTS = false
+private const val GO_BACK = "back"
+private const val GO_NEWS = "go_news"
+private const val GO_FAVORITES = "go_favorites"
+private const val SHOW_STAR = "gate_favor"
+
+
 @Composable
 fun CoinBottomBar(
-    onFavorites: () -> Unit,
     onClickedShowFavorites: () -> Unit,
+    onClickedShowStars: () -> Unit,
     onBack: () -> Unit,
     onNews: () -> Unit,
 ) {
 
 
     val paddingValues = PaddingValues(start = 4.dp, end = 12.dp, top = 12.dp)
-    val showSaveFavorites = remember { mutableStateOf(false) }
+    var starColor by remember { mutableStateOf(SHOW_STARS_ON_LIST_ELEMENTS) }
+    var heartColor by remember { mutableStateOf(HEART_COLOR) }
+
+    var isFavoritesClicked by remember { mutableStateOf(HEART_COLOR) }
+    var isShowStarsClicked by remember { mutableStateOf(SHOW_STARS_ON_LIST_ELEMENTS) }
 
     BottomAppBar(
         modifier = Modifier
@@ -37,23 +48,46 @@ fun CoinBottomBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            IconButton(onClick = onBack) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
+            IconButton(onClick = {
+                ///////
+                onBack();
+                starColor = SHOW_STARS_ON_LIST_ELEMENTS;
+                heartColor = HEART_COLOR
+                //////
+            }
+            ) {
+                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = GO_BACK)
             }
 
             IconButton(onClick = onNews) {
-                Icon(imageVector = Icons.Default.Newspaper, contentDescription = "news")
+                Icon(imageVector = Icons.Default.Newspaper, contentDescription = GO_NEWS)
             }
-            IconButton(onClick = onFavorites) {
-                Icon(imageVector = Icons.Default.Favorite, contentDescription = "show_fav")
+            IconButton(onClick = {
+                ///
+                heartColor = !heartColor;
+                onClickedShowFavorites()
+                ////
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Favorite, contentDescription = GO_FAVORITES,
+                    tint = if (heartColor) MaterialTheme.colorScheme.error
+                    else MaterialTheme.colorScheme.onTertiaryContainer
+                )
             }
             Spacer(modifier = Modifier.weight(0.3f))
             IconButton(onClick = {
-                showSaveFavorites.value = !showSaveFavorites.value
-                onClickedShowFavorites()
+                /////
+                starColor = !starColor
+                onClickedShowStars()
+                //////
             }) {
-                Icon(imageVector = Icons.Default.Star, contentDescription = "gate_favor")
+                Icon(
+                    imageVector = Icons.Default.Star, contentDescription = SHOW_STAR,
+                    tint = if (starColor) MaterialTheme.colorScheme.error
+                    else MaterialTheme.colorScheme.onTertiaryContainer
+                )
             }
         }
     }
 }
+

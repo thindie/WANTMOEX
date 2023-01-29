@@ -18,12 +18,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         WindowCompat.setDecorFitsSystemWindows(window, true)
+
+        val addFavorite = {coinName: String -> viewModel.onAddToFavorites(listOf(coinName))}
+        val deleteFavorite = {coinName: String -> viewModel.onDeleteFromFavorites(listOf(coinName))}
 
         setContent {
             WANTMOEXTheme {
-                CoinStateFun(viewModel)
+                CoinStateFun(viewModel, addFavorite,deleteFavorite)
             }
         }
     }

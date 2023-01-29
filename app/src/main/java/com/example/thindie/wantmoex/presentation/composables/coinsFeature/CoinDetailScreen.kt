@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.data.mappers.getHowLongAgo
 import com.example.thindie.wantmoex.domain.entities.Coin
+import com.example.thindie.wantmoex.presentation.composables.CoinUIModel
 import com.example.thindie.wantmoex.presentation.composables.util.animateTextByDotsOnStateBased
 
 
@@ -31,7 +32,7 @@ private const val DOT = " • "
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoinDetailsScreen(
-    coin: Coin,
+    coin: CoinUIModel,
     onClickBack: () -> Unit,
 ) {
 
@@ -52,7 +53,7 @@ fun CoinDetailsScreen(
 }
 
 @Composable
-private fun CoinDetailScreenContent(coin: Coin, modifier: Modifier) {
+private fun CoinDetailScreenContent(coin: CoinUIModel, modifier: Modifier) {
 
     val paddingValues = PaddingValues(
         start = 16.dp,
@@ -173,3 +174,4 @@ private fun CoinDetailsBottomBar(
         }
     }
 }
+

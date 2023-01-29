@@ -1,7 +1,5 @@
 package com.example.thindie.wantmoex.presentation.composables.newsFeature
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -16,11 +14,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.domain.entities.News
 import com.example.thindie.wantmoex.presentation.theme.Shapes
-import com.example.thindie.wantmoex.route.share
+import com.example.thindie.wantmoex.route.actionGoBrowse
+import com.example.thindie.wantmoex.route.actionShare
 
 private const val DOT = " • "
 private const val GO_SURF_THIS_ARTICLE_WEB = "Go see more in Web"
@@ -28,13 +26,7 @@ private const val GO_SURF_THIS_ARTICLE_WEB = "Go see more in Web"
 @Composable
 fun NewsElement(news: News) {
     val context = LocalContext.current
-    val goBrowser: () -> Unit = {
-        val urlIntent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(news.url)
-        )
-        startActivity(context, urlIntent, null)
-    }
+
 
     val paddingValues = PaddingValues(
         start = 16.dp,
@@ -97,7 +89,7 @@ fun NewsElement(news: News) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(
-                    onClick = goBrowser,
+                    onClick = { actionGoBrowse(news.url, context) },
                     modifier = Modifier
                         .padding(paddingValues)
                 ) {
@@ -114,8 +106,8 @@ fun NewsElement(news: News) {
                     color = MaterialTheme.colorScheme.secondary,
                 )
                 Spacer(modifier = Modifier.weight(0.2f))
-                IconButton(onClick = { share(news.url, news.title, news.imageUrl, context) }) {
-                    Icon(imageVector = Icons.Default.Share, contentDescription = "share")
+                IconButton(onClick = { actionShare(news.url, news.title, news.imageUrl, context) }) {
+                    Icon(imageVector = Icons.Default.Share, contentDescription = "actionShare")
                 }
             }
 

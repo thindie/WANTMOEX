@@ -24,8 +24,7 @@ inline fun <reified T : ComponentActivity, reified R : ComponentActivity> beginT
 }
 
 
-fun share(uri: String, title: String, contentUri: String, context: Context) {
-
+fun actionShare(uri: String, title: String, contentUri: String, context: Context) {
     val share = Intent.createChooser(Intent().apply {
         action = Intent.ACTION_SEND
         putExtra(Intent.EXTRA_TEXT, Uri.parse(uri))
@@ -36,4 +35,12 @@ fun share(uri: String, title: String, contentUri: String, context: Context) {
         flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
     }, null)
     startActivity(context, share, null)
+}
+
+val actionGoBrowse: (String, Context) -> Unit = { news, context ->
+    val urlIntent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse(news)
+    )
+    startActivity(context, urlIntent, null)
 }

@@ -9,32 +9,25 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.thindie.wantmoex.R
-import com.example.thindie.wantmoex.domain.entities.Coin
-import kotlinx.coroutines.delay
+import com.example.thindie.wantmoex.presentation.composables.CoinUIModel
 
 @Composable
 
 fun CoinListElement(
-    coin: Coin,
-    isItFavorite: Boolean,
+    coin: CoinUIModel,
     showFavoriteSymbol: Boolean,
     added: (String) -> Unit,
     deleted: (String) -> Unit,
     onClick: (String) -> Unit
 ) {
 
-    var imageState by remember { mutableStateOf(true) }
-    var favoriteState by remember { mutableStateOf(isItFavorite) }
 
-    LaunchedEffect(key1 = true) {
-        delay(30)
-        imageState = false
-    }
+    var favoriteState by remember { mutableStateOf(coin.isFavorite) }
+
+
 
 
     Surface(
@@ -51,10 +44,7 @@ fun CoinListElement(
             ) {
 
                 Image(
-                    painter = if (imageState) painterResource(id = R.drawable.shape)
-                    else rememberAsyncImagePainter(
-                        model = coin.imageUrl
-                    ),
+                    painter = rememberAsyncImagePainter(model = coin.imageUrl),
                     contentDescription = "coin Image",
                     modifier = Modifier
                         .size(56.dp)
