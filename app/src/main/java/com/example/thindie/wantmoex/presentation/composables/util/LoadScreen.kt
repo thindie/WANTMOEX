@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.presentation.composables
+package com.example.thindie.wantmoex.presentation.composables.util
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -23,7 +23,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 
-fun CoinLoadScreen(modifier: Modifier = Modifier, waitTime: Long, onTimeout: () -> Unit) {
+fun LoadScreen(modifier: Modifier = Modifier, waitTime: Long, onTimeout: () -> Unit) {
     Surface(modifier = modifier.fillMaxSize()) {
         Box(modifier = modifier.clip(CircleShape), contentAlignment = Alignment.Center) {
 

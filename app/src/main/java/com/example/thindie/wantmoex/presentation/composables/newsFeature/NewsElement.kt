@@ -23,7 +23,7 @@ import com.example.thindie.wantmoex.presentation.theme.Shapes
 import com.example.thindie.wantmoex.route.share
 
 private const val DOT = " • "
-private const val GO_SURF_THIS_ARTICLE_WEB = "Check more in Web"
+private const val GO_SURF_THIS_ARTICLE_WEB = "Go see more in Web"
 
 @Composable
 fun NewsElement(news: News) {

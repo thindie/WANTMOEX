@@ -3,30 +3,56 @@ package com.example.thindie.wantmoex.presentation.composables.coinsFeature
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Payments
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.data.mappers.getHowLongAgo
 import com.example.thindie.wantmoex.domain.entities.Coin
+import com.example.thindie.wantmoex.presentation.composables.util.animateTextByDotsOnStateBased
 
 
 private const val UPDATED = "Last updated"
 private const val ON_MARKET = "Last trade on"
-
+private const val TITLE = "Coin: "
 private const val PRICE = "Price"
 private const val TODAY_HIGHEST_PRICE = "Today's highest"
 private const val TODAY_LOWEST_PRICE = "Today's lowest"
 private const val DOT = " • "
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CoinDetailScreen(coin: Coin, modifier: Modifier) {
+fun CoinDetailsScreen(
+    coin: Coin,
+    onClickBack: () -> Unit,
+) {
+
+    val title = remember { mutableStateOf(TITLE) }
+
+    LaunchedEffect(key1 = true) {
+        animateTextByDotsOnStateBased(title.value, title)
+    }
+
+    Scaffold(
+        bottomBar = { CoinDetailsBottomBar(onBack = { onClickBack() }) },
+        topBar = { CoinTopAppBar(title = title.value, onClick = { }) }
+
+    ) {
+        title.value = TITLE
+        CoinDetailScreenContent(coin = coin, modifier = Modifier.padding(it))
+    }
+}
+
+@Composable
+private fun CoinDetailScreenContent(coin: Coin, modifier: Modifier) {
 
     val paddingValues = PaddingValues(
         start = 16.dp,
@@ -123,5 +149,27 @@ fun CoinDetailScreen(coin: Coin, modifier: Modifier) {
             }
         }
     }
+}
 
+@Composable
+private fun CoinDetailsBottomBar(
+    onBack: () -> Unit,
+) {
+    val paddingValues = PaddingValues(start = 4.dp, end = 12.dp, top = 12.dp)
+    val showSaveFavorites = remember { mutableStateOf(false) }
+
+    BottomAppBar(
+        modifier = Modifier
+            .padding(paddingValues)
+            .fillMaxWidth()
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
+            }
+        }
+    }
 }

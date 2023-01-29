@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.presentation.composables
+package com.example.thindie.wantmoex.presentation.composables.util
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +19,7 @@ private const val WAIT_TIME: Long = 3000
 
 @Composable
 
-fun CoinErrorScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
+fun ErrorScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
     Surface(modifier = modifier.fillMaxSize()) {
 
 

@@ -10,11 +10,14 @@ import com.example.thindie.wantmoex.data.network.retrofit.CryptoCoinsApiService
 import com.example.thindie.wantmoex.data.storage.AppDataBase
 import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinDBModel
 import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinsDataBase
+import com.example.thindie.wantmoex.di.DispatchersModule
 import com.example.thindie.wantmoex.domain.CryptoCoinRepository
 import com.example.thindie.wantmoex.domain.FavouriteCoinsRepository
 import com.example.thindie.wantmoex.domain.entities.Coin
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,7 +25,8 @@ import javax.inject.Singleton
 class CryptoCoinsRepositoryImpl @Inject constructor(
     private val cryptoCoinsApiService: CryptoCoinsApiService,
     private val appDataBase: AppDataBase,
-    private val favouriteCoinsDataBase: FavouriteCoinsDataBase
+    private val favouriteCoinsDataBase: FavouriteCoinsDataBase,
+    @DispatchersModule.IODispatcher private val IODispatcher: CoroutineDispatcher
 ) : CryptoCoinRepository, FavouriteCoinsRepository {
 
     override suspend fun getAll(): Flow<List<Coin>> {
@@ -107,7 +111,10 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
         val listOfID = favouriteCoinsDataBase.coinFavouriteListDao().getAllFavouriteCoins()
         listOfID.forEach {
             if (deleteCoins.contains(it.fromSymbol)) {
-                favouriteCoinsDataBase.coinFavouriteListDao().deleteFavouriteCoin(it.id)
+                withContext(IODispatcher) {
+                    favouriteCoinsDataBase.coinFavouriteListDao().deleteFavouriteCoin(it.id)
+                }
+
             }
         }
 

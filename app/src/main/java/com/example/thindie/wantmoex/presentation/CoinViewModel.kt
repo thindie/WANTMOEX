@@ -36,6 +36,13 @@ class CoinViewModel @Inject constructor(
         viewModelScope.launch {
             getAllCryptoCoinsUseCase.invoke().collect {
                 val coinList = it
+
+                try {
+                    onLoadFavoritesIDs()
+                } catch (e: IndexOutOfBoundsException) {
+                    _favoriteCache.value = emptyList()
+                }
+
                 try {
                     coinList[0]
                     _viewState.value = CoinViewState.SuccessCoinList(coinList)

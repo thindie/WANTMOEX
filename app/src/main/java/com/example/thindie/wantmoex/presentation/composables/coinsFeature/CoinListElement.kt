@@ -15,8 +15,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.R
 import com.example.thindie.wantmoex.domain.entities.Coin
-import com.example.thindie.wantmoex.presentation.composables.util.cacheListAdd
-import com.example.thindie.wantmoex.presentation.composables.util.cacheListRemove
 import kotlinx.coroutines.delay
 
 @Composable
@@ -25,6 +23,8 @@ fun CoinListElement(
     coin: Coin,
     isItFavorite: Boolean,
     showFavoriteSymbol: Boolean,
+    added: (String) -> Unit,
+    deleted: (String) -> Unit,
     onClick: (String) -> Unit
 ) {
 
@@ -81,11 +81,13 @@ fun CoinListElement(
                         if (showFavoriteSymbol) {
                             IconButton(
                                 onClick = {
-                                    if (favoriteState) {
-                                        cacheListAdd(coin.fromSymbol)
-                                    } else cacheListRemove(coin.fromSymbol)
+                                    if (!favoriteState) {
+                                        added(coin.fromSymbol)
+                                    } else deleted(coin.fromSymbol)
+
                                     favoriteState = !favoriteState
                                 },
+
                                 modifier = Modifier.padding(bottom = 25.dp)
                             ) {
                                 Icon(

@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.presentation.composables
+package com.example.thindie.wantmoex.presentation.composables.coinsFeature
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

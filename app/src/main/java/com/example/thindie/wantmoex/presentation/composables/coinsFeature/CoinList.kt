@@ -13,6 +13,8 @@ import com.example.thindie.wantmoex.domain.entities.Coin
 fun CoinList(
     modifier: Modifier,
     onClickElement: (String) -> Unit,
+    onFavoritesAdded: (String) -> Unit,
+    onFavoritesDeleted: (String) -> Unit,
     list: List<Coin>,
     listOfFavorites: List<String>?
 ) {
@@ -24,7 +26,14 @@ fun CoinList(
             state = state
         ) {
             items(list) { coinItem ->
-                CoinListElement(coin = coinItem, false, showFavoriteSymbol = false, onClickElement)
+                CoinListElement(
+                    coin = coinItem,
+                    false,
+                    showFavoriteSymbol = false,
+                    onFavoritesAdded,
+                    onFavoritesDeleted,
+                    onClickElement
+                )
             }
         }
     } else {
@@ -38,6 +47,8 @@ fun CoinList(
                         coin = coinItem,
                         true,
                         showFavoriteSymbol = true,
+                        onFavoritesAdded,
+                        onFavoritesDeleted,
                         onClickElement
                     )
                 } else {
@@ -45,6 +56,8 @@ fun CoinList(
                         coin = coinItem,
                         false,
                         showFavoriteSymbol = true,
+                        onFavoritesAdded,
+                        onFavoritesDeleted,
                         onClickElement
                     )
                 }
@@ -52,6 +65,6 @@ fun CoinList(
             }
         }
     }
+ }
 
 
-}
