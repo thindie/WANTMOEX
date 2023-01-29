@@ -40,6 +40,11 @@ class CoinViewModel @Inject constructor(
                     }
                 }
             }.collect {
+                try {
+                    it[INVOKE_BY_CONTROL]
+                } catch (e: IndexOutOfBoundsException) {
+                    _viewState.value = CoinViewState.Error; onLoadCoinsList(); return@collect
+                }
                 _viewState.value = CoinViewState.SuccessCoinList(it)
             }
         }
@@ -90,5 +95,9 @@ class CoinViewModel @Inject constructor(
         data class SuccessCoin(val coin: CoinUIModel) : CoinViewState()
         object Loading : CoinViewState()
         object Error : CoinViewState()
+    }
+
+    companion object {
+        private const val INVOKE_BY_CONTROL = 1
     }
 }

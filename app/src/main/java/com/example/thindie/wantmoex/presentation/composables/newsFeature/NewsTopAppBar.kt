@@ -48,7 +48,7 @@ fun NewsTopAppBar(title: String, onClick: () -> Unit) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(painter = painterResource(id = R.drawable.crypto), contentDescription = null)
+
             }
         }
 

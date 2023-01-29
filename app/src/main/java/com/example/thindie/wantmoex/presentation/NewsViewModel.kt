@@ -1,9 +1,15 @@
 package com.example.thindie.wantmoex.presentation
 
+import android.os.Bundle
+import android.os.PersistableBundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thindie.wantmoex.domain.entities.News
 import com.example.thindie.wantmoex.domain.useCases.GetAllActualNewsUseCase
+import com.example.thindie.wantmoex.route.beginTransition
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,8 +34,8 @@ class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: Get
                 } catch (e: IndexOutOfBoundsException) {
                     _viewState.value = ViewState.Error
                     onLoadNews()
+                    _viewState.value = ViewState.SuccessNews(it)
                 }
-                _viewState.value = ViewState.SuccessNews(it)
             }
         }
     }

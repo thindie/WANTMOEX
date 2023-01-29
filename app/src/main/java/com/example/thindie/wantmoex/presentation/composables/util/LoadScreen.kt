@@ -35,7 +35,7 @@ fun LoadScreen(modifier: Modifier = Modifier, waitTime: Long, onTimeout: () -> U
                 currentTimeOut()
             }
 
-            Image(painterResource(id = R.drawable.crypto), contentDescription = null)
+            Image(painterResource(id = R.drawable.cryptoviews), contentDescription = null)
             LinearProgressIndicator(
                 modifier = Modifier
                     .scale(0.3f)

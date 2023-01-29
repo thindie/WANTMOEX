@@ -40,7 +40,13 @@ fun NewsScreen(
 
     Scaffold(
         contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-        bottomBar = { NewsBottomBar { beginTransition<NewsActivity, MainActivity>(context) } },
+        bottomBar = {
+            NewsBottomBar {
+
+                    beginTransition<NewsActivity, MainActivity>(context)
+
+            }
+        },
         topBar = { NewsTopAppBar(title = TITLE) { } })
     { freshNew ->
         title.value = TITLE

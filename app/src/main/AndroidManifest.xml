@@ -6,9 +6,9 @@
         android:name=".di.MoexApplication"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/crypto"
+        android:icon="@drawable/cryptoviews"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/crypto"
+        android:roundIcon="@drawable/cryptoviews"
         tools:targetApi="31">
         <activity
             android:name=".presentation.NewsActivity"

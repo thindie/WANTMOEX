@@ -45,8 +45,13 @@ fun CoinFavoriteCoinsScreen(
                 onClickedShowStars = {
                     revealedFavoritesSection = revealedFavoritesSection.not()
                 }) {
-                beginTransition<NewsActivity, MainActivity>(context)
+                try {
+                    beginTransition<NewsActivity, MainActivity>(context)
+                } catch (e: Exception) {
+                     ///
+                }
             }
+
         },
         topBar = { CoinTopAppBar(title = title.value, onClick = { }) }
 
