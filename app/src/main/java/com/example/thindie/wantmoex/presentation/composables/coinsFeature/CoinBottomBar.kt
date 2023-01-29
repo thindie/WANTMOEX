@@ -36,9 +36,6 @@ fun CoinBottomBar(
     var starColor by remember { mutableStateOf(SHOW_STARS_ON_LIST_ELEMENTS) }
     var heartColor by remember { mutableStateOf(HEART_COLOR) }
 
-    var isFavoritesClicked by remember { mutableStateOf(HEART_COLOR) }
-    var isShowStarsClicked by remember { mutableStateOf(SHOW_STARS_ON_LIST_ELEMENTS) }
-
     BottomAppBar(
         modifier = Modifier
             .padding(paddingValues)

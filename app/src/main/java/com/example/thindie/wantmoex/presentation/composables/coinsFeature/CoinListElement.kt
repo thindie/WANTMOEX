@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -14,8 +15,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.presentation.CoinUIModel
 
-@Composable
+private const val USD = " $"
 
+@Composable
 fun CoinListElement(
     coin: CoinUIModel,
     showFavoriteSymbol: Boolean,
@@ -24,10 +26,7 @@ fun CoinListElement(
     onClick: (String) -> Unit
 ) {
 
-
-    var favoriteState by remember { mutableStateOf(coin.isFavorite) }
-
-
+    var favoriteState by rememberSaveable { mutableStateOf(coin.isFavorite) }
 
 
     Surface(
@@ -60,34 +59,40 @@ fun CoinListElement(
                     Text(text = coin.fromSymbol, style = MaterialTheme.typography.headlineSmall)
                     Row {
                         Text(
-                            text = coin.price.plus(" $"),
+                            text = coin.price.plus(USD),
                             style = MaterialTheme.typography.labelMedium
                         )
                         Text(
                             text = " • ".plus(coin.lastMarket),
                             style = MaterialTheme.typography.labelSmall
                         )
-                        Spacer(modifier = Modifier.weight(1f))
+                        Spacer(modifier = Modifier.weight(0.9f ))
                         if (showFavoriteSymbol) {
-                            IconButton(
-                                onClick = {
-                                    if (!favoriteState) {
-                                        added(coin.fromSymbol)
-                                    } else deleted(coin.fromSymbol)
-
-                                    favoriteState = !favoriteState
-                                },
-
-                                modifier = Modifier.padding(bottom = 25.dp)
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Icon(
-                                    imageVector = Icons.Default.Star,
-                                    contentDescription = "",
-                                    tint = if (favoriteState) MaterialTheme.colorScheme.error
-                                    else MaterialTheme.colorScheme.onTertiaryContainer
-                                )
+                                IconButton(
+                                    onClick = {
+                                        if (!favoriteState) {
+                                            added(coin.fromSymbol)
+                                        } else deleted(coin.fromSymbol)
 
+                                        favoriteState = !favoriteState
+                                    },
+
+                                    modifier = Modifier.padding(bottom = 25.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Star,
+                                        contentDescription = "",
+                                        tint = if (favoriteState) MaterialTheme.colorScheme.error
+                                        else MaterialTheme.colorScheme.onTertiaryContainer
+                                    )
+
+                                }
                             }
+
                         }
 
                     }

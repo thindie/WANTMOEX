@@ -38,8 +38,8 @@ fun CoinScreen(
     Scaffold(
         bottomBar = {
             CoinBottomBar(
-                onClickedShowFavorites = { onClickFavorites(); },
-                onBack = { onClickBack() },
+                onClickedShowFavorites =  onClickFavorites,
+                onBack =  onClickBack,
                 onClickedShowStars = {
                     revealedFavoritesSection = revealedFavoritesSection.not()
                 }) {

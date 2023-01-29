@@ -47,7 +47,7 @@ fun CoinStateFun(
                 onClickFavourites = toStartScreen,
                 onClickElement = toDetailCoinScreen
             ) {
-
+                toStartScreen()
             }
         }
         is CoinViewModel.CoinViewState.Loading -> {
