@@ -84,13 +84,13 @@ fun CoinListElement(
                                         favoriteState = !favoriteState
                                     },
 
-                                    modifier = Modifier.padding(bottom = 25.dp)
+                                    modifier = Modifier.padding(bottom = 15.dp)
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Star,
                                         contentDescription = "",
-                                        tint = if (favoriteState) MaterialTheme.colorScheme.error
-                                        else MaterialTheme.colorScheme.onTertiaryContainer
+                                        tint = if (favoriteState) MaterialTheme.colorScheme.inversePrimary
+                                        else MaterialTheme.colorScheme.onSurfaceVariant
                                     )
 
                                 }

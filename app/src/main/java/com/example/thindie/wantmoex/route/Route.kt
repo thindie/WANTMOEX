@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat.startActivity
+import com.example.thindie.wantmoex.R
 
 /**
  *   Запускем из ComponentActivity T требуемую ComponentActivity R
@@ -25,13 +26,16 @@ inline fun <reified T : ComponentActivity, reified R : ComponentActivity> beginT
 
 
 fun actionShare(uri: String, title: String, contentUri: String, context: Context) {
-    val share = Intent.createChooser(Intent().apply {
+
+    val intent = Intent().apply {
         action = Intent.ACTION_SEND
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, Uri.parse(contentUri))
         putExtra(Intent.EXTRA_TEXT, Uri.parse(uri))
         putExtra(Intent.EXTRA_TITLE, title)
-        data = Uri.parse(contentUri)
         flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-    }, null)
+    }
+    val share = Intent.createChooser(intent, R.string.share.toString())
     startActivity(context, share, null)
 }
 

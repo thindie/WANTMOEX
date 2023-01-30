@@ -1,5 +1,6 @@
 package com.example.thindie.wantmoex.presentation
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thindie.wantmoex.domain.entities.Coin
@@ -51,21 +52,27 @@ class CoinViewModel @Inject constructor(
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     fun onLoadFavorites() {
         viewModelScope.launch {
             val flowFavoriteCoins: Flow<List<String>> = getAllFavoriteCoinsUseCase.invoke()
 
-                try {
-                     flowFavoriteCoins.collect{ listOfIds ->
-                     val list =   listOfIds.map { fromCoinToUIDeep(doSingleCoinRequestUseCase.invoke(it),true) }
-                         _viewState.value = CoinViewState.SuccessFavoriteList(list)
-                     }
-                } catch (e: IndexOutOfBoundsException) {
-                    _viewState.value = CoinViewState.Error
-                    onLoadCoinsList()
+            try {
+                flowFavoriteCoins.collect { listOfIds ->
+                    val list = listOfIds.map {
+                        fromCoinToUIDeep(
+                            doSingleCoinRequestUseCase.invoke(it),
+                            true
+                        )
+                    }
+                    _viewState.value = CoinViewState.SuccessFavoriteList(list)
                 }
+            } catch (e: IndexOutOfBoundsException) {
+                _viewState.value = CoinViewState.Error
+                onLoadCoinsList()
             }
         }
+    }
 
 
     fun onLoadSingleCoin(coinTicker: String) {

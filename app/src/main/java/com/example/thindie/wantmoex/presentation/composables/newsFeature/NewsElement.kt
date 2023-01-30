@@ -1,5 +1,6 @@
 package com.example.thindie.wantmoex.presentation.composables.newsFeature
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -13,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.domain.entities.News
@@ -37,7 +39,10 @@ fun NewsElement(news: News) {
     val startPadding = PaddingValues(start = 16.dp)
     val modifier = Modifier
 
-    OutlinedCard(modifier = modifier.padding(paddingValues)) {
+    OutlinedCard(
+        modifier = modifier.padding(paddingValues),
+        border = BorderStroke(Dp.Hairline, MaterialTheme.colorScheme.inversePrimary)
+    ) {
         Row(
             Modifier
                 .fillMaxWidth()
@@ -154,6 +159,7 @@ fun NewsElement(news: News) {
                 Text(
                     text = news.body,
                     style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.padding(startPadding),
                     textAlign = TextAlign.Justify
                 )

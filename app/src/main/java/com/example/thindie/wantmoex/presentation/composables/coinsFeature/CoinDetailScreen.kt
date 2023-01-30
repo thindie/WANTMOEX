@@ -2,14 +2,12 @@ package com.example.thindie.wantmoex.presentation.composables.coinsFeature
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Payments
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,6 +15,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.data.mappers.getHowLongAgo
 import com.example.thindie.wantmoex.presentation.CoinUIModel
 import com.example.thindie.wantmoex.presentation.composables.util.animateTextByDotsOnStateBased
+import kotlinx.coroutines.launch
 
 
 private const val UPDATED = "Last updated"
@@ -28,7 +27,6 @@ private const val TODAY_LOWEST_PRICE = "Today's lowest"
 private const val DOT = " • "
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoinDetailsScreen(
     coin: CoinUIModel,
@@ -41,10 +39,42 @@ fun CoinDetailsScreen(
         animateTextByDotsOnStateBased(title.value, title)
     }
 
-    Scaffold(
-        bottomBar = { CoinDetailsBottomBar(onBack = { onClickBack() }) },
-        topBar = { CoinTopAppBar(title = title.value, onClick = { }) }
+    val scaffoldState = rememberScaffoldState()
+    val scaffoldScope = rememberCoroutineScope()
 
+    val drawerMenuItems = listOf(
+        DrawerMenuItem(
+            Icons.Default.Home,
+            "Home",
+            MaterialTheme.typography.bodyLarge
+        ) { },
+        DrawerMenuItem(
+            Icons.Default.Settings,
+            "Set",
+            MaterialTheme.typography.bodyLarge
+        ) { },
+        DrawerMenuItem(
+            Icons.Default.Moving,
+            "Others",
+            MaterialTheme.typography.bodyLarge
+        ) { },
+    )
+
+    Scaffold(
+
+        topBar = {
+            CoinTopAppBar(
+                title = title.value,
+                onClick = { scaffoldScope.launch { scaffoldState.drawerState.open() } })
+        },
+        scaffoldState = scaffoldState,
+        drawerContent = {
+            CoinDrawerHeader(); NewsDrawerBody(drawerMenuItems)
+        },
+        drawerBackgroundColor = MaterialTheme.colorScheme.surface,
+        backgroundColor = MaterialTheme.colorScheme.surface,
+        drawerElevation = 80.dp,
+        bottomBar = { CoinDetailsBottomBar(onBack = { onClickBack() }) },
     ) {
         title.value = TITLE
         CoinDetailScreenContent(coin = coin, modifier = Modifier.padding(it))

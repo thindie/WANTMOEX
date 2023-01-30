@@ -16,7 +16,6 @@ import com.example.thindie.wantmoex.domain.FavouriteCoinsRepository
 import com.example.thindie.wantmoex.domain.entities.Coin
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -96,7 +95,7 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAllFavoriteCoins(): Flow<List<String>> {
-       val coinsIdList =   favouriteCoinsDataBase.coinFavouriteListDao().getAllFavouriteCoins().map{
+        val coinsIdList = favouriteCoinsDataBase.coinFavouriteListDao().getAllFavouriteCoins().map {
             it.fromSymbol
         }
         return flow { emit(coinsIdList) }
