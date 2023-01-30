@@ -3,6 +3,7 @@ package com.example.thindie.wantmoex.presentation.composables.coinsFeature
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
@@ -13,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -39,10 +41,11 @@ fun CoinListElement(
 
     ) {
         Column(Modifier.fillMaxSize()) {
+            Divider(thickness = Dp.Hairline)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 12.dp, bottom = 12.dp, start = 16.dp, end = 24.dp)
+                    .padding(top = 16.dp, bottom = 12.dp, start = 16.dp, end = 24.dp)
             ) {
 
                 Image(
@@ -51,6 +54,7 @@ fun CoinListElement(
                     modifier = Modifier
                         .size(56.dp)
                         .clickable { onClick(coin.fromSymbol) }
+                        .clip(CircleShape)
                 )
 
                 Column(
@@ -84,7 +88,7 @@ fun CoinListElement(
                                         favoriteState = !favoriteState
                                     },
 
-                                    modifier = Modifier.padding(bottom = 15.dp)
+                                    modifier = Modifier.padding(bottom = 19.dp)
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Star,
@@ -92,7 +96,6 @@ fun CoinListElement(
                                         tint = if (favoriteState) MaterialTheme.colorScheme.inversePrimary
                                         else MaterialTheme.colorScheme.onSurfaceVariant
                                     )
-
                                 }
                             }
 
@@ -102,7 +105,6 @@ fun CoinListElement(
 
                 }
             }
-            Divider(thickness = Dp.Hairline)
         }
 
     }
