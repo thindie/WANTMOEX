@@ -13,6 +13,6 @@ class GetAllCryptoCoinsUseCase @Inject constructor(
     @DispatchersModule.IODispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
     suspend operator fun invoke(): Flow<List<Coin>> {
-        return repository.getAll().flowOn(ioDispatcher)
+        return repository.getAllCoins().flowOn(ioDispatcher)
     }
 }

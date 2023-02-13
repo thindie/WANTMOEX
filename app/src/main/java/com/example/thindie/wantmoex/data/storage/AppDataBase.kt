@@ -10,7 +10,6 @@ import javax.inject.Singleton
 @Database(entities = [CoinDBModel::class], version = 1, exportSchema = false)
 abstract class AppDataBase : RoomDatabase() {
 
-
     abstract fun coinListDao(): CoinDao
 
     companion object {

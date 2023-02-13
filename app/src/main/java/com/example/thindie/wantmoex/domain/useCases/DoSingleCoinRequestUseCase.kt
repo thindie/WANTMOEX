@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class DoSingleCoinRequestUseCase @Inject constructor(private val repository: CryptoCoinRepository) {
     suspend operator fun invoke(fromSymbol: String): Coin {
-        return repository.getSingle(fromSymbol)
+        return repository.getCoin(fromSymbol)
     }
 }

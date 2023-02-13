@@ -1,13 +1,14 @@
 package com.example.thindie.wantmoex.data
 
-import com.example.thindie.wantmoex.data.mappers.fromDBtoCoin
-import com.example.thindie.wantmoex.data.mappers.fromDTOtoCoinDBModel
+import com.example.thindie.wantmoex.data.mappers.map
+import com.example.thindie.wantmoex.data.network.dto.CoinDTO
 import com.example.thindie.wantmoex.data.network.dto.fromMultiFullToDTO
 import com.example.thindie.wantmoex.data.network.dto.fromTotalVolFullToDTOList
 import com.example.thindie.wantmoex.data.network.dto.multifull.CoinRawMultiFullResponseDTO
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinRawTotalVolFullResponseDTO
 import com.example.thindie.wantmoex.data.network.retrofit.CryptoCoinsApiService
 import com.example.thindie.wantmoex.data.storage.AppDataBase
+import com.example.thindie.wantmoex.data.storage.CoinDBModel
 import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinDBModel
 import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinsDataBase
 import com.example.thindie.wantmoex.di.DispatchersModule
@@ -29,69 +30,30 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
     @DispatchersModule.IODispatcher private val IODispatcher: CoroutineDispatcher
 ) : CryptoCoinRepository, FavouriteCoinsRepository {
 
-    override suspend fun getAll(): Flow<List<Coin>> {
-        var resultList: List<Coin>? = null
-        var rawNetWorkData: CoinRawTotalVolFullResponseDTO? = null
-        try {
-            rawNetWorkData = cryptoCoinsApiService.getTopCoins(limit = LIMIT)
-        } catch (e: Exception) {
-            resultList = appDataBase.coinListDao().getAllCoins().map { fromDBtoCoin(it) }
-        }
-        if (resultList.isNullOrEmpty()) {
-            val listDTO = rawNetWorkData?.let { fromTotalVolFullToDTOList(it) }
-            if (listDTO != null) {
-                appDataBase.coinListDao().insertPriceList(
-                    listDTO.map {
-                        fromDTOtoCoinDBModel(it)
-                    }
-                )
-                return flow {
-                    emit(
-                        appDataBase.coinListDao().getAllCoins().map { fromDBtoCoin(it) }
-                    )
-                }
-            }
+
+
+
+    override suspend fun getAllCoins(): Flow<List<Coin>?> {
+
+        suspend fun fromDBCoins()  = run { _DBcoins().map { it.map() } }
+        val nullableDTOList = rawFullCoinsDTO().toCoinListDTO()
+
+        if (fromDBCoins().isEmpty()) {
+            return if (!nullableDTOList.isNullOrEmpty()) {
+                nullableDTOList._DBInsert()
+                flow { emit( fromDBCoins() )  }
+            } else flow { emit(null) }
         }
         return flow {
-            if (resultList != null) {
-                emit(resultList)
-            }
+            emit(fromDBCoins())
         }
     }
 
-    override suspend fun getSingle(fromSymbol: String): Coin {
-        var resultList: List<Coin>? = null
-        var rawNetWorkData: CoinRawMultiFullResponseDTO? = null
-        try {
-            rawNetWorkData = cryptoCoinsApiService.getCoin(fSyms = fromSymbol)
-        } catch (e: Exception) {
-            resultList = listOf(appDataBase.coinListDao().getCoin(fromSymbol)).map {
-                fromDBtoCoin(it)
-            }
-        }
+    override suspend fun getCoin(fromSymbol: String): Coin? {
 
-        if (resultList.isNullOrEmpty()) {
-            val listDTO = rawNetWorkData?.let { fromMultiFullToDTO(it) }
-            if (listDTO != null && listDTO.isNotEmpty()) {
-                val listDBModel = listDTO.map {
-                    fromDTOtoCoinDBModel(it)
-                }
-                val listCoin = listDBModel.map {
-                    fromDBtoCoin(it)
-                }
-                return listCoin[INDEX]
-            }
-            try {
-                resultList = listOf(appDataBase.coinListDao().getCoin(fromSymbol)).map {
-                    fromDBtoCoin(it)
-                }
-            } catch (e: Exception) {
-                resultList = appDataBase.coinListDao().getAllCoins().map { fromDBtoCoin(it) }
-            }
-
-        }
-
-        return resultList?.get(INDEX) ?: throw Exception(SERIOUS_EXCEPTION)
+        suspend fun fromDBCoins()  = run { _DBcoins().map { it.map() } }
+         val coinDTO  = getRawCoinData(fromSymbol).toCoinDTO() ?: return  fromDBCoins().containsCoin(fromSymbol)
+        return coinDTO.map().map()
     }
 
     override suspend fun getAllFavoriteCoins(): Flow<List<String>> {
@@ -99,8 +61,7 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
             it.fromSymbol
         }
         return flow { emit(coinsIdList) }
-
-    }
+     }
 
     override suspend fun deleteFromFavoriteCoins(deleteCoins: List<String>) {
         val listOfID = favouriteCoinsDataBase.coinFavouriteListDao().getAllFavouriteCoins()
@@ -109,16 +70,49 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
                 withContext(IODispatcher) {
                     favouriteCoinsDataBase.coinFavouriteListDao().deleteFavouriteCoin(it.id)
                 }
-
-            }
+             }
         }
-
-    }
+     }
 
     override suspend fun addToFavoriteCoins(addCoins: List<String>) {
         addCoins.forEach {
             favouriteCoinsDataBase.coinFavouriteListDao()
                 .insertFavouriteCoin(FavouriteCoinDBModel(fromSymbol = it, id = AUTOGENERATED))
+        }
+    }
+
+    private fun CoinRawTotalVolFullResponseDTO?.toCoinListDTO() : List<CoinDTO>?{
+       return  this?.let { fromTotalVolFullToDTOList(it) }
+    }
+
+    private fun CoinRawMultiFullResponseDTO?.toCoinDTO() : CoinDTO?{
+      return this?.let { fromMultiFullToDTO(it) }?.get(0)
+    }
+
+    private suspend fun getRawCoinData(fromSymbol: String) : CoinRawMultiFullResponseDTO {
+       return cryptoCoinsApiService.getCoin(fSyms = fromSymbol)
+    }
+    private suspend fun _DBcoins() : List<CoinDBModel>{
+      return  appDataBase.coinListDao().getAllCoins()
+    }
+
+    private suspend fun List<CoinDTO>?._DBInsert(){
+        this?.map {  it.map() }?.let { appDataBase.coinListDao().insertPriceList(it) }
+    }
+
+    private fun List<Coin>.containsCoin(fromSymbol: String) : Coin?{
+        var coin: Coin? = null
+        this.forEach {
+            if(it.fromSymbol == fromSymbol){ coin = it  }
+        }
+        return coin
+    }
+
+    private suspend fun rawFullCoinsDTO() : CoinRawTotalVolFullResponseDTO?{
+      return  try {
+            cryptoCoinsApiService.getTopCoins(limit = LIMIT)
+        } catch (_: Exception) {
+            null
         }
     }
 

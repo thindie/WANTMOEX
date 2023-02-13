@@ -3,7 +3,7 @@ package com.example.thindie.wantmoex.data.network.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class NewsItselfDTO(
+data class NewsParsedDTO(
     @SerializedName("body")
     val body: String?,
     @SerializedName("categories")

@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface CryptoCoinRepository {
-    suspend fun getAll(): Flow<List<Coin>>
-    suspend fun getSingle(fromSymbol: String): Coin
+    suspend fun getAllCoins(): Flow<List<Coin>?>
+    suspend fun getCoin(fromSymbol: String): Coin?
 }
 

@@ -1,7 +1,7 @@
 package com.example.thindie.wantmoex.data
 
-import com.example.thindie.wantmoex.data.mappers.fromNewsItselfDTOtoNews
-import com.example.thindie.wantmoex.data.network.dto.parseRawNewsDTOtoNewsItselfDTO
+import com.example.thindie.wantmoex.data.mappers.map
+import com.example.thindie.wantmoex.data.network.dto.parseRawNewsDTOtoNewsDTO
 import com.example.thindie.wantmoex.data.network.retrofit.CryptoCoinsApiService
 import com.example.thindie.wantmoex.domain.CryptoNewsRepository
 import com.example.thindie.wantmoex.domain.entities.News
@@ -16,8 +16,8 @@ class CryptoNewsRepositoryImpl @Inject constructor(private val cryptoCoinsApiSer
     override suspend fun getNews(): Flow<List<News>> {
         return flow {
             emit(
-                parseRawNewsDTOtoNewsItselfDTO(cryptoCoinsApiService.getLastestNews()).map {
-                    fromNewsItselfDTOtoNews(it)
+                parseRawNewsDTOtoNewsDTO(cryptoCoinsApiService.getLastestNews()).map {
+                    it.map()
                 }
             )
 
