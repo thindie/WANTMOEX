@@ -21,24 +21,13 @@ class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: Get
         get() = _viewState.asStateFlow()
 
     fun onLoadNews() {
-
-        viewModelScope.launch {
-            try {
-                getAllActualNewsUseCase.invoke().collect {
-                    try {
-                        it[1]
-                    } catch (e: IndexOutOfBoundsException) {
-                        _viewState.value = ViewState.Error
-                        return@collect
-                    }
-                    _viewState.value = ViewState.SuccessNews(it)
-                }
-            } catch (e: Exception) {
-                _viewState.value = ViewState.Error
+         viewModelScope.launch {
+            getAllActualNewsUseCase().collect {
+                if (it.isNullOrEmpty()) {  _viewState.value = ViewState.Error;return@collect  }
+                 _viewState.value = ViewState.SuccessNews(it)
             }
         }
-
-    }
+     }
 
     sealed class ViewState {
         data class SuccessNews(val newsList: List<News>) : ViewState()
