@@ -12,7 +12,7 @@ class GetAllActualNewsUseCase @Inject constructor(
     private val cryptoNewsRepository: CryptoNewsRepository,
     @DispatchersModule.IODispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(): Flow<List<News>> {
+    suspend operator fun invoke(): Flow<List<News>?> {
         return cryptoNewsRepository.getNews().flowOn(ioDispatcher)
     }
 }

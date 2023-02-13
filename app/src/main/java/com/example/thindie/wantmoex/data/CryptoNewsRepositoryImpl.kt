@@ -13,14 +13,13 @@ import javax.inject.Singleton
 @Singleton
 class CryptoNewsRepositoryImpl @Inject constructor(private val cryptoCoinsApiService: CryptoCoinsApiService) :
     CryptoNewsRepository {
-    override suspend fun getNews(): Flow<List<News>> {
+    override suspend fun getNews(): Flow<List<News>?> {
         return flow {
             emit(
                 parseRawNewsDTOtoNewsDTO(cryptoCoinsApiService.getLastestNews()).map {
                     it.map()
                 }
             )
-
-        }
+         }
     }
 }
