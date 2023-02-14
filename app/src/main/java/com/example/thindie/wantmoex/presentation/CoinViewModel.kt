@@ -1,6 +1,5 @@
 package com.example.thindie.wantmoex.presentation
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thindie.wantmoex.domain.entities.Coin
@@ -49,21 +48,21 @@ class CoinViewModel @Inject constructor(
                 _viewState.value = CoinViewState.SuccessCoinList(it)
             }
         }
+    }
 
 
-        fun onLoadFavorites() {
-            try {
-                viewModelScope.launch {
-                    getAllFavoriteCoinsUseCase().collect { listOfIds ->
-                        val coinUiModelList =  listOfIds.buildFavouriteCoinsList()
-                        _viewState.value =
-                            CoinViewState.SuccessFavoriteList(coinUiModelList)
-                    }
+    fun onLoadFavorites() {
+        try {
+            viewModelScope.launch {
+                getAllFavoriteCoinsUseCase().collect { listOfIds ->
+                    val coinUiModelList = listOfIds.buildFavouriteCoinsList()
+                    _viewState.value =
+                        CoinViewState.SuccessFavoriteList(coinUiModelList)
                 }
-            } catch (e: Exception) {
-                _viewState.value = CoinViewState.Error
-                onLoadCoinsList()
             }
+        } catch (e: Exception) {
+            _viewState.value = CoinViewState.Error
+            onLoadCoinsList()
         }
     }
 
@@ -110,5 +109,6 @@ class CoinViewModel @Inject constructor(
         object Loading : CoinViewState()
         object Error : CoinViewState()
     }
+
 }
 

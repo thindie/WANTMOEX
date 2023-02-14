@@ -16,7 +16,7 @@ private const val WAIT_TIME = 100L
 
 @Composable
 fun NewsStateFun(newsViewModel: NewsViewModel = viewModel()) {
-    val context = LocalContext.current
+
     val newsViewState by newsViewModel.viewState.collectAsStateWithLifecycle()
 
     when (newsViewState) {
@@ -24,7 +24,7 @@ fun NewsStateFun(newsViewModel: NewsViewModel = viewModel()) {
             LoadScreen(waitTime = WAIT_TIME) { newsViewModel.onLoadNews() }
         }
         is NewsViewModel.ViewState.Error -> {
-            ErrorScreen { beginTransition<NewsActivity, MainActivity>(context) }
+            ErrorScreen {  }
         }
         is NewsViewModel.ViewState.SuccessNews -> {
             val newsList = (newsViewState as NewsViewModel.ViewState.SuccessNews).newsList
