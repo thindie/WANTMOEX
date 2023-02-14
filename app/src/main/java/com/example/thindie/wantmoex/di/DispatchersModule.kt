@@ -24,13 +24,6 @@ class DispatchersModule {
         return Dispatchers.IO
     }
 
-    @MainDispatcher
-    @Provides
-    fun provideDispatchersMain(): CoroutineDispatcher {
-        return Dispatchers.Main
-    }
-
-
     @Retention(AnnotationRetention.BINARY)
     @Qualifier
     annotation class DefaultDispatcher
@@ -39,7 +32,4 @@ class DispatchersModule {
     @Qualifier
     annotation class IODispatcher
 
-    @Retention(AnnotationRetention.BINARY)
-    @Qualifier
-    annotation class MainDispatcher
 }

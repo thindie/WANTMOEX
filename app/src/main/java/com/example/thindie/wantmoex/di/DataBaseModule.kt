@@ -2,6 +2,8 @@ package com.example.thindie.wantmoex.di
 
 import android.app.Application
 import com.example.thindie.wantmoex.data.storage.AppDataBase
+import com.example.thindie.wantmoex.data.storage.CoinDao
+import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinDao
 import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinsDataBase
 import dagger.Module
 import dagger.Provides
@@ -19,5 +21,15 @@ class DataBaseModule {
     @Provides
     fun provideFavouriteCoinsDataBase(application: Application): FavouriteCoinsDataBase {
         return FavouriteCoinsDataBase.getInstance(application)
+    }
+
+    @Provides
+    fun provideCoinDao(appDataBase: AppDataBase): CoinDao{
+        return appDataBase.coinListDao()
+    }
+
+    @Provides
+    fun provideFavoriteCoinDao(favouriteCoinsDataBase: FavouriteCoinsDataBase) : FavouriteCoinDao{
+        return favouriteCoinsDataBase.coinFavouriteListDao()
     }
 }

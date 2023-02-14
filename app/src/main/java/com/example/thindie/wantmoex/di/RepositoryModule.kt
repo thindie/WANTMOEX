@@ -21,4 +21,5 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindCryptoNewsRepo(cryptoNewsRepositoryImpl: CryptoNewsRepositoryImpl): CryptoNewsRepository
+
 }
