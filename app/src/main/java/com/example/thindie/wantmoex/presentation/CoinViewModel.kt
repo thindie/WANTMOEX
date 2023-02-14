@@ -25,7 +25,6 @@ class CoinViewModel @Inject constructor(
     val viewState: StateFlow<CoinViewState>
         get() = _viewState.asStateFlow()
 
-
     @Suppress("NAME_SHADOWING")
     fun onLoadCoinsList() {
         viewModelScope.launch {
@@ -50,7 +49,6 @@ class CoinViewModel @Inject constructor(
         }
     }
 
-
     fun onLoadFavorites() {
         try {
             viewModelScope.launch {
@@ -65,7 +63,6 @@ class CoinViewModel @Inject constructor(
             onLoadCoinsList()
         }
     }
-
 
     fun onLoadSingleCoin(coinTicker: String) {
         viewModelScope.launch {
