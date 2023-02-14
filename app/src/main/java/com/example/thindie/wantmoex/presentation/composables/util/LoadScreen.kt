@@ -30,7 +30,6 @@ fun LoadScreen(modifier: Modifier = Modifier, waitTime: Long, onTimeout: () -> U
             val currentTimeOut by rememberUpdatedState(newValue = onTimeout)
 
             LaunchedEffect(true) {
-
                 delay(waitTime)
                 currentTimeOut()
             }

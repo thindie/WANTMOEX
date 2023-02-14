@@ -1,18 +1,24 @@
 package com.example.thindie.wantmoex.presentation.composables.update
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Newspaper
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
-private const val ALL_COINS = "allCoins"
-private const val FAVORITE_COINS = "favCoins"
-private const val DETAIL_COINS = "detail"
-private const val NEWS = "news"
-
-private val cryptoBottomBarScreens = listOf(ALL_COINS, FAVORITE_COINS, DETAIL_COINS, NEWS)
 
 @Composable
 fun CryptoAppUI(
@@ -24,10 +30,11 @@ fun CryptoAppUI(
     val currentScreen = cryptoDestinations.find { it.route == currentDestination?.route } ?: Coins
 
 
-    Scaffold() {
+    Scaffold(bottomBar = { CryptoCoinsBottomBar(navController ) }) {
         CryptoNavHost(navController = navController, modifier = Modifier.padding(it))
     }
 }
+
 
 
 

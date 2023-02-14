@@ -67,4 +67,12 @@ private fun getCoinDTOFromCoinFullInfo(coinFullInfoDTO: CoinFullInfoDTO): CoinDT
     return rawCoinDto.copy(imageUrl = RetrofitFactory.BASE_URL_FOR_COIN_IMAGE.plus(imgUrlTail))
 }
 
+fun CoinRawTotalVolFullResponseDTO?.toCoinListDTO() : List<CoinDTO>?{
+    return  this?.let { fromTotalVolFullToDTOList(it) }
+}
+
+fun CoinRawMultiFullResponseDTO?.toCoinDTO() : CoinDTO?{
+    return this?.let { fromMultiFullToDTO(it) }?.get(0)
+}
+
 
