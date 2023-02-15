@@ -38,8 +38,8 @@ class LocalCoinRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addCoins(list: List<Coin>) {
-      val dbList =  list.map {
-             it.map()
+        val dbList = list.map {
+            it.map()
         }
         local.insertPriceList(dbList)
     }
@@ -53,15 +53,15 @@ class LocalCoinRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAllCoins(): Results<List<CoinDBModel>> {
-         return try {
-             Success(local.getAllCoins())
-         }catch (e : Exception){
-             Error(e)
-         }
+        return try {
+            Success(local.getAllCoins())
+        } catch (e: Exception) {
+            Error(e)
+        }
     }
 
     override suspend fun getAllCoins(limit: Int): Results<List<CoinDBModel>> {
-       return  getAllCoins()
+        return getAllCoins()
     }
 
 }

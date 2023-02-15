@@ -1,10 +1,10 @@
 package com.example.thindie.wantmoex.di
 
 import com.example.thindie.wantmoex.data.CryptoCoinsRepositoryImpl
-import com.example.thindie.wantmoex.data.storage.CryptoFavoritesRepositoryImpl
 import com.example.thindie.wantmoex.data.CryptoNewsRepositoryImpl
 import com.example.thindie.wantmoex.data.network.RemoteCoinRepository
 import com.example.thindie.wantmoex.data.network.RemoteCoinRepositoryImpl
+import com.example.thindie.wantmoex.data.storage.CryptoFavoritesRepositoryImpl
 import com.example.thindie.wantmoex.data.storage.LocalCoinRepository
 import com.example.thindie.wantmoex.data.storage.LocalCoinRepositoryImpl
 import com.example.thindie.wantmoex.domain.CryptoCoinRepository

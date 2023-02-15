@@ -25,7 +25,7 @@ class CryptoFavoritesRepositoryImpl @Inject constructor(
     override suspend fun getAllFavoriteCoins(): Results<List<String>> {
         return try {
             Success(favoriteDao.getAllFavouriteCoins().map { it.fromSymbol })
-        }catch (e :Exception){
+        } catch (e: Exception) {
             Error(e)
         }
     }
@@ -52,3 +52,4 @@ class CryptoFavoritesRepositoryImpl @Inject constructor(
     }
 
 }
+
