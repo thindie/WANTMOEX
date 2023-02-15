@@ -1,14 +1,15 @@
 package com.example.thindie.wantmoex.data
 
+import com.example.thindie.wantmoex.data.mappers.map
 import com.example.thindie.wantmoex.data.network.RemoteCoinRepository
-import com.example.thindie.wantmoex.data.storage.CryptoFavoritesRepositoryImpl
 import com.example.thindie.wantmoex.data.storage.LocalCoinRepository
-import com.example.thindie.wantmoex.di.DispatchersModule
 import com.example.thindie.wantmoex.domain.CryptoCoinRepository
 import com.example.thindie.wantmoex.domain.Results
 import com.example.thindie.wantmoex.domain.entities.Coin
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,13 +17,12 @@ import javax.inject.Singleton
 class CryptoCoinsRepositoryImpl @Inject constructor(
     private val remoteCoinRepository: RemoteCoinRepository,
     private val localCoinRepository: LocalCoinRepository,
-    private val favoritesRepositoryImpl: CryptoFavoritesRepositoryImpl,
-    @DispatchersModule.IODispatcher private val IODispatcher: CoroutineDispatcher,
+    private val scope: CoroutineScope,
 ) : CryptoCoinRepository {
 
 
     override fun observeAllCoins(): Flow<Results<List<Coin>>> {
-      return observeAllCoins(UNSETTED_LIMIT)
+        return observeAllCoins(UNSETTED_LIMIT)
     }
 
     override fun observeAllCoins(limit: Int): Flow<Results<List<Coin>>> {
@@ -44,7 +44,8 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
     override suspend fun getAllCoins(limit: Int): Results<List<Coin>> {
         TODO("Not yet implemented")
     }
-    companion object{
+
+    companion object {
         private const val UNSETTED_LIMIT = 10
     }
 }

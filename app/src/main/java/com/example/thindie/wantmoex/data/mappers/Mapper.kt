@@ -34,6 +34,21 @@ fun CoinDTO.map(): CoinDBModel {
     )
 }
 
+
+fun Coin.map(): CoinDBModel {
+    return CoinDBModel(
+        this.market,
+        this.fromSymbol,
+        this.toSymbol,
+        this.price,
+        this.lastUpdate,
+        this.highDay,
+        this.lowDay,
+        this.lastMarket,
+        this.imageUrl,
+    )
+}
+
 fun NewsParsedDTO.map(): News {
     return News(
         this.body ?: "",

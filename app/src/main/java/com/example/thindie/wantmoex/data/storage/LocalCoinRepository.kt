@@ -12,6 +12,7 @@ interface LocalCoinRepository {
     fun observeAllCoins(limit: Int): Flow<Results<List<CoinDBModel>>>
     fun observeCoin(fromSymbol: String): Flow<Results<CoinDBModel>>
 
+    suspend fun addCoins(list : List<Coin>)
     suspend fun getCoin(fromSymbol: String): Results<CoinDBModel>
     suspend fun getAllCoins(): Results<List<CoinDBModel>>
     suspend fun getAllCoins(limit: Int): Results<List<CoinDBModel>>

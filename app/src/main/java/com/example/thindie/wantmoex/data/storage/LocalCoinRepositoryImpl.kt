@@ -1,10 +1,12 @@
 package com.example.thindie.wantmoex.data.storage
 
+import com.example.thindie.wantmoex.data.mappers.map
 import com.example.thindie.wantmoex.data.storage.allCoins.CoinDBModel
 import com.example.thindie.wantmoex.data.storage.allCoins.CoinDao
 import com.example.thindie.wantmoex.domain.Results
 import com.example.thindie.wantmoex.domain.Results.Error
 import com.example.thindie.wantmoex.domain.Results.Success
+import com.example.thindie.wantmoex.domain.entities.Coin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -33,6 +35,13 @@ class LocalCoinRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             flow { Results.Error(e) }
         }
+    }
+
+    override suspend fun addCoins(list: List<Coin>) {
+      val dbList =  list.map {
+             it.map()
+        }
+        local.insertPriceList(dbList)
     }
 
     override suspend fun getCoin(fromSymbol: String): Results<CoinDBModel> {
