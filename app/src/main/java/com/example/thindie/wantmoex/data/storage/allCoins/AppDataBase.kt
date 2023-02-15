@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.data.storage
+package com.example.thindie.wantmoex.data.storage.allCoins
 
 import android.app.Application
 import androidx.room.Database

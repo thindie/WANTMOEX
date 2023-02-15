@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface CryptoCoinRepository {
-    fun observeAllCoins(): Flow<Result<List<Coin>>>
-    fun observeAllCoins(limit: Int): Flow<Result<List<Coin>>>
-    fun observeCoin(fromSymbol: String): Flow<Result<Coin>>
+    fun observeAllCoins(): Flow<Results<List<Coin>>>
+    fun observeAllCoins(limit: Int): Flow<Results<List<Coin>>>
+    fun observeCoin(fromSymbol: String): Flow<Results<Coin>>
 
-    suspend fun getCoin(fromSymbol: String): Result<Coin>
+    suspend fun getCoin(fromSymbol: String): Results<Coin>
 
-    suspend fun getAllCoins(): Result<List<Coin>>
-    suspend fun getAllCoins(limit: Int): Result<List<Coin>>
+    suspend fun getAllCoins(): Results<List<Coin>>
+    suspend fun getAllCoins(limit: Int): Results<List<Coin>>
 
 }
 

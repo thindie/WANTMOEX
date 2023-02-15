@@ -2,7 +2,7 @@ package com.example.thindie.wantmoex.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.thindie.wantmoex.domain.Result
+import com.example.thindie.wantmoex.domain.Results
 import com.example.thindie.wantmoex.domain.entities.News
 import com.example.thindie.wantmoex.domain.useCases.GetAllActualNewsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,15 +33,8 @@ class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: Get
         }
     }
 
-    private fun produceNewsUiState(result: Result<List<News>?>): NewsUiState {
-        return when (result) {
-            is Result.Success -> {
-                NewsUiState(news = result.data.toList(), isLoading = false)
-            }
-            is Result.Error -> {
-                NewsUiState()
-            }
-        }
+    private fun produceNewsUiState(results: Results<List<News>?>): NewsUiState {
+        TODO()
     }
 }
 

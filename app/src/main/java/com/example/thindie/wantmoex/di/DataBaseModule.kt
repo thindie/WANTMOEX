@@ -1,8 +1,8 @@
 package com.example.thindie.wantmoex.di
 
 import android.app.Application
-import com.example.thindie.wantmoex.data.storage.AppDataBase
-import com.example.thindie.wantmoex.data.storage.CoinDao
+import com.example.thindie.wantmoex.data.storage.allCoins.AppDataBase
+import com.example.thindie.wantmoex.data.storage.allCoins.CoinDao
 import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinDao
 import com.example.thindie.wantmoex.data.storage.favourites.FavouriteCoinsDataBase
 import dagger.Module

@@ -2,7 +2,7 @@ package com.example.thindie.wantmoex.data.mappers
 
 import com.example.thindie.wantmoex.data.network.dto.CoinDTO
 import com.example.thindie.wantmoex.data.network.dto.NewsParsedDTO
-import com.example.thindie.wantmoex.data.storage.CoinDBModel
+import com.example.thindie.wantmoex.data.storage.allCoins.CoinDBModel
 import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.domain.entities.News
 
