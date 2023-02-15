@@ -12,7 +12,7 @@ class CoinUIModel(
     val lowDay: String,
     val lastMarket: String,
     val imageUrl: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
 )
 
 

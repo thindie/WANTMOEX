@@ -13,5 +13,5 @@ data class News(
     val tags: String,
     val title: String,
     val upVotes: String,
-    val url: String
+    val url: String,
 )

@@ -29,5 +29,5 @@ data class NewsParsedDTO(
     @SerializedName("upvotes")
     val upvotes: String?,
     @SerializedName("url")
-    val url: String?
+    val url: String?,
 )

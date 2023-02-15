@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 
 data class CoinRawMultiFullResponseDTO(
     @SerializedName("RAW")
-    val jsonObject: JsonObject?
+    val jsonObject: JsonObject?,
 )

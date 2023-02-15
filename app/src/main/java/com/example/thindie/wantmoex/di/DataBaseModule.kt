@@ -24,12 +24,12 @@ class DataBaseModule {
     }
 
     @Provides
-    fun provideCoinDao(appDataBase: AppDataBase): CoinDao{
+    fun provideCoinDao(appDataBase: AppDataBase): CoinDao {
         return appDataBase.coinListDao()
     }
 
     @Provides
-    fun provideFavoriteCoinDao(favouriteCoinsDataBase: FavouriteCoinsDataBase) : FavouriteCoinDao{
+    fun provideFavoriteCoinDao(favouriteCoinsDataBase: FavouriteCoinsDataBase): FavouriteCoinDao {
         return favouriteCoinsDataBase.coinFavouriteListDao()
     }
 }

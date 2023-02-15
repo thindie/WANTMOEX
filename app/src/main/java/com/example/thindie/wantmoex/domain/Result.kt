@@ -5,7 +5,7 @@ sealed class Result<out R> {
     data class Error(val exception: Exception) : Result<Nothing>()
 
     override fun toString(): String {
-        return when (this){
+        return when (this) {
             is Success<*> -> "Success $data"
             is Error -> "Error $exception"
         }

@@ -34,8 +34,6 @@ fun CoinDTO.map(): CoinDBModel {
     )
 }
 
-
-
 fun NewsParsedDTO.map(): News {
     return News(
         this.body ?: "",

@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 
 data class NewsRawDTO(
     @SerializedName("Data")
-    val jsonArray: JsonArray?
+    val jsonArray: JsonArray?,
 )

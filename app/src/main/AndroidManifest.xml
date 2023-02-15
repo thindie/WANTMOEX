@@ -12,15 +12,6 @@
         android:roundIcon="@drawable/cryptoviews"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.NewsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_news"
-            android:theme="@style/Theme.WANTMOEX">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.WANTMOEX">

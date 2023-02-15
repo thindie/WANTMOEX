@@ -1,6 +1,7 @@
 package com.example.thindie.wantmoex.di
 
 import com.example.thindie.wantmoex.data.CryptoCoinsRepositoryImpl
+import com.example.thindie.wantmoex.data.CryptoFavoritesRepositoryImpl
 import com.example.thindie.wantmoex.data.CryptoNewsRepositoryImpl
 import com.example.thindie.wantmoex.domain.CryptoCoinRepository
 import com.example.thindie.wantmoex.domain.CryptoNewsRepository
@@ -17,7 +18,7 @@ abstract class RepositoryModule {
     abstract fun bindEntityRepo(cryptoCoinsRepositoryImpl: CryptoCoinsRepositoryImpl): CryptoCoinRepository
 
     @Binds
-    abstract fun bindFavoriteCoins(cryptoCoinsRepositoryImpl: CryptoCoinsRepositoryImpl): FavouriteCoinsRepository
+    abstract fun bindFavoriteCoins(favoritesRepositoryImpl: CryptoFavoritesRepositoryImpl): FavouriteCoinsRepository
 
     @Binds
     abstract fun bindCryptoNewsRepo(cryptoNewsRepositoryImpl: CryptoNewsRepositoryImpl): CryptoNewsRepository

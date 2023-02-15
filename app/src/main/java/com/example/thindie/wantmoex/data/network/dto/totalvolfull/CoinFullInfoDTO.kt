@@ -9,5 +9,5 @@ import com.google.gson.annotations.SerializedName
 data class CoinFullInfoDTO(
     @SerializedName(CURRENCY)
     @Expose
-    val jsonObject: JsonObject?
+    val jsonObject: JsonObject?,
 )

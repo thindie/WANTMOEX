@@ -13,7 +13,7 @@ fun CryptoNavHost(navController: NavHostController, modifier: Modifier) {
     NavHost(navController = navController, startDestination = Coins.route, modifier = modifier) {
 
 
-        composable(route = Coins.route) {  }
+        composable(route = Coins.route) { }
 
         composable(route = CoinInFocus.route) { }
 
