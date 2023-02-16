@@ -7,11 +7,8 @@ import com.example.thindie.wantmoex.data.network.retrofit.CryptoCoinsApiService
 import com.example.thindie.wantmoex.di.DispatchersModule
 import com.example.thindie.wantmoex.domain.Results
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,7 +16,6 @@ import javax.inject.Singleton
 @Singleton
 class RemoteCoinRepositoryImpl @Inject constructor(
     private val remote: CryptoCoinsApiService,
-    private val scope: CoroutineScope,
     @DispatchersModule.IODispatcher private val IODispatcher: CoroutineDispatcher,
 ) :
     RemoteCoinRepository {
@@ -29,24 +25,11 @@ class RemoteCoinRepositoryImpl @Inject constructor(
     }
 
     override fun observeAllCoins(limit: Int): Flow<Results<List<CoinDTO>>> {
-        val state: MutableStateFlow<Results<List<CoinDTO>>> = MutableStateFlow(
-            Results.Success(
-                emptyList()
-            )
-        )
-        scope.launch {
-            state.value = getAllCoins(limit)
-        }
-        return flow { state.value }
+        return flow { emit(getAllCoins(limit)) }
     }
 
     override fun observeCoin(fromSymbol: String): Flow<Results<CoinDTO>> {
-        val state: MutableStateFlow<Results<CoinDTO>> =
-            MutableStateFlow(Results.Error(Exception("remote coin not found")))
-        scope.launch {
-            state.value = getCoin(fromSymbol)
-        }
-        return flow { state.value }
+        return flow { emit(getCoin(fromSymbol)) }
     }
 
     override suspend fun getCoin(fromSymbol: String): Results<CoinDTO> = withContext(IODispatcher) {

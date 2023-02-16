@@ -19,9 +19,9 @@ class LocalCoinRepositoryImpl @Inject constructor(
 
     override fun observeAllCoins(): Flow<Results<List<CoinDBModel>>> {
         return try {
-            flow { Success(local.observeAllCoins()) }
+            flow { Results.Success(local.observeAllCoins()) }
         } catch (e: Exception) {
-            flow { Results.Error(e) }
+            flow { emit(Results.Error(e)) }
         }
     }
 
@@ -31,9 +31,9 @@ class LocalCoinRepositoryImpl @Inject constructor(
 
     override fun observeCoin(fromSymbol: String): Flow<Results<CoinDBModel>> {
         return try {
-            flow { Success(local.getCoin(fromSymbol)) }
+            flow { local.observeCoin(fsym = fromSymbol) }
         } catch (e: Exception) {
-            flow { Results.Error(e) }
+            flow { emit(Results.Error(e)) }
         }
     }
 
@@ -46,7 +46,9 @@ class LocalCoinRepositoryImpl @Inject constructor(
 
     override suspend fun getCoin(fromSymbol: String): Results<CoinDBModel> {
         return try {
-            Success(local.getCoin(fromSymbol))
+            val coin: CoinDBModel = local.getCoin(fromSymbol)
+            coin.fromSymbol
+            Success(coin)
         } catch (e: Exception) {
             Error(e)
         }
@@ -54,6 +56,8 @@ class LocalCoinRepositoryImpl @Inject constructor(
 
     override suspend fun getAllCoins(): Results<List<CoinDBModel>> {
         return try {
+            val coin: List<CoinDBModel> = local.getAllCoins()
+            coin[0].fromSymbol
             Success(local.getAllCoins())
         } catch (e: Exception) {
             Error(e)

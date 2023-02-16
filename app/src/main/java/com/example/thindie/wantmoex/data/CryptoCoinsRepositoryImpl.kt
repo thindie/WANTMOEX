@@ -7,8 +7,10 @@ import com.example.thindie.wantmoex.domain.CryptoCoinRepository
 import com.example.thindie.wantmoex.domain.Results
 import com.example.thindie.wantmoex.domain.Results.Success
 import com.example.thindie.wantmoex.domain.entities.Coin
+import com.example.thindie.wantmoex.presentation.unpackResult
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -18,6 +20,7 @@ import javax.inject.Singleton
 class CryptoCoinsRepositoryImpl @Inject constructor(
     private val remoteCoinRepository: RemoteCoinRepository,
     private val localCoinRepository: LocalCoinRepository,
+    private val scope: CoroutineScope,
 ) : CryptoCoinRepository {
 
 
@@ -26,71 +29,70 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
     }
 
     override fun observeAllCoins(limit: Int): Flow<Results<List<Coin>>> {
-        val flowState: MutableStateFlow<Results<List<Coin>>> =
-            MutableStateFlow(Success(emptyList()))
-        remoteCoinRepository.observeAllCoins().map { remoteResult ->
+        return flow {
+            remoteCoinRepository.observeAllCoins().collect { remoteResult ->
 
-            when (remoteResult) {
-                is Success -> {
-                    val webResult = remoteResult.transform {
-                        it.map {
-                            it.map().map()
+                when (remoteResult) {
+                    is Success -> {
+                        val webResult = remoteResult.transform {
+                            it.map {
+                                it.map().map()
+                            }
                         }
+                        emit(webResult)
+
                     }
-                    flowState.value = webResult
-                }
-                is Results.Error -> {
-                    localCoinRepository.observeAllCoins().map { localResult ->
-                        when (localResult) {
-                            is Success -> {
-                                val dBResult = localResult.transform {
-                                    it.map {
-                                        it.map()
+                    is Results.Error -> {
+                        localCoinRepository.observeAllCoins().map { localResult ->
+                            when (localResult) {
+                                is Success -> {
+                                    val dBResult = localResult.transform {
+                                        it.map {
+                                            it.map()
+                                        }
                                     }
+                                    emit(dBResult)
                                 }
-                                flowState.value = dBResult
-                            }
-                            is Results.Error -> {
-                                flowState.value = Results.Error(Exception("no observable data"))
+                                is Results.Error -> {
+                                    emit(Results.Error(Exception("empty data")))
+                                }
                             }
                         }
-
                     }
                 }
             }
         }
-        return flow { emit(flowState.value) }
     }
+
 
     override fun observeCoin(fromSymbol: String): Flow<Results<Coin>> {
-        val flowState: MutableStateFlow<Results<Coin>> =
-            MutableStateFlow(Results.Error(Exception("empty data")))
-
-        remoteCoinRepository.observeCoin(fromSymbol).map { remoteCoinObserve ->
-            when (remoteCoinObserve) {
-                is Success -> {
-                    val remoteCoin = remoteCoinObserve.transform {
-                        it.map().map()
+        return flow {
+            remoteCoinRepository.observeCoin(fromSymbol).collect { remoteCoinObserve ->
+                when (remoteCoinObserve) {
+                    is Success -> {
+                        val remoteCoin = remoteCoinObserve.transform {
+                            it.map().map()
+                        }
+                        emit(remoteCoin)
                     }
-                    flowState.value = remoteCoin
-                }
-                is Results.Error -> {
-                    localCoinRepository.observeCoin(fromSymbol).map { localCoinObserve ->
-                        when (localCoinObserve) {
-                            is Success -> {
-                                val localCoin = localCoinObserve.transform {
-                                    it.map()
+                    is Results.Error -> {
+                        localCoinRepository.observeCoin(fromSymbol).map { localCoinObserve ->
+                            when (localCoinObserve) {
+                                is Success -> {
+                                    val localCoin = localCoinObserve.transform {
+                                        it.map()
+                                    }
+                                    emit(localCoin)
                                 }
-                                flowState.value = localCoin
+                                is Results.Error -> emit(Results.Error(Exception("empty data")))
                             }
-                            is Results.Error -> {}
                         }
                     }
                 }
             }
         }
-        return flow { emit(flowState.value) }
     }
+
 
     override suspend fun getCoin(fromSymbol: String): Results<Coin> {
 
@@ -127,11 +129,17 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
     override suspend fun getAllCoins(limit: Int): Results<List<Coin>> {
         when (val remoteCoins = remoteCoinRepository.getAllCoins(limit = limit)) {
             is Success -> {
-                return remoteCoins.transform {
+                val coins = remoteCoins.transform {
                     it.map {
                         it.map().map()
                     }
                 }
+                localCoinRepository.addCoins(coins.unpackResult { coinz ->
+                    coinz.map {
+                        it.map().map()
+                    }
+                })
+                return coins
             }
             is Results.Error -> {
                 when (val localCoins = localCoinRepository.getAllCoins(limit)) {

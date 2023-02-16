@@ -13,7 +13,7 @@ class GetAllCryptoCoinsUseCase @Inject constructor(
     private val repository: CryptoCoinRepository,
     @DispatchersModule.IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-    operator fun invoke(): Flow<Results<List<Coin>?>> {
+    operator fun invoke(): Flow<Results<List<Coin>>> {
         return repository.observeAllCoins().flowOn(ioDispatcher)
     }
 
