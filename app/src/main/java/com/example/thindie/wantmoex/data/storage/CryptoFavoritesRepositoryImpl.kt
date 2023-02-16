@@ -15,7 +15,6 @@ import javax.inject.Singleton
 @Singleton
 class CryptoFavoritesRepositoryImpl @Inject constructor(
     private val favoriteDao: FavouriteCoinDao,
-    private val scope: CoroutineScope,
 ) : FavouriteCoinsRepository {
 
     override fun observeAllFavoriteCoins(): Flow<Results<List<String>>> {

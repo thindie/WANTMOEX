@@ -16,11 +16,11 @@ data class CoinUIModel(
     val isShowExpand: Boolean,
 )
 
-fun CoinUIModel.expandChange(): CoinUIModel {
+fun CoinUIModel.onExpandedUiChange(): CoinUIModel {
     return this.copy(isShowExpand = !isShowExpand)
 }
 
-  fun  CoinUIModel.isFavorite(detector: () -> Boolean): CoinUIModel{
+  fun  CoinUIModel.onRevealIsFavorite(detector: () -> Boolean): CoinUIModel{
     return  this.copy(isFavorite = detector())
 }
 

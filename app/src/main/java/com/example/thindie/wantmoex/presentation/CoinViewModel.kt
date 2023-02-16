@@ -3,7 +3,6 @@ package com.example.thindie.wantmoex.presentation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.thindie.wantmoex.R
 import com.example.thindie.wantmoex.domain.Results
 import com.example.thindie.wantmoex.domain.Results.Success
 import com.example.thindie.wantmoex.domain.useCases.*
@@ -58,16 +57,16 @@ class CoinViewModel @Inject constructor(
     }
 
     fun onExpandOptionsCoinsList() {
-
         viewModelScope.launch {
+            load()
             val list = _coinList.value
-            list.map { it.expandChange() }.map {
-                val checkFavorite = getAllFavoriteCoinsUseCase.checkIsFavorite(it.fromSymbol)
-                it.isFavorite {
-                    checkFavorite
+            list.map { it.onExpandedUiChange() }.map {
+                val isFavorite = getAllFavoriteCoinsUseCase.checkIsFavorite(it.fromSymbol)
+                it.onRevealIsFavorite {
+                    isFavorite
                 }
             }
-
+            _coinList.value = list
         }
 
     }
@@ -77,19 +76,17 @@ class CoinViewModel @Inject constructor(
             load()
             getAllFavoriteCoinsUseCase().collect { favorites ->
                 when (favorites) {
-
                     is Success -> {
                         val flow = favorites.unpackResult {
-                            getCoinsByListId(it)
+                            getFavoriteCoinsByID(it)
                         }
                         flow.collect {
                             _coinList.value = it
                         }
                     }
                     is Results.Error -> {
-
+                        _coinList.value = emptyList()
                     }
-
                 }
             }
 
@@ -105,9 +102,8 @@ class CoinViewModel @Inject constructor(
         observeCoin(id)
     }
 
-    private fun getCoinsByListId(list: List<String>): Flow<List<CoinUIModel>> {
+    private fun getFavoriteCoinsByID(list: List<String>): Flow<List<CoinUIModel>> {
         return flow {
-
             val uiList = mutableListOf<CoinUIModel>()
             list.forEach {
                 val coinResult = doSingleCoinRequestUseCase.getCoin(it)
@@ -140,7 +136,8 @@ class CoinViewModel @Inject constructor(
                         }
                     }
                     is Results.Error -> {
-
+                        getAllCryptoCoinsUseCase.getAllCoins(coinsSize)
+                        observeCoinList()
                     }
                 }
             }
@@ -162,7 +159,7 @@ class CoinViewModel @Inject constructor(
                         }
                     }
                     else -> {
-
+                        observeCoinList()
                     }
                 }
             }
