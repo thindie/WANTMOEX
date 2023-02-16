@@ -5,7 +5,13 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.thindie.wantmoex.presentation.theme.WANTMOEXTheme
@@ -22,17 +28,29 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, true)
         viewModel.onStart()
-        setContent {
+         setContent {
             WANTMOEXTheme {
                 val state = viewModel.viewState.collectAsStateWithLifecycle()
-                LaunchedEffect(true) {
-                    while (true) {
-                        delay(1100)
-                        Log.d("SERVICE_TAG", "${state.value}")
+                Box(modifier = Modifier.fillMaxSize()) {
+
+
+                    Column {
+
+                        Button(onClick = { viewModel.onChoseCoin("BTC") }) {
+                            state.value.coin?.fromSymbol?.let { Text(it) }
+                        }
+
+                        Button(onClick = { viewModel.onShowList(null) }) {
+                            Text("")
+                        }
+                    }
+                    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+                        if(state.value.isLoading){
+                            CircularProgressIndicator(modifier = Modifier.size(72.dp))}
                     }
                 }
 
-            }
+             }
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.thindie.wantmoex.data.network
 
+import com.example.thindie.wantmoex.R
 import com.example.thindie.wantmoex.data.network.dto.CoinDTO
 import com.example.thindie.wantmoex.data.network.dto.toCoinDTO
 import com.example.thindie.wantmoex.data.network.dto.toCoinListDTO
@@ -38,7 +39,7 @@ class RemoteCoinRepositoryImpl @Inject constructor(
             if (coin != null) {
                 return@withContext Results.Success(coin)
             } else {
-                return@withContext Results.Error(Exception("Coin not found!"))
+                return@withContext Results.Error(Exception(R.string.data_error_remote.toString()))
             }
         } catch (e: Exception) {
             return@withContext Results.Error(e)
@@ -52,7 +53,7 @@ class RemoteCoinRepositoryImpl @Inject constructor(
             try {
                 val coins = remote.getTopCoins(limit = limit).toCoinListDTO()
                 if (coins.isNullOrEmpty()) {
-                    return@withContext Results.Error(Exception("remote data is absent"))
+                    return@withContext Results.Error(Exception(R.string.data_error_remote.toString()))
                 } else {
                     return@withContext Results.Success(coins)
                 }

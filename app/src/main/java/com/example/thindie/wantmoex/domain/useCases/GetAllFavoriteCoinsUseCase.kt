@@ -15,4 +15,7 @@ class GetAllFavoriteCoinsUseCase @Inject constructor(
     operator fun invoke(): Flow<Results<List<String>>> {
         return favouriteCoinsRepository.observeAllFavoriteCoins().flowOn(defaultDispatcher)
     }
+     suspend fun checkIsFavorite(id: String): Boolean{
+        return favouriteCoinsRepository.checkIsFavorite(id)
+    }
 }

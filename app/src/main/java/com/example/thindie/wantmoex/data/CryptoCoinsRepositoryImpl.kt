@@ -1,5 +1,6 @@
 package com.example.thindie.wantmoex.data
 
+import com.example.thindie.wantmoex.R
 import com.example.thindie.wantmoex.data.mappers.map
 import com.example.thindie.wantmoex.data.network.RemoteCoinRepository
 import com.example.thindie.wantmoex.data.storage.LocalCoinRepository
@@ -8,9 +9,7 @@ import com.example.thindie.wantmoex.domain.Results
 import com.example.thindie.wantmoex.domain.Results.Success
 import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.presentation.unpackResult
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -20,7 +19,6 @@ import javax.inject.Singleton
 class CryptoCoinsRepositoryImpl @Inject constructor(
     private val remoteCoinRepository: RemoteCoinRepository,
     private val localCoinRepository: LocalCoinRepository,
-    private val scope: CoroutineScope,
 ) : CryptoCoinRepository {
 
 
@@ -54,7 +52,7 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
                                     emit(dBResult)
                                 }
                                 is Results.Error -> {
-                                    emit(Results.Error(Exception("empty data")))
+                                    emit(Results.Error(Exception(R.string.data_error_remote.toString())))
                                 }
                             }
                         }
@@ -84,7 +82,7 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
                                     }
                                     emit(localCoin)
                                 }
-                                is Results.Error -> emit(Results.Error(Exception("empty data")))
+                                is Results.Error -> emit(Results.Error(Exception(R.string.data_error_remote.toString())))
                             }
                         }
                     }
@@ -104,20 +102,20 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
             }
 
             is Results.Error -> {
-                when (val localCoin = localCoinRepository.getCoin(fromSymbol)) {
+                return when (val localCoin = localCoinRepository.getCoin(fromSymbol)) {
                     is Success -> {
-                        return localCoin.transform {
+                        localCoin.transform {
                             it.map()
                         }
                     }
 
                     is Results.Error ->
-                        return Results.Error(Exception("bad data in local and remote sources"))
+                        Results.Error(Exception(R.string.data_error_remote.toString()))
 
                 }
             }
             else -> {
-                return Results.Error(Exception("bad data in local and remote sources"))
+                return Results.Error(Exception(R.string.data_error_remote.toString()))
             }
         }
     }
@@ -142,16 +140,16 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
                 return coins
             }
             is Results.Error -> {
-                when (val localCoins = localCoinRepository.getAllCoins(limit)) {
+                return when (val localCoins = localCoinRepository.getAllCoins(limit)) {
                     is Success -> {
-                        return localCoins.transform {
+                        localCoins.transform {
                             it.map {
                                 it.map()
                             }
                         }
                     }
                     is Results.Error -> {
-                        return Results.Error(Exception("bad data in local and remote sources"))
+                        Results.Error(Exception(R.string.data_error_remote.toString()))
                     }
                 }
             }

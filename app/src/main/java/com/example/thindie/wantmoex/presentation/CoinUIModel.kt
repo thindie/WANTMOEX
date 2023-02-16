@@ -2,7 +2,7 @@ package com.example.thindie.wantmoex.presentation
 
 import com.example.thindie.wantmoex.domain.entities.Coin
 
-class CoinUIModel(
+data class CoinUIModel(
     val market: String,
     val fromSymbol: String,
     val toSymbol: String,
@@ -13,8 +13,16 @@ class CoinUIModel(
     val lastMarket: String,
     val imageUrl: String,
     val isFavorite: Boolean,
+    val isShowExpand: Boolean,
 )
 
+fun CoinUIModel.expandChange(): CoinUIModel {
+    return this.copy(isShowExpand = !isShowExpand)
+}
+
+  fun  CoinUIModel.isFavorite(detector: () -> Boolean): CoinUIModel{
+    return  this.copy(isFavorite = detector())
+}
 
 val fromCoinToUILazy: (Coin) -> CoinUIModel = { domainModel: Coin ->
     CoinUIModel(
@@ -27,12 +35,13 @@ val fromCoinToUILazy: (Coin) -> CoinUIModel = { domainModel: Coin ->
         domainModel.lowDay,
         domainModel.lastMarket,
         domainModel.imageUrl,
-        isFavorite = false
+        isFavorite = false,
+        isShowExpand = false
 
     )
 }
 
-val fromCoinToUIDeep: (Coin, Boolean) -> CoinUIModel = { domainModel: Coin, isIt: Boolean ->
+val fromCoinToUIDeep: (Boolean, Coin) -> CoinUIModel = { isIt: Boolean, domainModel: Coin ->
     CoinUIModel(
         domainModel.market,
         domainModel.fromSymbol,
@@ -43,6 +52,7 @@ val fromCoinToUIDeep: (Coin, Boolean) -> CoinUIModel = { domainModel: Coin, isIt
         domainModel.lowDay,
         domainModel.lastMarket,
         domainModel.imageUrl,
-        isFavorite = isIt
+        isFavorite = isIt,
+        isShowExpand = true
     )
 }
