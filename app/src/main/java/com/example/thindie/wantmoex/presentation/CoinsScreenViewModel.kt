@@ -23,6 +23,7 @@ class CoinViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
+    private val _viewedCacheList: MutableStateFlow<List<CoinUIModel>> = MutableStateFlow(emptyList())
     private val _coinList: MutableStateFlow<List<CoinUIModel>> = MutableStateFlow(emptyList())
     private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val _coin: MutableStateFlow<CoinUIModel?> = MutableStateFlow(null)
@@ -31,43 +32,61 @@ class CoinViewModel @Inject constructor(
     val viewState: StateFlow<CoinUIState> = combine(
         _coinList, _isLoading, _coin
     ) { list, isLoading, coin ->
+        val state: CoinUIState
         if (!isLoading) {
             if (coin == null) {
-                CoinUIState(coinsList = list, isLoading = isLoading)
+               state = CoinUIState(coinsList = list, isLoading = isLoading)
             } else {
-                CoinUIState(isLoading = isLoading, coin = coin)
+              state =  CoinUIState(isLoading = isLoading, coin = coin)
             }
         } else {
             _coinList.value = emptyList(); _coin.value = null; _isLoading.value = false
-            CoinUIState()
+          state =  CoinUIState()
         }
+        state.apply { }
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = CoinUIState()
+        started = SharingStarted.WhileSubscribed(TIMEOUT),
+        initialValue = savedStateHandle.get<CoinUIState>(VIEW_STATE) ?: CoinUIState()
     )
+
+
+    private fun saveState() {
+        savedStateHandle[VIEW_STATE] = viewState.value
+    }
 
     fun onStart() {
         viewModelScope.launch {
-            getAllCryptoCoinsUseCase.getAllCoins(30)
+            getAllCryptoCoinsUseCase.getAllCoins(INIT_COINS)
         }
         viewModelScope.launch {
             observeCoinList()
         }
     }
 
-    fun onExpandOptionsCoinsList() {
+    fun onAddFavoriteCoins(list:  List<String>){
         viewModelScope.launch {
-            load()
-            val list = _coinList.value
-            list.map { it.onExpandedUiChange() }.map {
-                val isFavorite = getAllFavoriteCoinsUseCase.checkIsFavorite(it.fromSymbol)
-                it.onRevealIsFavorite {
-                    isFavorite
-                }
-            }
-            _coinList.value = list
+            doAddCoinToFavoritesUseCase(list)
         }
+    }
+
+    fun onDeleteFavoriteCoins(list: List<String>){
+        viewModelScope.launch {
+            doDeleteCoinFromFavoritesUseCase(list)
+        }
+    }
+    fun onExpandOptionsCoinsList() {
+          viewModelScope.launch {
+             _viewedCacheList.collect{
+             val cached =  it.map { it.onExpandedUiChange() }.map {
+                   val isFavorite = getAllFavoriteCoinsUseCase.checkIsFavorite(it.fromSymbol)
+                   it.onRevealIsFavorite {
+                       isFavorite
+                   }
+               }
+               _coinList.value = cached
+           }
+          }
 
     }
 
@@ -133,6 +152,8 @@ class CoinViewModel @Inject constructor(
                     is Success -> {
                         _coinList.value = result.unpackResult { list ->
                             list.map { fromCoinToUILazy(it) }
+                        }.apply {
+                            _viewedCacheList.value = this
                         }
                     }
                     is Results.Error -> {
@@ -145,12 +166,12 @@ class CoinViewModel @Inject constructor(
     }
 
     private fun observeCoinList() {
-        observeCoinList(10)
+        observeCoinList(TOP_COINS)
     }
 
     private fun observeCoin(id: String) {
         viewModelScope.launch {
-           load()
+            load()
             doSingleCoinRequestUseCase(id).collect {
                 when (it) {
                     is Success -> {
@@ -169,7 +190,7 @@ class CoinViewModel @Inject constructor(
     private suspend fun load() {
         _isLoading.value = true
         delay(1)
-        _isLoading.value = false
+         _isLoading.value = false
     }
 
     data class CoinUIState(
@@ -177,6 +198,13 @@ class CoinViewModel @Inject constructor(
         val isLoading: Boolean = true,
         val coin: CoinUIModel? = null,
     )
+
+    companion object {
+        private const val TIMEOUT = 5000L
+        private const val INIT_COINS = 30
+        private const val TOP_COINS = 10
+        private const val VIEW_STATE = "viewState"
+    }
 }
 
 

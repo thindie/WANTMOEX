@@ -24,7 +24,7 @@ import kotlinx.coroutines.delay
 @Composable
 
 fun LoadScreen(modifier: Modifier = Modifier, waitTime: Long, onTimeout: () -> Unit) {
-    Surface(modifier = modifier.fillMaxSize()) {
+
         Box(modifier = modifier.clip(CircleShape), contentAlignment = Alignment.Center) {
 
             val currentTimeOut by rememberUpdatedState(newValue = onTimeout)
@@ -42,6 +42,6 @@ fun LoadScreen(modifier: Modifier = Modifier, waitTime: Long, onTimeout: () -> U
 
             )
         }
-    }
+
 
 }

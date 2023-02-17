@@ -1,9 +1,10 @@
-package com.example.thindie.wantmoex.presentation.composables.update
+package com.example.thindie.wantmoex.presentation.composables
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Newspaper
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 
 interface CryptoDestination {
@@ -31,4 +32,9 @@ object News : CryptoDestination {
     override val route: String = "News"
 }
 
-val cryptoDestinations = listOf(Coins, CoinInFocus, FavoriteCoins, News)
+object CoinsExpandedView : CryptoDestination {
+    override val icon: ImageVector = Icons.Default.Star
+    override val route: String = "Stars"
+}
+
+val cryptoDestinations = listOf(Coins, CoinInFocus, FavoriteCoins, News, CoinsExpandedView)

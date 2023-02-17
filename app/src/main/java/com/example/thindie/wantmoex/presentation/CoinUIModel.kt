@@ -41,7 +41,7 @@ val fromCoinToUILazy: (Coin) -> CoinUIModel = { domainModel: Coin ->
     )
 }
 
-val fromCoinToUIDeep: (Boolean, Coin) -> CoinUIModel = { isIt: Boolean, domainModel: Coin ->
+val fromCoinToUIDeep: (Boolean, Coin) -> CoinUIModel = { isFavorite: Boolean, domainModel: Coin ->
     CoinUIModel(
         domainModel.market,
         domainModel.fromSymbol,
@@ -52,7 +52,7 @@ val fromCoinToUIDeep: (Boolean, Coin) -> CoinUIModel = { isIt: Boolean, domainMo
         domainModel.lowDay,
         domainModel.lastMarket,
         domainModel.imageUrl,
-        isFavorite = isIt,
+        isFavorite = isFavorite,
         isShowExpand = true
     )
 }
