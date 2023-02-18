@@ -16,7 +16,8 @@ fun CryptoAppUI() {
 
     CryptoNavHost(
         navController = navController,
-        startDestination = currentScreen,)
+        startDestination = currentScreen,
+    )
 }
 
 fun NavHostController.navigateSingleTopTo(route: String) =

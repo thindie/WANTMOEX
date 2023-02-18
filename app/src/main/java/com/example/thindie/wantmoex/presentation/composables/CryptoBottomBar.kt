@@ -31,7 +31,7 @@ fun CryptoCoinsBottomBar(
             horizontalArrangement = Arrangement.Start
         ) {
             with(onSelectedDestination) {
-                CryptoMoveTo(destination = Coins, onClick = this, )
+                CryptoMoveTo(destination = Coins, onClick = this)
                 CryptoMoveTo(destination = FavoriteCoins, onClick = this)
                 CryptoMoveTo(destination = News, onClick = this)
                 Spacer(modifier = Modifier.weight(1f))
@@ -48,7 +48,6 @@ fun CryptoMoveTo(destination: CryptoDestination, onClick: (String) -> Unit) {
         Icon(imageVector = destination.icon, contentDescription = destination.route)
     }
 }
-
 
 
 private const val HEART_COLOR = false

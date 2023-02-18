@@ -74,7 +74,13 @@ fun CoinListElement(
         }
         Column(horizontalAlignment = Alignment.End) {
             if (isReveal) {
-                IconButton(onClick = { color = !color;  checkModel(model, onFavoritesDeleted, onFavoritesAdded) }) {
+                IconButton(onClick = {
+                    color = !color; checkModel(
+                    model,
+                    onFavoritesDeleted,
+                    onFavoritesAdded
+                )
+                }) {
                     Icon(
                         imageVector = Icons.Default.Star,
                         contentDescription = null,
@@ -95,8 +101,8 @@ fun CryptoCoinDetailScreen(coin: CoinUIModel) {
 
 }
 
-fun checkModel(model: CoinUIModel, a: (String) -> Unit, b: (String) -> Unit)  {
+fun checkModel(model: CoinUIModel, a: (String) -> Unit, b: (String) -> Unit) {
     if (model.isFavorite) a(model.fromSymbol) else b(
         model.fromSymbol
     )
- }
+}

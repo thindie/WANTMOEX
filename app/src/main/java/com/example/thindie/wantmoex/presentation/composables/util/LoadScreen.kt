@@ -2,11 +2,9 @@ package com.example.thindie.wantmoex.presentation.composables.util
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,23 +23,23 @@ import kotlinx.coroutines.delay
 
 fun LoadScreen(modifier: Modifier = Modifier, waitTime: Long, onTimeout: () -> Unit) {
 
-        Box(modifier = modifier.clip(CircleShape), contentAlignment = Alignment.Center) {
+    Box(modifier = modifier.clip(CircleShape), contentAlignment = Alignment.Center) {
 
-            val currentTimeOut by rememberUpdatedState(newValue = onTimeout)
+        val currentTimeOut by rememberUpdatedState(newValue = onTimeout)
 
-            LaunchedEffect(true) {
-                delay(waitTime)
-                currentTimeOut()
-            }
-
-            Image(painterResource(id = R.drawable.cryptoviews), contentDescription = null)
-            LinearProgressIndicator(
-                modifier = Modifier
-                    .scale(0.3f)
-                    .padding(top = 350.dp)
-
-            )
+        LaunchedEffect(true) {
+            delay(waitTime)
+            currentTimeOut()
         }
+
+        Image(painterResource(id = R.drawable.cryptoviews), contentDescription = null)
+        LinearProgressIndicator(
+            modifier = Modifier
+                .scale(0.3f)
+                .padding(top = 350.dp)
+
+        )
+    }
 
 
 }

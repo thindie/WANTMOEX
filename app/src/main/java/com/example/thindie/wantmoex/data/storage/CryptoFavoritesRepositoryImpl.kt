@@ -6,7 +6,6 @@ import com.example.thindie.wantmoex.domain.FavouriteCoinsRepository
 import com.example.thindie.wantmoex.domain.Results
 import com.example.thindie.wantmoex.domain.Results.Error
 import com.example.thindie.wantmoex.domain.Results.Success
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -32,34 +31,34 @@ class CryptoFavoritesRepositoryImpl @Inject constructor(
         return false
     }
 
-        override suspend fun getAllFavoriteCoins(): Results<List<String>> {
-            return try {
-                Success(favoriteDao.getAllFavouriteCoins().map { it.fromSymbol })
-            } catch (e: Exception) {
-                Error(e)
-            }
+    override suspend fun getAllFavoriteCoins(): Results<List<String>> {
+        return try {
+            Success(favoriteDao.getAllFavouriteCoins().map { it.fromSymbol })
+        } catch (e: Exception) {
+            Error(e)
         }
+    }
 
 
-        override suspend fun deleteFromFavoriteCoins(deleteCoins: List<String>) {
-            val idList = mutableListOf<Int>()
-            deleteCoins.forEach { id ->
-                favoriteDao.getAllFavouriteCoins().forEach { coin ->
-                    if (coin.fromSymbol == id) {
-                        idList.add(coin.id)
-                    }
+    override suspend fun deleteFromFavoriteCoins(deleteCoins: List<String>) {
+        val idList = mutableListOf<Int>()
+        deleteCoins.forEach { id ->
+            favoriteDao.getAllFavouriteCoins().forEach { coin ->
+                if (coin.fromSymbol == id) {
+                    idList.add(coin.id)
                 }
             }
-            idList.forEach {
-                favoriteDao.deleteFavouriteCoin(it)
-            }
         }
-
-        override suspend fun addToFavoriteCoins(addCoins: List<String>) {
-            addCoins.forEach {
-                favoriteDao.insertFavouriteCoin(FavouriteCoinDBModel(fromSymbol = it))
-            }
+        idList.forEach {
+            favoriteDao.deleteFavouriteCoin(it)
         }
-
     }
+
+    override suspend fun addToFavoriteCoins(addCoins: List<String>) {
+        addCoins.forEach {
+            favoriteDao.insertFavouriteCoin(FavouriteCoinDBModel(fromSymbol = it))
+        }
+    }
+
+}
 

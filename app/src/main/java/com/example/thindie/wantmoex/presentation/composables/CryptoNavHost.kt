@@ -14,7 +14,6 @@ import androidx.navigation.compose.composable
 import com.example.thindie.wantmoex.presentation.CoinViewModel
 import com.example.thindie.wantmoex.presentation.composables.coinScreen.CryptoCoinDetailScreen
 import com.example.thindie.wantmoex.presentation.composables.coinScreen.CryptoCoinsScreen
-import com.example.thindie.wantmoex.presentation.onExpandedUiChange
 
 @Composable
 fun CryptoNavHost(
@@ -24,6 +23,7 @@ fun CryptoNavHost(
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
     Log.d("SERVICE_TAh", "${state.value.coinsList}")
+
     val reNewUi: (String) -> Unit = { renewThat ->
         mapOf(
             Coins.route to { viewModel.onShowList(null) },
@@ -59,14 +59,16 @@ fun CryptoNavHost(
 
                 composable(route = News.route) { }
 
-                composable(route = FavoriteCoins.route) { CryptoCoinsScreen(
-                    onClickCoin = { route, id ->
-                        viewModel.onChoseCoin(id);navController.navigateSingleTopTo(route)
-                    },
-                    onFavoritesAdded = {},
-                    onFavoritesDeleted = {},
-                    state = state.value
-                ) }
+                composable(route = FavoriteCoins.route) {
+                    CryptoCoinsScreen(
+                        onClickCoin = { route, id ->
+                            viewModel.onChoseCoin(id);navController.navigateSingleTopTo(route)
+                        },
+                        onFavoritesAdded = {},
+                        onFavoritesDeleted = {},
+                        state = state.value
+                    )
+                }
 
                 composable(route = CoinsExpandedView.route) {
                     CryptoCoinsScreen(
@@ -76,7 +78,7 @@ fun CryptoNavHost(
                         onFavoritesAdded = {},
                         onFavoritesDeleted = {},
                         state = state.value.apply {
-                            this.coinsList 
+                            this.coinsList
                         }
                     )
                 }

@@ -20,8 +20,8 @@ fun CoinUIModel.onExpandedUiChange(): CoinUIModel {
     return this.copy(isShowExpand = !isShowExpand)
 }
 
-  fun  CoinUIModel.onRevealIsFavorite(detector: () -> Boolean): CoinUIModel{
-    return  this.copy(isFavorite = detector())
+fun CoinUIModel.onRevealIsFavorite(detector: () -> Boolean): CoinUIModel {
+    return this.copy(isFavorite = detector())
 }
 
 val fromCoinToUILazy: (Coin) -> CoinUIModel = { domainModel: Coin ->

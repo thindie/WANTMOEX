@@ -1,6 +1,7 @@
 package com.example.thindie.wantmoex.data.network.dto
 
 
+import android.util.Log
 import com.example.thindie.wantmoex.data.network.dto.multifull.CoinRawMultiFullResponseDTO
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinFullInfoDTO
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinRawTotalVolFullResponseDTO
@@ -22,14 +23,16 @@ private val allCoinsNameContainer = mutableListOf<String>()
  */
 fun fromTotalVolFullToDTOList(thisComeFromNetwork: CoinRawTotalVolFullResponseDTO): List<CoinDTO> {
     val topCoinList: MutableList<CoinDTO> = mutableListOf()
-
-    thisComeFromNetwork.jsonData?.map { coinRootJson ->
-        val coinFullInfo = coinRootJson.coinFullInfoDTO ?: return topCoinList
-        val dtoToAdd = getCoinDTOFromCoinFullInfo(coinFullInfo)
-        topCoinList.add(dtoToAdd)
-        val coinName = dtoToAdd.fromSymbol
-        if (!allCoinsNameContainer.contains(coinName)) {
-            allCoinsNameContainer.add(coinName)
+    val fromNetwork = thisComeFromNetwork.jsonData
+    fromNetwork?.forEach { coinRootJson ->
+        if (coinRootJson.coinFullInfoDTO != null){
+            val coinFullInfo = coinRootJson.coinFullInfoDTO
+            val dtoToAdd = getCoinDTOFromCoinFullInfo(coinFullInfo)
+            topCoinList.add(dtoToAdd)
+            val coinName = dtoToAdd.fromSymbol
+            if (!allCoinsNameContainer.contains(coinName)) {
+                allCoinsNameContainer.add(coinName)
+            }
         }
     }
     return topCoinList.toList()

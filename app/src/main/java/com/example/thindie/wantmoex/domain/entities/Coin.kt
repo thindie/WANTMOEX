@@ -21,6 +21,6 @@ data class Coin(
     }
 
     override fun hashCode(): Int {
-         return 31 * fromSymbol.hashCode()
+        return 31 * fromSymbol.hashCode()
     }
 }
