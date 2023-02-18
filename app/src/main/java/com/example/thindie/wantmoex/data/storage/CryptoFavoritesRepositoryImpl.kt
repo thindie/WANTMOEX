@@ -23,10 +23,8 @@ class CryptoFavoritesRepositoryImpl @Inject constructor(
     }
 
     override suspend fun checkIsFavorite(id: String): Boolean {
-
         favoriteDao.getAllFavouriteCoins().forEach {
             if (it.fromSymbol == id) return true
-
         }
         return false
     }
@@ -40,13 +38,11 @@ class CryptoFavoritesRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun deleteFromFavoriteCoins(deleteCoins: List<String>) {
+    override suspend fun deleteFromFavoriteCoins(id: String) {
         val idList = mutableListOf<Int>()
-        deleteCoins.forEach { id ->
-            favoriteDao.getAllFavouriteCoins().forEach { coin ->
-                if (coin.fromSymbol == id) {
-                    idList.add(coin.id)
-                }
+        favoriteDao.getAllFavouriteCoins().forEach { coin ->
+            if (coin.fromSymbol == id) {
+                idList.add(coin.id)
             }
         }
         idList.forEach {
@@ -54,11 +50,10 @@ class CryptoFavoritesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addToFavoriteCoins(addCoins: List<String>) {
-        addCoins.forEach {
-            favoriteDao.insertFavouriteCoin(FavouriteCoinDBModel(fromSymbol = it))
-        }
+    override suspend fun addToFavoriteCoins(id: String) {
+        favoriteDao.insertFavouriteCoin(FavouriteCoinDBModel(fromSymbol = id))
     }
-
 }
+
+
 

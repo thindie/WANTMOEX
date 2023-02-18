@@ -6,7 +6,7 @@ import javax.inject.Inject
 class DoAddCoinToFavoritesUseCase @Inject constructor(
     private val favouriteCoinsRepository: FavouriteCoinsRepository,
 ) {
-    suspend operator fun invoke(list: List<String>) {
-        favouriteCoinsRepository.addToFavoriteCoins(list)
+    suspend operator fun invoke(id: String) {
+        favouriteCoinsRepository.addToFavoriteCoins(id)
     }
 }

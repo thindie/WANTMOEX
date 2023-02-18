@@ -1,7 +1,6 @@
 package com.example.thindie.wantmoex.data.network.dto
 
 
-import android.util.Log
 import com.example.thindie.wantmoex.data.network.dto.multifull.CoinRawMultiFullResponseDTO
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinFullInfoDTO
 import com.example.thindie.wantmoex.data.network.dto.totalvolfull.CoinRawTotalVolFullResponseDTO
@@ -25,7 +24,7 @@ fun fromTotalVolFullToDTOList(thisComeFromNetwork: CoinRawTotalVolFullResponseDT
     val topCoinList: MutableList<CoinDTO> = mutableListOf()
     val fromNetwork = thisComeFromNetwork.jsonData
     fromNetwork?.forEach { coinRootJson ->
-        if (coinRootJson.coinFullInfoDTO != null){
+        if (coinRootJson.coinFullInfoDTO != null) {
             val coinFullInfo = coinRootJson.coinFullInfoDTO
             val dtoToAdd = getCoinDTOFromCoinFullInfo(coinFullInfo)
             topCoinList.add(dtoToAdd)

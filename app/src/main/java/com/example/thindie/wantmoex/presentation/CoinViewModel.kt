@@ -4,11 +4,8 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.thindie.wantmoex.domain.Results
-import com.example.thindie.wantmoex.domain.Results.Success
 import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.domain.result
-import com.example.thindie.wantmoex.domain.unpackResult
 import com.example.thindie.wantmoex.domain.useCases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -47,9 +44,7 @@ class CoinViewModel @Inject constructor(
             _coinList.value = emptyList(); _coin.value = null; _isLoading.value = false
             state = CoinUIState()
         }
-        state.apply {
-            Log.d("SERVICE_TAG", "${this.coinsList}")
-        }
+        state
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(TIMEOUT),
@@ -67,26 +62,37 @@ class CoinViewModel @Inject constructor(
         }
     }
 
-    fun onAddFavoriteCoins(list: List<String>) {
+    fun onAddFavoriteCoins(id: String) {
         viewModelScope.launch {
-            doAddCoinToFavoritesUseCase(list)
+            doAddCoinToFavoritesUseCase(id)
         }
     }
 
-    fun onDeleteFavoriteCoins(list: List<String>) {
+    fun onDeleteFavoriteCoins(id: String) {
         viewModelScope.launch {
-            doDeleteCoinFromFavoritesUseCase(list)
+            doDeleteCoinFromFavoritesUseCase(id)
         }
     }
 
-    fun onExpandOptionsCoinsList() {
-
-    }
 
     fun onShowFavorites() {
+        viewModelScope.launch {
+            val coinUIModelList = mutableListOf<CoinUIModel>()
+            getAllFavoriteCoinsUseCase().collect { inResults ->
+                inResults.result { favoriteIds ->
+                    favoriteIds.forEach { id ->
+                        doSingleCoinRequestUseCase(id).onEach {
+                            it.result { coin ->
+                                coinUIModelList.add(coin.mapToUiModel { true })  //favoriteCoin = true
+                            }
+                        }.launchIn(viewModelScope)
+                    }
+                }
+            }
+            _coinList.value = coinUIModelList
+        }
 
     }
-
 
     fun onShowList(size: Int?) {
         if (size == null) observeCoinList() else observeCoinList(size)
@@ -96,27 +102,8 @@ class CoinViewModel @Inject constructor(
         observeCoin(id)
     }
 
-    private fun getFavoriteCoinsByID(list: List<String>): Flow<List<CoinUIModel>> {
-        return flow {
-            val uiList = mutableListOf<CoinUIModel>()
-            list.forEach {
-                val coinResult = doSingleCoinRequestUseCase.getCoin(it)
-                when (coinResult) {
-                    is Success -> coinResult.unpackResult {
-                        uiList.add(
-                            fromCoinToUILazy(it).copy(
-                                isFavorite = true,
-                                isShowExpand = true
-                            )
-                        )
-                    }
-                    is Results.Error -> {
-                        _coinList.value = emptyList()
-                    }
-                }
-            }
-            emit(uiList)
-        }
+    private fun observeCoinList() {
+        observeCoinList(TOP_COINS)
     }
 
     private fun observeCoinList(coinsSize: Int) {
@@ -125,7 +112,6 @@ class CoinViewModel @Inject constructor(
             val allFavoriteIds = mutableListOf<String>()
 
             getAllCryptoCoinsUseCase.observeAllCoins(coinsSize).collect { resultCoins ->
-                val res = resultCoins
                 resultCoins.result {
                     allCoins.addAll(it)
                 }
@@ -136,22 +122,21 @@ class CoinViewModel @Inject constructor(
                 }
             }
 
-            _coinList.value = allCoins.map {
-                fromCoinToUIDeep(allFavoriteIds.contains(it.fromSymbol), it)
+            _coinList.value = allCoins.map { coin ->
+                coin.mapToUiModel { allFavoriteIds.contains(it) }
             }
             Log.d("SERVICE_TAG", "${_coinList.value}")
         }
     }
 
 
-    private fun observeCoinList() {
-        observeCoinList(TOP_COINS)
-    }
-
     private fun observeCoin(id: String) {
         viewModelScope.launch {
-
-
+            doSingleCoinRequestUseCase(id).collect {
+                it.result {
+                    _coin.value =    it.mapToUiModel { false }
+                }
+            }
         }
     }
 

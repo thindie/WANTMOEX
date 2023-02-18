@@ -28,8 +28,8 @@ fun CryptoNavHost(
         mapOf(
             Coins.route to { viewModel.onShowList(null) },
             FavoriteCoins.route to { viewModel.onShowFavorites() },
-            CoinsExpandedView.route to { viewModel.onExpandOptionsCoinsList() }
-        )[renewThat]?.invoke()
+
+            )[renewThat]?.invoke()
     }
 
     Scaffold(bottomBar = {

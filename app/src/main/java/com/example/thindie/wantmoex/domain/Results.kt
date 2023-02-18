@@ -18,41 +18,26 @@ sealed class Results<out R> {
     }
 }
 
-fun <T, R> Results.Success<T>.transform(mapper: (T) -> R): Results.Success<R> {
+fun <T, R> Results.Success<T>.transformSuccessHandle(mapper: (T) -> R): Results.Success<R> {
     return Results.Success(mapper(this.data))
 }
 
-fun <T, R> Results<T>.transformResult(mapper: (T) -> R): Results<R> {
+fun <T, R> Results<T>.transformResultHandle(mapper: (T) -> R): Results<R> {
     return this.result { mapper(it) }
 }
 
-
-fun <T, R> Results<T>.resultOnFlow(mapper: (T) -> R): Flow<Results<R>> {
-    val r = this
-    return flow {
-        when (r) {
-            is Results.Success<*> -> {
-                emit(r.transform { mapper } as Results<R>)
-            }
-            is Results.Error -> {
-                emit(Results.Error(Exception("on resultOnFlow")))
-            }
-        }
-    }
-}
 
 fun <T, R> Results<T>.result(mapper: (T) -> R): Results<R> {
 
     return when (this) {
         is Results.Success<T> -> {
-            this.transform {  mapper(it) }
+            this.transformSuccessHandle { mapper(it) }
         }
         is Results.Error -> {
             Results.Error(Exception("on result"))
         }
     }
 }
-
 
 fun <T> Flow<T>.handleErrors(): Flow<T> =
     catch { e -> Log.d("SERVICE_TAG", "$e") }
@@ -62,11 +47,11 @@ fun <T, R> Results.Success<T>.unpackResult(mapper: (T) -> R): R {
     return mapper(this.data)
 }
 
-  fun <T, R> Flow<Results<T>>.mutateFlow(mapper: (T) -> R): Flow<Results<R>> {
+fun <T, R> Flow<Results<T>>.mutateFlow(mapper: (T) -> R): Flow<Results<R>> {
     val f = this
     return flow {
         f.collect {
-          val t =   it.result { r -> mapper(r) }
+            val t = it.result { r -> mapper(r) }
             emit(t)
         }
     }

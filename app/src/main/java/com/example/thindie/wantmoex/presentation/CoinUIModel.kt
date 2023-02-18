@@ -16,15 +16,8 @@ data class CoinUIModel(
     val isShowExpand: Boolean,
 )
 
-fun CoinUIModel.onExpandedUiChange(): CoinUIModel {
-    return this.copy(isShowExpand = !isShowExpand)
-}
 
-fun CoinUIModel.onRevealIsFavorite(detector: () -> Boolean): CoinUIModel {
-    return this.copy(isFavorite = detector())
-}
-
-val fromCoinToUILazy: (Coin) -> CoinUIModel = { domainModel: Coin ->
+private val fromCoinToUILazy: (Coin) -> CoinUIModel = { domainModel: Coin ->
     CoinUIModel(
         domainModel.market,
         domainModel.fromSymbol,
@@ -41,18 +34,23 @@ val fromCoinToUILazy: (Coin) -> CoinUIModel = { domainModel: Coin ->
     )
 }
 
-val fromCoinToUIDeep: (Boolean, Coin) -> CoinUIModel = { isFavorite: Boolean, domainModel: Coin ->
-    CoinUIModel(
-        domainModel.market,
-        domainModel.fromSymbol,
-        domainModel.toSymbol,
-        domainModel.price,
-        domainModel.lastUpdate,
-        domainModel.highDay,
-        domainModel.lowDay,
-        domainModel.lastMarket,
-        domainModel.imageUrl,
-        isFavorite = isFavorite,
-        isShowExpand = true
-    )
+private val fromCoinToUIDeep: (Boolean, Coin) -> CoinUIModel =
+    { isFavorite: Boolean, domainModel: Coin ->
+        CoinUIModel(
+            domainModel.market,
+            domainModel.fromSymbol,
+            domainModel.toSymbol,
+            domainModel.price,
+            domainModel.lastUpdate,
+            domainModel.highDay,
+            domainModel.lowDay,
+            domainModel.lastMarket,
+            domainModel.imageUrl,
+            isFavorite = isFavorite,
+            isShowExpand = false
+        )
+    }
+
+fun Coin.mapToUiModel(mapper: (String) -> Boolean): CoinUIModel {
+    return fromCoinToUIDeep(mapper(this.fromSymbol), this)
 }

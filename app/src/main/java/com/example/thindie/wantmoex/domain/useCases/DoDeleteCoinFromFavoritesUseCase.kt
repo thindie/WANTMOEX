@@ -6,7 +6,7 @@ import javax.inject.Inject
 class DoDeleteCoinFromFavoritesUseCase @Inject constructor(
     private val favouriteCoinsRepository: FavouriteCoinsRepository,
 ) {
-    suspend operator fun invoke(list: List<String>) {
-        favouriteCoinsRepository.deleteFromFavoriteCoins(list)
+    suspend operator fun invoke(id: String) {
+        favouriteCoinsRepository.deleteFromFavoriteCoins(id)
     }
 }
