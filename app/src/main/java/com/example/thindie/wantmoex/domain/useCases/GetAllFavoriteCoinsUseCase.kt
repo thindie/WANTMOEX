@@ -1,7 +1,7 @@
 package com.example.thindie.wantmoex.domain.useCases
 
 import com.example.thindie.wantmoex.di.DispatchersModule
-import com.example.thindie.wantmoex.domain.FavouriteCoinsRepository
+import com.example.thindie.wantmoex.data.storage.FavouriteCoinsRepository
 import com.example.thindie.wantmoex.domain.Results
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +16,4 @@ class GetAllFavoriteCoinsUseCase @Inject constructor(
         return favouriteCoinsRepository.observeAllFavoriteCoins().flowOn(defaultDispatcher)
     }
 
-    suspend fun checkIsFavorite(id: String): Boolean {
-        return favouriteCoinsRepository.checkIsFavorite(id)
-    }
 }

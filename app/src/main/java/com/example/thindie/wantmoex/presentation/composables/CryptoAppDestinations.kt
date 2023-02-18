@@ -37,4 +37,4 @@ object CoinsExpandedView : CryptoDestination {
     override val route: String = "Stars"
 }
 
-val cryptoDestinations = listOf(Coins, CoinInFocus, FavoriteCoins, News, CoinsExpandedView)
+val cryptoDestinations = listOf(Coins, CoinInFocus, FavoriteCoins, News)

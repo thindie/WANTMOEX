@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CryptoCoinsBottomBar(
     onSelectedDestination: (String) -> Unit,
+    onExpandCoins: () -> Unit
 ) {
 
 
@@ -35,7 +36,7 @@ fun CryptoCoinsBottomBar(
                 CryptoMoveTo(destination = FavoriteCoins, onClick = this)
                 CryptoMoveTo(destination = News, onClick = this)
                 Spacer(modifier = Modifier.weight(1f))
-                CryptoMoveTo(destination = CoinsExpandedView, onClick = this)
+                CryptoMoveTo(destination = CoinsExpandedView, onClick = { onExpandCoins() })
             }
         }
     }

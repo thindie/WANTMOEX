@@ -22,13 +22,8 @@ fun <T, R> Results.Success<T>.transformSuccessHandle(mapper: (T) -> R): Results.
     return Results.Success(mapper(this.data))
 }
 
-fun <T, R> Results<T>.transformResultHandle(mapper: (T) -> R): Results<R> {
-    return this.result { mapper(it) }
-}
-
 
 fun <T, R> Results<T>.result(mapper: (T) -> R): Results<R> {
-
     return when (this) {
         is Results.Success<T> -> {
             this.transformSuccessHandle { mapper(it) }
@@ -43,10 +38,6 @@ fun <T> Flow<T>.handleErrors(): Flow<T> =
     catch { e -> Log.d("SERVICE_TAG", "$e") }
 
 
-fun <T, R> Results.Success<T>.unpackResult(mapper: (T) -> R): R {
-    return mapper(this.data)
-}
-
 fun <T, R> Flow<Results<T>>.mutateFlow(mapper: (T) -> R): Flow<Results<R>> {
     val f = this
     return flow {
@@ -55,4 +46,17 @@ fun <T, R> Flow<Results<T>>.mutateFlow(mapper: (T) -> R): Flow<Results<R>> {
             emit(t)
         }
     }
+}
+
+fun <T, R> Results.Success<T>.unpackResult(mapper: (T) -> R): R {
+    return mapper(this.data)
+}
+
+fun <T, R> Results<T>.transformResultHandle(mapper: (T) -> R): Results<R> {
+    return this.result { mapper(it) }
+}
+
+fun <T> T.encapsulateResult( ) : Results<T>{
+    if(this == null || (this as Collection<*>).isEmpty()) return Results.Error(NullPointerException("Bad Results"))
+    return Results.Success(this)
 }

@@ -28,13 +28,16 @@ fun CryptoNavHost(
         mapOf(
             Coins.route to { viewModel.onShowList(null) },
             FavoriteCoins.route to { viewModel.onShowFavorites() },
-
-            )[renewThat]?.invoke()
+        )[renewThat]?.invoke()
     }
+
+    val addFavoriteCoin = { it: String -> viewModel.onAddFavoriteCoins(it) }
+    val deleteFavoriteCoin = { it: String -> viewModel.onDeleteFavoriteCoins(it) }
 
     Scaffold(bottomBar = {
         CryptoCoinsBottomBar(
-            onSelectedDestination = { reNewUi(it); navController.navigateSingleTopTo(it) })
+            onSelectedDestination = { reNewUi(it); navController.navigateSingleTopTo(it) },
+            onExpandCoins = { viewModel.onExpandCoinsList(state.value.coinsList) })
     }) {
         Box {
             NavHost(
@@ -47,8 +50,8 @@ fun CryptoNavHost(
                         onClickCoin = { route, id ->
                             viewModel.onChoseCoin(id);navController.navigateSingleTopTo(route)
                         },
-                        onFavoritesAdded = {},
-                        onFavoritesDeleted = {},
+                        onFavoritesAdded = { addFavoriteCoin(it) },
+                        onFavoritesDeleted = { deleteFavoriteCoin(it) },
                         state = state.value
                     )
                 }
@@ -64,30 +67,16 @@ fun CryptoNavHost(
                         onClickCoin = { route, id ->
                             viewModel.onChoseCoin(id);navController.navigateSingleTopTo(route)
                         },
-                        onFavoritesAdded = {},
-                        onFavoritesDeleted = {},
+                        onFavoritesAdded = { addFavoriteCoin(it) },
+                        onFavoritesDeleted = { deleteFavoriteCoin(it) },
                         state = state.value
                     )
                 }
-
-                composable(route = CoinsExpandedView.route) {
-                    CryptoCoinsScreen(
-                        onClickCoin = { route, id ->
-                            viewModel.onChoseCoin(id);navController.navigateSingleTopTo(route)
-                        },
-                        onFavoritesAdded = {},
-                        onFavoritesDeleted = {},
-                        state = state.value.apply {
-                            this.coinsList
-                        }
-                    )
-                }
             }
+
         }
 
     }
-
-
 }
 
 

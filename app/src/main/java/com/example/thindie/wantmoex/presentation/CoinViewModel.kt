@@ -1,6 +1,5 @@
 package com.example.thindie.wantmoex.presentation
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +7,6 @@ import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.domain.result
 import com.example.thindie.wantmoex.domain.useCases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -74,9 +72,15 @@ class CoinViewModel @Inject constructor(
         }
     }
 
+    fun onExpandCoinsList(list: List<CoinUIModel>) {
+        _coinList.value = list.map {
+            it.copy(isShowExpand = !it.isShowExpand)
+        }
+    }
 
     fun onShowFavorites() {
         viewModelScope.launch {
+            _isLoading.value = true
             val coinUIModelList = mutableListOf<CoinUIModel>()
             getAllFavoriteCoinsUseCase().collect { inResults ->
                 inResults.result { favoriteIds ->
@@ -89,6 +93,7 @@ class CoinViewModel @Inject constructor(
                     }
                 }
             }
+            _isLoading.value = false
             _coinList.value = coinUIModelList
         }
 
@@ -108,6 +113,7 @@ class CoinViewModel @Inject constructor(
 
     private fun observeCoinList(coinsSize: Int) {
         viewModelScope.launch {
+            _isLoading.value = true
             val allCoins = mutableListOf<Coin>()
             val allFavoriteIds = mutableListOf<String>()
 
@@ -121,30 +127,28 @@ class CoinViewModel @Inject constructor(
                     allFavoriteIds.addAll(it)
                 }
             }
-
+            _isLoading.value = false
             _coinList.value = allCoins.map { coin ->
                 coin.mapToUiModel { allFavoriteIds.contains(it) }
             }
-            Log.d("SERVICE_TAG", "${_coinList.value}")
+
         }
     }
 
 
     private fun observeCoin(id: String) {
+
         viewModelScope.launch {
+            _isLoading.value = true
             doSingleCoinRequestUseCase(id).collect {
                 it.result {
-                    _coin.value =    it.mapToUiModel { false }
+                    _isLoading.value = false
+                    _coin.value = it.mapToUiModel { false }
                 }
             }
         }
     }
 
-    private suspend fun load() {
-        _isLoading.value = true
-        delay(1)
-        _isLoading.value = false
-    }
 
     data class CoinUIState(
         val coinsList: List<CoinUIModel> = emptyList(),

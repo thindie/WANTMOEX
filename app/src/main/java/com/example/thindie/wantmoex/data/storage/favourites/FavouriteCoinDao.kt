@@ -18,6 +18,6 @@ interface FavouriteCoinDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavouriteCoin(coin: FavouriteCoinDBModel)
 
-    @Query("DELETE FROM favouriteCoinsTable WHERE id=:favouriteCoinID")
-    suspend fun deleteFavouriteCoin(favouriteCoinID: Int)
+    @Query("DELETE FROM favouriteCoinsTable WHERE fromSymbol=:id")
+    suspend fun deleteFavouriteCoin(id: String)
 }

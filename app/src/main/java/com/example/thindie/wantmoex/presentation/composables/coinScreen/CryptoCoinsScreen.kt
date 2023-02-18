@@ -2,10 +2,7 @@ package com.example.thindie.wantmoex.presentation.composables.coinScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
@@ -72,10 +69,11 @@ fun CoinListElement(
         Column() {
             Text(model.fromSymbol)
         }
+        Spacer(modifier = Modifier.weight(1f))
         Column(horizontalAlignment = Alignment.End) {
             if (isReveal) {
                 IconButton(onClick = {
-                    color = !color; checkModel(
+                    color = !color; addOrDeleteToFavorites(
                     model,
                     onFavoritesDeleted,
                     onFavoritesAdded
@@ -101,7 +99,7 @@ fun CryptoCoinDetailScreen(coin: CoinUIModel) {
 
 }
 
-fun checkModel(model: CoinUIModel, a: (String) -> Unit, b: (String) -> Unit) {
+fun addOrDeleteToFavorites(model: CoinUIModel, a: (String) -> Unit, b: (String) -> Unit) {
     if (model.isFavorite) a(model.fromSymbol) else b(
         model.fromSymbol
     )

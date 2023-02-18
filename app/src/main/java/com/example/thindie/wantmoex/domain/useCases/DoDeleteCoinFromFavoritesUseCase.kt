@@ -1,6 +1,6 @@
 package com.example.thindie.wantmoex.domain.useCases
 
-import com.example.thindie.wantmoex.domain.FavouriteCoinsRepository
+import com.example.thindie.wantmoex.data.storage.FavouriteCoinsRepository
 import javax.inject.Inject
 
 class DoDeleteCoinFromFavoritesUseCase @Inject constructor(

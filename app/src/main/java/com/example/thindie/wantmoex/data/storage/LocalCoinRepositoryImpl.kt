@@ -6,6 +6,7 @@ import com.example.thindie.wantmoex.data.storage.allCoins.CoinDao
 import com.example.thindie.wantmoex.domain.Results
 import com.example.thindie.wantmoex.domain.Results.Error
 import com.example.thindie.wantmoex.domain.Results.Success
+import com.example.thindie.wantmoex.domain.encapsulateResult
 import com.example.thindie.wantmoex.domain.entities.Coin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,23 +19,23 @@ class LocalCoinRepositoryImpl @Inject constructor(
 ) : LocalCoinRepository {
 
     override fun observeAllCoins(): Flow<Results<List<CoinDBModel>>> {
-        return try {
-            flow { Results.Success(local.observeAllCoins()) }
-        } catch (e: Exception) {
-            flow { emit(Results.Error(e)) }
+        return flow {
+            local.observeAllCoins().collect{
+                emit(it.encapsulateResult())
+            }
         }
-    }
+     }
 
     override fun observeAllCoins(limit: Int): Flow<Results<List<CoinDBModel>>> {
         return observeAllCoins()
     }
 
     override fun observeCoin(fromSymbol: String): Flow<Results<CoinDBModel>> {
-        return try {
-            flow { local.observeCoin(fsym = fromSymbol) }
-        } catch (e: Exception) {
-            flow { emit(Results.Error(e)) }
-        }
+         return flow {
+             local.observeCoin(fromSymbol).collect{
+                 emit(it.encapsulateResult())
+             }
+         }
     }
 
     override suspend fun addCoins(list: List<Coin>) {
@@ -45,23 +46,11 @@ class LocalCoinRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCoin(fromSymbol: String): Results<CoinDBModel> {
-        return try {
-            val coin: CoinDBModel = local.getCoin(fromSymbol)
-            coin.fromSymbol
-            Success(coin)
-        } catch (e: Exception) {
-            Error(e)
-        }
+       return local.getCoin(fromSymbol).encapsulateResult()
     }
 
     override suspend fun getAllCoins(): Results<List<CoinDBModel>> {
-        return try {
-            val coin: List<CoinDBModel> = local.getAllCoins()
-            coin[0].fromSymbol
-            Success(local.getAllCoins())
-        } catch (e: Exception) {
-            Error(e)
-        }
+         return local.getAllCoins().encapsulateResult()
     }
 
     override suspend fun getAllCoins(limit: Int): Results<List<CoinDBModel>> {
