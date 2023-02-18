@@ -16,7 +16,7 @@ class CryptoFavoritesRepositoryImpl @Inject constructor(
 
     override fun observeAllFavoriteCoins(): Flow<Results<List<String>>> {
         return flow {
-            favoriteDao.observeAllFavouriteCoins().collect{
+            favoriteDao.observeAllFavouriteCoins().collect {
                 val idList = mutableListOf<String>()
                 it.forEach {
                     idList.add(it.fromSymbol)
@@ -34,10 +34,9 @@ class CryptoFavoritesRepositoryImpl @Inject constructor(
         return list.encapsulateResult()
     }
 
-
     override suspend fun deleteFromFavoriteCoins(id: String) {
         favoriteDao.deleteFavouriteCoin(id)
-        }
+    }
 
     override suspend fun addToFavoriteCoins(id: String) {
         favoriteDao.insertFavouriteCoin(FavouriteCoinDBModel(fromSymbol = id))

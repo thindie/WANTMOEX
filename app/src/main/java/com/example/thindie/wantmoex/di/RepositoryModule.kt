@@ -5,11 +5,11 @@ import com.example.thindie.wantmoex.data.CryptoNewsRepositoryImpl
 import com.example.thindie.wantmoex.data.network.RemoteCoinRepository
 import com.example.thindie.wantmoex.data.network.RemoteCoinRepositoryImpl
 import com.example.thindie.wantmoex.data.storage.CryptoFavoritesRepositoryImpl
+import com.example.thindie.wantmoex.data.storage.FavouriteCoinsRepository
 import com.example.thindie.wantmoex.data.storage.LocalCoinRepository
 import com.example.thindie.wantmoex.data.storage.LocalCoinRepositoryImpl
 import com.example.thindie.wantmoex.domain.CryptoCoinRepository
 import com.example.thindie.wantmoex.domain.CryptoNewsRepository
-import com.example.thindie.wantmoex.data.storage.FavouriteCoinsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

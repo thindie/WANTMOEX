@@ -3,8 +3,8 @@ package com.example.thindie.wantmoex.presentation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.domain.result
+import com.example.thindie.wantmoex.domain.unpackResult
 import com.example.thindie.wantmoex.domain.useCases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -79,8 +79,9 @@ class CoinViewModel @Inject constructor(
     }
 
     fun onShowFavorites() {
+        _isLoading.value = true
         viewModelScope.launch {
-            _isLoading.value = true
+
             val coinUIModelList = mutableListOf<CoinUIModel>()
             getAllFavoriteCoinsUseCase().collect { inResults ->
                 inResults.result { favoriteIds ->
@@ -113,33 +114,20 @@ class CoinViewModel @Inject constructor(
 
     private fun observeCoinList(coinsSize: Int) {
         viewModelScope.launch {
-            _isLoading.value = true
-            val allCoins = mutableListOf<Coin>()
-            val allFavoriteIds = mutableListOf<String>()
-
-            getAllCryptoCoinsUseCase.observeAllCoins(coinsSize).collect { resultCoins ->
-                resultCoins.result {
-                    allCoins.addAll(it)
-                }
-            }
-            getAllFavoriteCoinsUseCase().collect { resultIds ->
-                resultIds.result {
-                    allFavoriteIds.addAll(it)
-                }
-            }
+            val list = getAllFavoriteCoinsUseCase.getAllFavoriteCoins().unpackResult { it }
+            val listCoins = getAllCryptoCoinsUseCase.getAllCoins(coinsSize)
+                .unpackResult { it.map { it.mapToUiModel { list.contains(it) } } }
             _isLoading.value = false
-            _coinList.value = allCoins.map { coin ->
-                coin.mapToUiModel { allFavoriteIds.contains(it) }
-            }
-
+            _coinList.value = listCoins
         }
+
     }
 
 
     private fun observeCoin(id: String) {
-
+        _isLoading.value = true
         viewModelScope.launch {
-            _isLoading.value = true
+
             doSingleCoinRequestUseCase(id).collect {
                 it.result {
                     _isLoading.value = false

@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CryptoCoinsBottomBar(
     onSelectedDestination: (String) -> Unit,
-    onExpandCoins: () -> Unit
+    onExpandCoins: () -> Unit,
 ) {
 
 

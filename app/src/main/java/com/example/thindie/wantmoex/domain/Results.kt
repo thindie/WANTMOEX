@@ -22,6 +22,14 @@ fun <T, R> Results.Success<T>.transformSuccessHandle(mapper: (T) -> R): Results.
     return Results.Success(mapper(this.data))
 }
 
+fun <T> T.encapsulateResult(): Results<T> {
+    if (this == null || (this as Collection<*>).isEmpty()) return Results.Error(
+        NullPointerException(
+            "Bad Results"
+        )
+    )
+    return Results.Success(this)
+}
 
 fun <T, R> Results<T>.result(mapper: (T) -> R): Results<R> {
     return when (this) {
@@ -48,15 +56,16 @@ fun <T, R> Flow<Results<T>>.mutateFlow(mapper: (T) -> R): Flow<Results<R>> {
     }
 }
 
-fun <T, R> Results.Success<T>.unpackResult(mapper: (T) -> R): R {
-    return mapper(this.data)
+fun <T, R> Results<T>.unpackResult(mapper: (T) -> R): R {
+    return when (this) {
+        is Results.Success -> mapper(this.data)
+        is Results.Error -> {
+            throw Exception("something wrong with data on unpack")
+        }
+    }
 }
 
 fun <T, R> Results<T>.transformResultHandle(mapper: (T) -> R): Results<R> {
     return this.result { mapper(it) }
 }
 
-fun <T> T.encapsulateResult( ) : Results<T>{
-    if(this == null || (this as Collection<*>).isEmpty()) return Results.Error(NullPointerException("Bad Results"))
-    return Results.Success(this)
-}
