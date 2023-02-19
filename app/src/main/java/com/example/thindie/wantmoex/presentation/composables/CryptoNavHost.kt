@@ -46,9 +46,6 @@ fun CryptoNavHost(
             onExpandCoins = { viewModel.onExpandCoinsList(state.value.coinsList) })
     }) {
         Box {
-            if (state.value.isLoading) CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-
-
             NavHost(
                 navController = navController,
                 startDestination = startDestination.route,
