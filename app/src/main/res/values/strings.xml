@@ -3,13 +3,13 @@
     <string name="app_name">CryptoView</string>
     <string name="title_activity_news">NewsActivity</string>
     <string name="share">Share with</string>
-    <string name="data_error_remote">Error with Remote data source</string>
-    <string name="data_error_local">Error with Remote local source</string>
-    <string name="default_coins_size">10</string>
-    <string name="default_buffer_size">30</string>
-    <string name="while_subscribed">5000</string>
-    <string name="share4">Share with</string>
-    <string name="shar5e">Share with</string>
+    <string name="coin_id_ticker">Coin: %s</string>
+    <string name="dot"> • </string>
+    <string name="price">$: %s</string>
+    <string name="coin_last_market">traded on: %s</string>
+    <string name="coin_low_today">low today: %s</string>
+    <string name="coin_last_updtated">updated: %s</string>
+    <string name="coin_on_currency"> to %s</string>
     <string name="shar6e">Share with</string>
     <string name="shar7e">Share with</string>
 

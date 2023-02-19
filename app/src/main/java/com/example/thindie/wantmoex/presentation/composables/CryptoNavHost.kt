@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import com.example.thindie.wantmoex.presentation.CoinViewModel
 import com.example.thindie.wantmoex.presentation.composables.coinScreen.CryptoCoinDetailScreen
 import com.example.thindie.wantmoex.presentation.composables.coinScreen.CryptoCoinsScreen
+import com.example.thindie.wantmoex.presentation.composables.util.surfaceColor
 import kotlinx.coroutines.CoroutineScope
 
 @Composable

@@ -25,7 +25,7 @@ fun CoinDTO.map(): CoinDBModel {
         this.market,
         this.fromSymbol,
         this.toSymbol,
-        this.price,
+        this.price.trimPrice(),
         this.lastUpdate,
         this.highDay,
         this.lowDay,
@@ -33,6 +33,7 @@ fun CoinDTO.map(): CoinDBModel {
         this.imageUrl,
     )
 }
+  fun String.trimPrice() = if (this.length > 10) this.subSequence(0,8).toString() else this
 
 
 fun Coin.map(): CoinDBModel {
