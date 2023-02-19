@@ -34,6 +34,8 @@ class RemoteCoinRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCoin(fromSymbol: String): Results<CoinDTO> = withContext(IODispatcher) {
+
+
         try {
             val coin = remote.getCoin(fSyms = fromSymbol).toCoinDTO()
             if (coin != null) {

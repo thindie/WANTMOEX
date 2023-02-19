@@ -9,12 +9,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 
 
-/**
- *  Список содержит в себе наименования Криптовалют. наполняется в fromTotalVolFullToDTOList,
- *  при первичном сетевом запросе. необходим для fromMultiFullToDTO
- *
- */
-private val allCoinsNameContainer = mutableListOf<String>()
+
 
 /**
  * Возращает лист, содержащий в себе модели CoinDTO. Количество моделей ограничено параметром limit в
@@ -28,38 +23,25 @@ fun fromTotalVolFullToDTOList(thisComeFromNetwork: CoinRawTotalVolFullResponseDT
             val coinFullInfo = coinRootJson.coinFullInfoDTO
             val dtoToAdd = getCoinDTOFromCoinFullInfo(coinFullInfo)
             topCoinList.add(dtoToAdd)
-            val coinName = dtoToAdd.fromSymbol
-            if (!allCoinsNameContainer.contains(coinName)) {
-                allCoinsNameContainer.add(coinName)
-            }
-        }
+         }
     }
     return topCoinList.toList()
 }
 
 /**
- * Возвращает лист, содержащий в себе на данном этапе реализации модель CoinDTO за индексом "ноль".
- * сетевой запрос /GET multiFull. По сути метод занимается локализацией заранее неизвестного объекта Json,
- * опираясь на поименный список всех возможных объектов данной реализации.
+ * Возвращает   CoinDTO.
+ * сетевой запрос /GET multiFull.
+ *
  */
-fun fromMultiFullToDTO(thisComeFromNetwork: CoinRawMultiFullResponseDTO): List<CoinDTO> {
-    val resultList: MutableList<CoinDTO> = mutableListOf()
+fun fromMultiFullToDTO(thisComeFromNetwork: CoinRawMultiFullResponseDTO): CoinDTO? {
 
-    allCoinsNameContainer.forEach { alreadyKnownCoinName ->
-        val knownJsonObject = thisComeFromNetwork.jsonObject ?: return resultList
+    val knownJsonObject = thisComeFromNetwork.jsonObject ?: return null
+    val detectedTagTOParseJson = knownJsonObject.entrySet().first().key.toString()
+    val revealDeepJsonObject: JsonObject = knownJsonObject.getAsJsonObject(detectedTagTOParseJson)
+    val coinFullInfoDTO = Gson().fromJson(revealDeepJsonObject, CoinFullInfoDTO::class.java)
+    return   getCoinDTOFromCoinFullInfo(coinFullInfoDTO)
 
-        val keySetOfKnownObject = knownJsonObject.keySet()
-        for (eachKey in keySetOfKnownObject) {
-            if (eachKey == alreadyKnownCoinName) {
-                val revealDeepJsonObject: JsonObject? =
-                    knownJsonObject.getAsJsonObject(alreadyKnownCoinName)
-                val coinFullInfoDTO =
-                    Gson().fromJson(revealDeepJsonObject, CoinFullInfoDTO::class.java)
-                resultList.add(getCoinDTOFromCoinFullInfo(coinFullInfoDTO))
-            }
-        }
-    }
-    return resultList.toList()
+
 }
 
 
@@ -74,7 +56,7 @@ fun CoinRawTotalVolFullResponseDTO?.toCoinListDTO(): List<CoinDTO>? {
 }
 
 fun CoinRawMultiFullResponseDTO?.toCoinDTO(): CoinDTO? {
-    return this?.let { fromMultiFullToDTO(it) }?.get(0)
+    return this?.let { fromMultiFullToDTO(it) }
 }
 
 

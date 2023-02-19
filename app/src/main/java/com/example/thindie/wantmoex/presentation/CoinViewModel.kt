@@ -81,24 +81,23 @@ class CoinViewModel @Inject constructor(
     fun onShowFavorites() {
         _isLoading.value = true
         viewModelScope.launch {
+             val coinsList = mutableListOf<CoinUIModel>()
+            val idList = getAllFavoriteCoinsUseCase.getAllFavoriteCoins()
+                    .unpackResult { it }
 
-            val coinUIModelList = mutableListOf<CoinUIModel>()
-            getAllFavoriteCoinsUseCase().collect { inResults ->
-                inResults.result { favoriteIds ->
-                    favoriteIds.forEach { id ->
-                        doSingleCoinRequestUseCase(id).onEach {
-                            it.result { coin ->
-                                coinUIModelList.add(coin.mapToUiModel { true })  //favoriteCoin = true
+                   idList?.map {
+                        doSingleCoinRequestUseCase
+                            .getCoin(it)
+                            .unpackResult {
+                               coinsList.add(( it.mapToUiModel { true }))
                             }
-                        }.launchIn(viewModelScope)
-                    }
-                }
-            }
+                    } ?: emptyList()
             _isLoading.value = false
-            _coinList.value = coinUIModelList
-        }
+            _coinList.value = coinsList
 
+        }
     }
+
 
     fun onShowList(size: Int?) {
         if (size == null) observeCoinList() else observeCoinList(size)
@@ -116,9 +115,9 @@ class CoinViewModel @Inject constructor(
         viewModelScope.launch {
             val list = getAllFavoriteCoinsUseCase.getAllFavoriteCoins().unpackResult { it }
             val listCoins = getAllCryptoCoinsUseCase.getAllCoins(coinsSize)
-                .unpackResult { it.map { it.mapToUiModel { list.contains(it) } } }
+                .unpackResult { it.map { it.mapToUiModel { list?.contains(it) ?: false } } }
             _isLoading.value = false
-            _coinList.value = listCoins
+            _coinList.value = listCoins ?: emptyList()
         }
 
     }

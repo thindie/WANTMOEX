@@ -22,7 +22,6 @@ fun CryptoNavHost(
     viewModel: CoinViewModel = hiltViewModel(),
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
-    Log.d("SERVICE_TAh", "${state.value.coinsList}")
 
     val reNewUi: (String) -> Unit = { renewThat ->
         mapOf(
@@ -48,7 +47,8 @@ fun CryptoNavHost(
                 composable(route = Coins.route) {
                     CryptoCoinsScreen(
                         onClickCoin = { route, id ->
-                            viewModel.onChoseCoin(id);navController.navigateSingleTopTo(route)
+                            viewModel.onChoseCoin(id);
+                            navController.navigateSingleTopTo(route)
                         },
                         onFavoritesAdded = { addFavoriteCoin(it) },
                         onFavoritesDeleted = { deleteFavoriteCoin(it) },
@@ -65,7 +65,8 @@ fun CryptoNavHost(
                 composable(route = FavoriteCoins.route) {
                     CryptoCoinsScreen(
                         onClickCoin = { route, id ->
-                            viewModel.onChoseCoin(id);navController.navigateSingleTopTo(route)
+                            viewModel.onChoseCoin(id);
+                            navController.navigateSingleTopTo(route)
                         },
                         onFavoritesAdded = { addFavoriteCoin(it) },
                         onFavoritesDeleted = { deleteFavoriteCoin(it) },
