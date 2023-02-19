@@ -7,6 +7,7 @@ import com.example.thindie.wantmoex.data.network.dto.toCoinListDTO
 import com.example.thindie.wantmoex.data.network.retrofit.CryptoCoinsApiService
 import com.example.thindie.wantmoex.di.DispatchersModule
 import com.example.thindie.wantmoex.domain.Results
+import com.example.thindie.wantmoex.domain.encapsulateResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -34,34 +35,14 @@ class RemoteCoinRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCoin(fromSymbol: String): Results<CoinDTO> = withContext(IODispatcher) {
-
-
-        try {
-            val coin = remote.getCoin(fSyms = fromSymbol).toCoinDTO()
-            if (coin != null) {
-                return@withContext Results.Success(coin)
-            } else {
-                return@withContext Results.Error(Exception(R.string.data_error_remote.toString()))
-            }
-        } catch (e: Exception) {
-            return@withContext Results.Error(e)
-        }
+        return@withContext remote.getCoin(fSyms = fromSymbol).toCoinDTO()?.encapsulateResult()!!  //on null = Result(Error)
     }
 
     override suspend fun getAllCoins(): Results<List<CoinDTO>> = getAllCoins(LIMIT)
 
     override suspend fun getAllCoins(limit: Int): Results<List<CoinDTO>> =
         withContext(IODispatcher) {
-            try {
-                val coins = remote.getTopCoins(limit = limit).toCoinListDTO()
-                if (coins.isNullOrEmpty()) {
-                    return@withContext Results.Error(Exception(R.string.data_error_remote.toString()))
-                } else {
-                    return@withContext Results.Success(coins)
-                }
-            } catch (e: Exception) {
-                return@withContext Results.Error(e)
-            }
+         return@withContext   remote.getTopCoins(limit = limit).toCoinListDTO()?.encapsulateResult()!!
         }
 
     companion object {
