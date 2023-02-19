@@ -23,22 +23,22 @@ fun <T, R> Results.Success<T>.transformSuccessHandle(mapper: (T) -> R): Results.
 }
 
 fun <T : Any?> T.encapsulateResult(): Results<T> {
-
-    if (this as Any? == null) {
+    val t: T = this
+    if (t as Any? == null) {
         return Results.Error(
-            NullPointerException("Bad Results")
+            NullPointerException("Bad Results - null obj on encapsulation")
         )
     }
-    if (this is Collection<*>) {
-        if ((this as Collection<*>).isEmpty()) {
+    if (t is Collection<*>) {
+        if ((t as Collection<*>).isEmpty()) {
             return Results.Error(
-                NullPointerException("Bad Results")
+                NullPointerException("Bad Results - empty Iterable<{$t}> here. data lost / or not received")
             )
         }
     }
 
 
-    return Results.Success(this)
+    return Results.Success(t)
 }
 
 
@@ -48,7 +48,7 @@ fun <T, R> Results<T>.result(mapper: (T) -> R): Results<R> {
             this.transformSuccessHandle { mapper(it) }
         }
         is Results.Error -> {
-            Results.Error(Exception("on result"))
+            Results.Error(Exception(this.toString()))
         }
     }
 }
