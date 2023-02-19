@@ -51,7 +51,7 @@ class CoinViewModel @Inject constructor(
 
 
     private fun saveState() {
-        savedStateHandle[VIEW_STATE] = viewState.value
+        // savedStateHandle[VIEW_STATE] = viewState.value
     }
 
     fun onStart() {
@@ -81,17 +81,17 @@ class CoinViewModel @Inject constructor(
     fun onShowFavorites() {
         _isLoading.value = true
         viewModelScope.launch {
-             val coinsList = mutableListOf<CoinUIModel>()
+            val coinsList = mutableListOf<CoinUIModel>()
             val idList = getAllFavoriteCoinsUseCase.getAllFavoriteCoins()
-                    .unpackResult { it }
+                .unpackResult { it }
 
-                   idList?.map {
-                        doSingleCoinRequestUseCase
-                            .getCoin(it)
-                            .unpackResult {
-                               coinsList.add(( it.mapToUiModel { true }))
-                            }
-                    } ?: emptyList()
+            idList?.map {
+                doSingleCoinRequestUseCase
+                    .getCoin(it)
+                    .unpackResult {
+                        coinsList.add((it.mapToUiModel { true }))
+                    }
+            } ?: emptyList()
             _isLoading.value = false
             _coinList.value = coinsList
 

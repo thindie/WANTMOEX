@@ -1,6 +1,5 @@
 package com.example.thindie.wantmoex.data.network
 
-import com.example.thindie.wantmoex.R
 import com.example.thindie.wantmoex.data.network.dto.CoinDTO
 import com.example.thindie.wantmoex.data.network.dto.toCoinDTO
 import com.example.thindie.wantmoex.data.network.dto.toCoinListDTO
@@ -35,14 +34,16 @@ class RemoteCoinRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCoin(fromSymbol: String): Results<CoinDTO> = withContext(IODispatcher) {
-        return@withContext remote.getCoin(fSyms = fromSymbol).toCoinDTO()?.encapsulateResult()!!  //on null = Result(Error)
+        return@withContext remote.getCoin(fSyms = fromSymbol).toCoinDTO()
+            ?.encapsulateResult()!!  //on null = Result(Error)
     }
 
     override suspend fun getAllCoins(): Results<List<CoinDTO>> = getAllCoins(LIMIT)
 
     override suspend fun getAllCoins(limit: Int): Results<List<CoinDTO>> =
         withContext(IODispatcher) {
-         return@withContext   remote.getTopCoins(limit = limit).toCoinListDTO()?.encapsulateResult()!!
+            return@withContext remote.getTopCoins(limit = limit).toCoinListDTO()
+                ?.encapsulateResult()!!
         }
 
     companion object {

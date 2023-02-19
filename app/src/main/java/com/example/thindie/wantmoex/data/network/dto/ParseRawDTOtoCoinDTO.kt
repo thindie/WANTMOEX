@@ -9,8 +9,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 
 
-
-
 /**
  * Возращает лист, содержащий в себе модели CoinDTO. Количество моделей ограничено параметром limit в
  * сетевом запросе /GET totalVolFull.
@@ -23,7 +21,7 @@ fun fromTotalVolFullToDTOList(thisComeFromNetwork: CoinRawTotalVolFullResponseDT
             val coinFullInfo = coinRootJson.coinFullInfoDTO
             val dtoToAdd = getCoinDTOFromCoinFullInfo(coinFullInfo)
             topCoinList.add(dtoToAdd)
-         }
+        }
     }
     return topCoinList.toList()
 }
@@ -39,7 +37,7 @@ fun fromMultiFullToDTO(thisComeFromNetwork: CoinRawMultiFullResponseDTO): CoinDT
     val detectedTagTOParseJson = knownJsonObject.entrySet().first().key.toString()
     val revealDeepJsonObject: JsonObject = knownJsonObject.getAsJsonObject(detectedTagTOParseJson)
     val coinFullInfoDTO = Gson().fromJson(revealDeepJsonObject, CoinFullInfoDTO::class.java)
-    return   getCoinDTOFromCoinFullInfo(coinFullInfoDTO)
+    return getCoinDTOFromCoinFullInfo(coinFullInfoDTO)
 
 
 }

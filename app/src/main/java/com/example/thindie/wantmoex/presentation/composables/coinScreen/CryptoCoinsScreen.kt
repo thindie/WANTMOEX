@@ -19,6 +19,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.presentation.CoinUIModel
 import com.example.thindie.wantmoex.presentation.CoinViewModel
 import com.example.thindie.wantmoex.presentation.composables.CoinInFocus
+import com.example.thindie.wantmoex.presentation.composables.util.ColorShimmer
+import com.example.thindie.wantmoex.presentation.composables.util.LoadingContent
 import com.example.thindie.wantmoex.presentation.theme.md_theme_dark_onError
 import com.example.thindie.wantmoex.presentation.theme.md_theme_dark_surfaceTint
 
@@ -27,18 +29,25 @@ fun CryptoCoinsScreen(
     onClickCoin: (String, String) -> Unit,
     onFavoritesDeleted: (String) -> Unit,
     onFavoritesAdded: (String) -> Unit,
+    onRefresh: () -> Unit,
     state: CoinViewModel.CoinUIState,
 ) {
-    LazyColumn(
-    ) {
-        items(state.coinsList) { coinItem ->
-            CoinListElement(
-                model = coinItem,
-                isReveal = coinItem.isShowExpand,
-                onFavoritesAdded = onFavoritesAdded,
-                onFavoritesDeleted = onFavoritesDeleted,
-                onClickCoin = { onClickCoin(CoinInFocus.route, coinItem.fromSymbol) }
-            )
+    LoadingContent(
+        isLoading = state.isLoading,
+        isEmpty = state.coinsList.isEmpty(),
+        emptyContent = { ColorShimmer() },
+        onRefresh = { onRefresh() }) {
+        LazyColumn(
+        ) {
+            items(state.coinsList) { coinItem ->
+                CoinListElement(
+                    model = coinItem,
+                    isReveal = coinItem.isShowExpand,
+                    onFavoritesAdded = onFavoritesAdded,
+                    onFavoritesDeleted = onFavoritesDeleted,
+                    onClickCoin = { onClickCoin(CoinInFocus.route, coinItem.fromSymbol) }
+                )
+            }
         }
     }
 }
@@ -94,13 +103,11 @@ fun CoinListElement(
 
 @Composable
 fun CryptoCoinDetailScreen(coin: CoinUIModel) {
-
     Text(text = coin.fromSymbol)
-
 }
 
-fun addOrDeleteToFavorites(model: CoinUIModel, a: (String) -> Unit, b: (String) -> Unit) {
-    if (model.isFavorite) a(model.fromSymbol) else b(
+fun addOrDeleteToFavorites(model: CoinUIModel, del: (String) -> Unit, add: (String) -> Unit) {
+    if (model.isFavorite) del(model.fromSymbol) else add(
         model.fromSymbol
     )
 }

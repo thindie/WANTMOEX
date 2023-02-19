@@ -17,24 +17,7 @@ data class CoinUIModel(
 )
 
 
-private val fromCoinToUILazy: (Coin) -> CoinUIModel = { domainModel: Coin ->
-    CoinUIModel(
-        domainModel.market,
-        domainModel.fromSymbol,
-        domainModel.toSymbol,
-        domainModel.price,
-        domainModel.lastUpdate,
-        domainModel.highDay,
-        domainModel.lowDay,
-        domainModel.lastMarket,
-        domainModel.imageUrl,
-        isFavorite = false,
-        isShowExpand = false
-
-    )
-}
-
-private val fromCoinToUIDeep: (Boolean, Coin) -> CoinUIModel =
+private val fromCoinToUImodel: (Boolean, Coin) -> CoinUIModel =
     { isFavorite: Boolean, domainModel: Coin ->
         CoinUIModel(
             domainModel.market,
@@ -52,5 +35,5 @@ private val fromCoinToUIDeep: (Boolean, Coin) -> CoinUIModel =
     }
 
 fun Coin.mapToUiModel(mapper: (String) -> Boolean): CoinUIModel {
-    return fromCoinToUIDeep(mapper(this.fromSymbol), this)
+    return fromCoinToUImodel(mapper(this.fromSymbol), this)
 }
