@@ -7,6 +7,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun CryptoCoinsBottomBar(
@@ -16,7 +17,8 @@ fun CryptoCoinsBottomBar(
 
     BottomAppBar(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        tonalElevation = 8.dp
     ) {
         with(onSelectedDestination) {
             CryptoMoveTo(destination = Coins, onClick = this)

@@ -56,7 +56,18 @@ fun CryptoNavHost(
                     ); navController.navigateSingleTopTo(it)
                 },
                 onExpandCoins = { viewModel.onExpandCoinsList(state.value.coinsList) })
-        }) {
+        },
+        drawerContent = {
+            CryptoDrawer(
+                drawerState = drawerState,
+                coroutineScope = coroutineScope,
+                onSelectTags = {},
+                onSelectedLimit = { }
+            )
+        })
+
+
+    {
         Box {
             NavHost(
                 navController = navController,
@@ -90,7 +101,7 @@ fun CryptoNavHost(
                             reNewUi(route, id)
                             navController.navigateSingleTopTo(route)
                         },
-                        onRefresh = viewModel::onRefresh,
+                        onRefresh = viewModel::onShowFavorites,
                         onFavoritesAdded = { addFavoriteCoin(it) },
                         onFavoritesDeleted = { deleteFavoriteCoin(it) },
                         state = state.value

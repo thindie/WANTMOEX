@@ -68,18 +68,27 @@ fun <T, R> Flow<Results<T>>.mutateFlow(mapper: (T) -> R): Flow<Results<R>> {
 }
 
 fun <T, R : Any> Results<T>.unpackResult(mapper: (T) -> R): R? {
-     when (this) {
+    when (this) {
         is Results.Success -> {
-             if (this.data == null){ return null }
-             if((this.data as Collection<*>).isEmpty()){ return null }
+            if (this.data == null) {
+                return null
+            }
+            if (this.data is Collection<*>) {
+                return if ((this.data as Collection<*>).isEmpty()) {
+                    null
+                } else mapper(this.data)
+            }
+            if (this.data !is Collection<*>) {
+                return mapper(this.data)
+            }
             return mapper(this.data)
         }
         is Results.Error -> {
             return null
         }
     }
-}
 
+}
 
 fun <T, R> Results<T>.transformResultHandle(mapper: (T) -> R): Results<R> {
     return this.result { mapper(it) }

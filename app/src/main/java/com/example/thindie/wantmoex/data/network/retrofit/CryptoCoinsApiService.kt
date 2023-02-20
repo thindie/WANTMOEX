@@ -41,8 +41,8 @@ interface CryptoCoinsApiService {
         //NEWS
         private const val LANGUAGE = "EN"
         private const val QUERY_PARAM_LANGUAGE = "lang"
-        private const val BTC = "BTC"
         private const val COMMA = ","
+        private const val BTC = "BTC"
         private const val ETH = "ETH"
         private const val XRP = "XRP"
         private const val DOGE = "DOGE"

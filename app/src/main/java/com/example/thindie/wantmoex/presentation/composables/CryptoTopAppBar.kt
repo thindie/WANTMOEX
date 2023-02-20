@@ -25,7 +25,7 @@ fun CryptoTopAppbar(
         modifier = Modifier
             .surfaceColor()
             .height(80.dp),
-        elevation = 60.dp,
+        elevation = 6.dp,
         backgroundColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface,
         contentPadding = PaddingValues(start = 8.dp, top = 20.dp, end = 16.dp, bottom = 20.dp)

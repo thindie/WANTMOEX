@@ -15,6 +15,12 @@
     <string name="favorites">Favorites</string>
     <string name="coins">Coins</string>
     <string name="news">News</string>
+    <string name="BTC">BTC</string>
+    <string name="ETH">ETH</string>
+    <string name="XRP">XRP</string>
+    <string name="DOGE">DOGE</string>
+    <string name="SHIBA">SHIBA</string>
     <string name="coin_details">Coin</string>
+    <string name="onDone">Tags OK</string>
 
 </resources>
