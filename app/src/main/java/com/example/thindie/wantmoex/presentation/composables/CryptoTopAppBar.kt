@@ -1,0 +1,38 @@
+package com.example.thindie.wantmoex.presentation.composables
+
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.example.thindie.wantmoex.presentation.composables.util.HeadLine
+import com.example.thindie.wantmoex.presentation.composables.util.surfaceColor
+
+@Composable
+fun CryptoTopAppbar(
+    @StringRes resource: Int,
+    onClickTopAppbar: () -> Unit,
+) {
+    TopAppBar(
+        modifier = Modifier
+            .surfaceColor()
+            .height(80.dp),
+        elevation = 60.dp,
+        backgroundColor = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        contentPadding = PaddingValues(start = 8.dp, top = 20.dp, end = 16.dp, bottom = 20.dp)
+    ) {
+        IconButton(onClick = { onClickTopAppbar() }) {
+            Icon(imageVector = Icons.Default.Menu, contentDescription = null)
+        }
+        stringResource(id = resource).HeadLine()
+    }
+}

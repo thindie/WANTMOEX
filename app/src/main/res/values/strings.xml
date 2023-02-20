@@ -12,6 +12,9 @@
     <string name="coin_last_updtated">• updated: %s</string>
     <string name="coin_on_currency"> to %s</string>
     <string name="coin_open_day">• opened today: %s $</string>
-    <string name="shar7e">Share with</string>
+    <string name="favorites">Favorites</string>
+    <string name="coins">Coins</string>
+    <string name="news">News</string>
+    <string name="coin_details">Coin</string>
 
 </resources>
