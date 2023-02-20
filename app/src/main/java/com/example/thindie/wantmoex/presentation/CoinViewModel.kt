@@ -7,6 +7,7 @@ import com.example.thindie.wantmoex.domain.result
 import com.example.thindie.wantmoex.domain.unpackResult
 import com.example.thindie.wantmoex.domain.useCases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,9 +55,19 @@ class CoinViewModel @Inject constructor(
         // savedStateHandle[VIEW_STATE] = viewState.value
     }
 
-    fun onStart() {
+    fun onRefresh() {
         viewModelScope.launch {
             observeCoinList()
+        }
+    }
+
+    fun onStart() {
+        viewModelScope.launch {
+            val list = getAllFavoriteCoinsUseCase.getAllFavoriteCoins().unpackResult { it }
+            val listCoins = getAllCryptoCoinsUseCase.getAllCoins(TOP_COINS)
+                .unpackResult { it.map { it.mapToUiModel { list?.contains(it) ?: false } } }
+            _isLoading.value = false
+            _coinList.value = listCoins ?: emptyList()
         }
     }
 
@@ -113,13 +124,32 @@ class CoinViewModel @Inject constructor(
 
     private fun observeCoinList(coinsSize: Int) {
         viewModelScope.launch {
-            val list = getAllFavoriteCoinsUseCase.getAllFavoriteCoins().unpackResult { it }
-            val listCoins = getAllCryptoCoinsUseCase.getAllCoins(coinsSize)
-                .unpackResult { it.map { it.mapToUiModel { list?.contains(it) ?: false } } }
+            _isLoading.value = true
+
+            val ids = mutableListOf<String>()
+            val coins = mutableListOf<CoinUIModel>()
+            getAllFavoriteCoinsUseCase().onEach {
+                it.unpackResult { it }
+            }.launchIn(viewModelScope)
+
+            getAllCryptoCoinsUseCase.observeAllCoins(coinsSize).onEach {
+                it.result { coins.addAll(it.map { it.mapToUiModel { ids.contains(it) } }) }
+            }.launchIn(viewModelScope)
+            delay(TO_LOAD_DATA)
+
             _isLoading.value = false
-            _coinList.value = listCoins ?: emptyList()
+            _coinList.value = emptyList()
+            _coinList.value = coins
+
         }
 
+
+        /*
+          val list = getAllFavoriteCoinsUseCase.getAllFavoriteCoins().unpackResult { it }
+          val listCoins = getAllCryptoCoinsUseCase.getAllCoins(coinsSize)
+              .unpackResult { it.map { it.mapToUiModel { list?.contains(it) ?: false } } }
+          _isLoading.value = false
+          _coinList.value = listCoins ?: emptyList()*/
     }
 
 
@@ -144,6 +174,7 @@ class CoinViewModel @Inject constructor(
     )
 
     companion object {
+        private const val TO_LOAD_DATA = 2500L
         private const val TIMEOUT = 5000L
         private const val INIT_COINS = 30
         private const val TOP_COINS = 10

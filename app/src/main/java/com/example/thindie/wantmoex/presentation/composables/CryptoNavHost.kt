@@ -50,7 +50,7 @@ fun CryptoNavHost(
             NavHost(
                 navController = navController,
                 startDestination = startDestination.route,
-                modifier = Modifier.padding(it)
+                modifier = Modifier.padding(it).surfaceColor()
             ) {
                 composable(route = Coins.route) {
                     CryptoCoinsScreen(
@@ -58,7 +58,7 @@ fun CryptoNavHost(
                             reNewUi(route, id)
                             navController.navigateSingleTopTo(route)
                         },
-                        onRefresh = {},
+                        onRefresh = viewModel::onRefresh,
                         onFavoritesAdded = { addFavoriteCoin(it) },
                         onFavoritesDeleted = { deleteFavoriteCoin(it) },
                         state = state.value
@@ -77,7 +77,7 @@ fun CryptoNavHost(
                             reNewUi(route, id)
                             navController.navigateSingleTopTo(route)
                         },
-                        onRefresh = {},
+                        onRefresh = viewModel::onRefresh,
                         onFavoritesAdded = { addFavoriteCoin(it) },
                         onFavoritesDeleted = { deleteFavoriteCoin(it) },
                         state = state.value

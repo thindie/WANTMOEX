@@ -40,23 +40,26 @@ fun CryptoCoinsScreen(
         isEmpty = state.coinsList.isEmpty(),
         emptyContent = { ColorShimmer() },
         onRefresh = { onRefresh() }) {
-        LazyColumn(
-            modifier = Modifier
-                .surfaceColor()
-                .fillMaxSize()
-        )
-        {
-            items(state.coinsList) { coinItem ->
-                CoinListElement(
-                    model = coinItem,
-                    isReveal = coinItem.isShowExpand,
-                    onFavoritesAdded = onFavoritesAdded,
-                    onFavoritesDeleted = onFavoritesDeleted,
-                    onClickCoin = { onClickCoin(CoinInFocus.route, coinItem.fromSymbol) }
-                )
+
+            LazyColumn(
+                modifier = Modifier
+                    .surfaceColor()
+                    .fillMaxSize()
+            )
+            {
+                items(state.coinsList) { coinItem ->
+                    CoinListElement(
+                        model = coinItem,
+                        isReveal = coinItem.isShowExpand,
+                        onFavoritesAdded = onFavoritesAdded,
+                        onFavoritesDeleted = onFavoritesDeleted,
+                        onClickCoin = { onClickCoin(CoinInFocus.route, coinItem.fromSymbol) }
+                    )
+                }
             }
         }
-    }
+
+
 }
 
 
@@ -146,7 +149,9 @@ fun CryptoCoinDetailScreen(coin: CoinUIModel) {
                 .padding(all = 16.dp)
         ) {
             Spacer(modifier = Modifier.height(80.dp))
-            Row(modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp)) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 10.dp)) {
                 Column(modifier = Modifier.halfScreenColumns()) {
                     Image(
                         painter = rememberAsyncImagePainter(model = coin.imageUrl),
@@ -189,10 +194,13 @@ fun CryptoCoinDetailScreen(coin: CoinUIModel) {
             Divider(
                 thickness = Dp.Hairline,
                 modifier = Modifier
-                    .onSurfaceColor().padding( bottom = 1.dp)
+                    .onSurfaceColor()
+                    .padding(bottom = 1.dp)
             )
 
-            Row(modifier = Modifier.eightStartPadding().padding(top = 20.dp)) {
+            Row(modifier = Modifier
+                .eightStartPadding()
+                .padding(top = 20.dp)) {
                 onText(res = R.string.coin_id_ticker, text = coin.fromSymbol).HeadLine()
                 Spacer(modifier = Modifier.weight(0.4f))
                 stringResource(id = R.string.dot).Mini()
