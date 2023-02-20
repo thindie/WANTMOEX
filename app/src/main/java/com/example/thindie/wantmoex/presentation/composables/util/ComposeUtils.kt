@@ -62,10 +62,7 @@ fun String.Medium() =
         )
     }
 
-@Composable
-fun onText(res: Int, text: String): String {
-    return String.format(stringResource(id = res), text)
-}
+
 
 fun Modifier.eightEndPadding() = this.padding(end = 8.dp)
 fun Modifier.eightStartPadding() = this.padding(start = 8.dp)
@@ -92,6 +89,8 @@ fun Long.toTime(): String {
                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeDifference))
     )
 }
+
+
 
 fun <T, R : T> Iterable<T>.approveCheck(r: R): List<T> {
     val l = this.toMutableList()

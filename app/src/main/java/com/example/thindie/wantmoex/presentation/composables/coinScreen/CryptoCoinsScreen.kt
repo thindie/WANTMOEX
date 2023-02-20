@@ -90,9 +90,9 @@ fun CoinListElement(
                 )
             }
             Column(modifier = Modifier.eightStartPadding()) {
-                onText(res = R.string.coin_id_ticker, text = model.fromSymbol).HeadLine()
-                onText(res = R.string.coin_last_market, text = model.lastMarket).Medium()
-                onText(res = R.string.coin_last_updtated, text = model.lastUpdate.toTime())
+                stringResource(  R.string.coin_id_ticker,  model.fromSymbol).HeadLine()
+                stringResource( R.string.coin_last_market,  model.lastMarket).Medium()
+                stringResource(  R.string.coin_last_updtated,   model.lastUpdate.toTime())
                     .plus(stringResource(id = R.string.dot))
                     .Mini()
 
@@ -159,13 +159,13 @@ fun CryptoCoinDetailScreen(coin: CoinUIModel) {
                     )
                 }
                 Column(modifier = Modifier.halfScreenColumns()) {
-                    onText(
-                        res = R.string.coin_last_updtated,
-                        text = coin.lastUpdate.toTime()
+                    stringResource(
+                         R.string.coin_last_updtated,
+                         coin.lastUpdate.toTime()
                     ).Mini()
-                    onText(res = R.string.price, text = coin.price).HeadLine()
-                    onText(res = R.string.coin_open_day, text = coin.openDay).Medium()
-                    onText(res = R.string.coin_last_market, text = coin.market).Medium()
+                    stringResource(  R.string.price,  coin.price).HeadLine()
+                    stringResource(  R.string.coin_open_day,  coin.openDay).Medium()
+                    stringResource(  R.string.coin_last_market,   coin.market).Medium()
                 }
                 Column() {
                     if (coin.isGrowing) {
@@ -201,12 +201,12 @@ fun CryptoCoinDetailScreen(coin: CoinUIModel) {
             Row(modifier = Modifier
                 .eightStartPadding()
                 .padding(top = 20.dp)) {
-                onText(res = R.string.coin_id_ticker, text = coin.fromSymbol).HeadLine()
+                stringResource(  R.string.coin_id_ticker,  coin.fromSymbol).HeadLine()
                 Spacer(modifier = Modifier.weight(0.4f))
                 stringResource(id = R.string.dot).Mini()
-                onText(res = R.string.coin_low_today, text = coin.lowDay).Body()
+                stringResource(  R.string.coin_low_today,   coin.lowDay).Body()
                 stringResource(id = R.string.dot).Mini()
-                onText(res = R.string.coin_high_today, text = coin.highDay).Body()
+                stringResource( R.string.coin_high_today,  coin.highDay).Body()
             }
 
         }
