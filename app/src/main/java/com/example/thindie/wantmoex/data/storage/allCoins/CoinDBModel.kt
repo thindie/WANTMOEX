@@ -12,6 +12,7 @@ data class CoinDBModel(
     val toSymbol: String,
     val price: String,
     val lastUpdate: Long,
+    val openDay: String,
     val highDay: String,
     val lowDay: String,
     val lastMarket: String,

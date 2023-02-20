@@ -3,6 +3,7 @@ package com.example.thindie.wantmoex.presentation.composables.util
 import android.os.Build
 import android.os.SystemClock
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
@@ -64,7 +65,7 @@ fun Modifier.eightStartPadding() = this.padding(start = 8.dp)
 fun Modifier.surfaceColor() = composed { this.background(MaterialTheme.colorScheme.surface) }
 fun Modifier.onSurfaceColor() = composed { this.background(MaterialTheme.colorScheme.onSurface) }
 
-
+fun Modifier.halfScreenColumns() =  this.fillMaxWidth(0.5f)
 fun Long.toTime(): String {
     val currentTime = try {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

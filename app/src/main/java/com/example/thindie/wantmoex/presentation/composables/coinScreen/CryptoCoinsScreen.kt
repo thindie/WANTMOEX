@@ -7,11 +7,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -37,7 +40,11 @@ fun CryptoCoinsScreen(
         isEmpty = state.coinsList.isEmpty(),
         emptyContent = { ColorShimmer() },
         onRefresh = { onRefresh() }) {
-        LazyColumn(modifier = Modifier.surfaceColor().fillMaxSize())
+        LazyColumn(
+            modifier = Modifier
+                .surfaceColor()
+                .fillMaxSize()
+        )
         {
             items(state.coinsList) { coinItem ->
                 CoinListElement(
@@ -89,7 +96,12 @@ fun CoinListElement(
                 Spacer(modifier = Modifier.eightStartPadding())
             }
             Column(modifier = Modifier.eightEndPadding()) {
-                String.format(stringResource(id = R.string.price), model.price).HeadLine()
+                stringResource(id = R.string.price, model.price).HeadLine()
+                Text(
+                    text = model.percentDelta,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = if (model.isGrowing) Color.Green else Color.Red
+                )
             }
             Spacer(modifier = Modifier.weight(1f))
             Column(horizontalAlignment = Alignment.End) {
@@ -118,7 +130,79 @@ fun CoinListElement(
 
 @Composable
 fun CryptoCoinDetailScreen(coin: CoinUIModel) {
-    Text(text = coin.fromSymbol)
+
+    Surface(
+        color = MaterialTheme.colorScheme.surface,
+        modifier = Modifier
+            .surfaceColor()
+            .fillMaxSize()
+    ) {
+
+        Column(
+            modifier = Modifier
+                .surfaceColor()
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(all = 16.dp)
+        ) {
+            Spacer(modifier = Modifier.height(80.dp))
+            Row(modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp)) {
+                Column(modifier = Modifier.halfScreenColumns()) {
+                    Image(
+                        painter = rememberAsyncImagePainter(model = coin.imageUrl),
+                        contentDescription = ""
+                    )
+                }
+                Column(modifier = Modifier.halfScreenColumns()) {
+                    onText(
+                        res = R.string.coin_last_updtated,
+                        text = coin.lastUpdate.toTime()
+                    ).Mini()
+                    onText(res = R.string.price, text = coin.price).HeadLine()
+                    onText(res = R.string.coin_open_day, text = coin.openDay).Medium()
+                    onText(res = R.string.coin_last_market, text = coin.market).Medium()
+                }
+                Column() {
+                    if (coin.isGrowing) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowUpward,
+                            contentDescription = "",
+                            tint = Color.Green
+                        )
+
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDownward,
+                            contentDescription = "",
+                            tint = Color.Red
+                        )
+                    }
+
+                    Text(
+                        text = coin.percentDelta,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (coin.isGrowing) Color.Green else Color.Red
+                    )
+                }
+
+            }
+            Divider(
+                thickness = Dp.Hairline,
+                modifier = Modifier
+                    .onSurfaceColor().padding( bottom = 1.dp)
+            )
+
+            Row(modifier = Modifier.eightStartPadding().padding(top = 20.dp)) {
+                onText(res = R.string.coin_id_ticker, text = coin.fromSymbol).HeadLine()
+                Spacer(modifier = Modifier.weight(0.4f))
+                stringResource(id = R.string.dot).Mini()
+                onText(res = R.string.coin_low_today, text = coin.lowDay).Body()
+                stringResource(id = R.string.dot).Mini()
+                onText(res = R.string.coin_high_today, text = coin.highDay).Body()
+            }
+
+        }
+    }
 }
 
 fun addOrDeleteToFavorites(model: CoinUIModel, del: (String) -> Unit, add: (String) -> Unit) {

@@ -1,15 +1,19 @@
 package com.example.thindie.wantmoex.domain.entities
 
+
 data class Coin(
     val market: String,
     val fromSymbol: String,
     val toSymbol: String,
     val price: String,
     val lastUpdate: Long,
+    val openDay: String,
     val highDay: String,
     val lowDay: String,
     val lastMarket: String,
     val imageUrl: String,
+    val isGrowing: Boolean = openDay.toDouble() < price.toDouble(),
+    val percentDelta: String = isGrowing.percentDelta(price.toDouble(), openDay.toDouble()),
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -23,4 +27,32 @@ data class Coin(
     override fun hashCode(): Int {
         return 31 * fromSymbol.hashCode()
     }
+
+
 }
+
+private const val EXPRESSION = "%s%s"
+private const val PERCENTAGE_PLUS = "+"
+private const val PERCENTAGE_MINUS= "-"
+private const val PERCENT = "%"
+
+fun Boolean.percentDelta(currentPrice: Double, openPrice: Double): String {
+
+    return if (this) {
+
+        String.format(
+            EXPRESSION, PERCENTAGE_PLUS,
+            ((currentPrice - openPrice).div(openPrice).times(100)).toString().subSequence(0,4).toString()
+        )
+             .plus(PERCENT)
+
+
+    } else
+        String.format(
+        EXPRESSION, PERCENTAGE_MINUS,
+        (openPrice - currentPrice).div(openPrice).times(100).toInt()
+    )
+        .plus(PERCENT)
+}
+
+
