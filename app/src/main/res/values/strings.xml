@@ -22,5 +22,8 @@
     <string name="SHIBA">SHIBA</string>
     <string name="coin_details">Coin</string>
     <string name="onDone">Tags OK</string>
+    <integer name="start_list_size">10</integer>
+    <integer name="list_medium_size">30</integer>
+    <integer name="list_top_size">50</integer>
 
 </resources>

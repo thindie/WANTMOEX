@@ -19,7 +19,7 @@ import com.example.thindie.wantmoex.presentation.composables.util.surfaceColor
 @Composable
 fun CryptoTopAppbar(
     @StringRes resource: Int,
-    onClickTopAppbar: () -> Unit,
+    onClickTopAppbar:  () -> Unit,
 ) {
     TopAppBar(
         modifier = Modifier

@@ -15,6 +15,13 @@ import androidx.compose.ui.unit.dp
 import com.example.thindie.wantmoex.presentation.theme.WANTMOEXTheme
 import java.util.concurrent.TimeUnit
 
+
+  const val BTC = "BTC"
+  const val ETH = "ETH"
+  const val XRP = "XRP"
+  const val DOGE = "DOGE"
+  const val SHIBA = "SHIBA"
+
 @Composable
 fun String.HeadLine() =
     WANTMOEXTheme() {
@@ -85,3 +92,11 @@ fun Long.toTime(): String {
                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeDifference))
     )
 }
+
+fun <T, R : T> Iterable<T>.approveCheck(r: R): List<T> {
+    val l = this.toMutableList()
+    if (!l.contains(r)) l.add(r) else l.remove(r)
+    return l
+}
+
+
