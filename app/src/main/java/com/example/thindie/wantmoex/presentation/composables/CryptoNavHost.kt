@@ -70,7 +70,8 @@ fun CryptoNavHost(
         drawerContent = {
             AppDrawer(
                 onSelectTags = {
-                     newsTagListState = it.toMutableStateList()
+                     newsTagListState = it.toMutableStateList();
+                    Log.d("SERVICE_TAG", newsTagListState.toList().toString())
                 },
                 onSelectedLimit = { coinsLimitState = it },
                 closeDrawer = { coroutineScope.launch { scaffoldState.drawerState.close() } })

@@ -98,4 +98,15 @@ fun <T, R : T> Iterable<T>.approveCheck(r: R): List<T> {
     return l
 }
 
+fun <T> Iterable<Pair<T, Boolean>>.reNew(it: Pair<T, Boolean>): Iterable<Pair<T, Boolean>> {
+    val l = this
+    val n = mutableListOf<Pair<T, Boolean>>()
+    l.forEach { pair ->
+        if(pair.first == it.first ){
+            n.add(Pair(it.first, !it.second))
+        }
+        n.add(pair)
+    }
+    return n
+}
 

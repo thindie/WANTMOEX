@@ -7,43 +7,6 @@ import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.domain.entities.News
 
 
-inline fun <reified T, R> T.entityMap(): R {
-    val t: T = this
-    return when (T::class) {
-        CoinDBModel::class -> {
-            t as CoinDBModel
-            Coin(
-                market = t.market,
-                fromSymbol = t.fromSymbol,
-                toSymbol = t.toSymbol,
-                price = t.price.trimPrice(),
-                lastUpdate = t.lastUpdate,
-                openDay = t.openDay,
-                highDay = t.highDay,
-                lowDay = t.lowDay,
-                lastMarket = t.lastMarket,
-                imageUrl = t.imageUrl,
-            ) as R
-        }
-        CoinDTO::class -> {
-            t as CoinDTO
-            CoinDBModel(
-                market = t.market,
-                fromSymbol = t.fromSymbol,
-                toSymbol = t.toSymbol,
-                price = t.price.trimPrice(),
-                lastUpdate = t.lastUpdate,
-                openDay = t.openDay,
-                highDay = t.highDay,
-                lowDay = t.lowDay,
-                lastMarket = t.lastMarket,
-                imageUrl = t.imageUrl,
-            ) as R
-        }
-        else -> { throw UnsupportedOperationException("Check mapper logic")}
-    }
-}
-
 
 fun CoinDBModel.map(): Coin {
     return Coin(

@@ -21,7 +21,8 @@
     <string name="DOGE">DOGE</string>
     <string name="SHIBA">SHIBA</string>
     <string name="coin_details">Coin</string>
-    <string name="onDone">Tags OK</string>
+    <string name="apply_news_tags">Apply Tags</string>
+    <string name="apply_limits_tags">Apply Limit</string>
     <integer name="start_list_size">10</integer>
     <integer name="list_medium_size">30</integer>
     <integer name="list_top_size">50</integer>

@@ -143,13 +143,6 @@ class CoinViewModel @Inject constructor(
 
         }
 
-
-        /*
-          val list = getAllFavoriteCoinsUseCase.getAllFavoriteCoins().unpackResult { it }
-          val listCoins = getAllCryptoCoinsUseCase.getAllCoins(coinsSize)
-              .unpackResult { it.map { it.mapToUiModel { list?.contains(it) ?: false } } }
-          _isLoading.value = false
-          _coinList.value = listCoins ?: emptyList()*/
     }
 
 
