@@ -21,7 +21,10 @@ import kotlinx.coroutines.delay
 
 @Composable
 
-fun LoadScreen(modifier: Modifier = Modifier, waitTime: Long, onTimeout: () -> Unit) {
+fun LoadScreen(
+    modifier: Modifier = Modifier,
+    waitTime: Long,
+     onTimeout: @Composable () -> Unit) {
 
     Box(modifier = modifier.clip(CircleShape), contentAlignment = Alignment.Center) {
 
@@ -29,7 +32,7 @@ fun LoadScreen(modifier: Modifier = Modifier, waitTime: Long, onTimeout: () -> U
 
         LaunchedEffect(true) {
             delay(waitTime)
-            currentTimeOut()
+           // currentTimeOut()
         }
 
         Image(painterResource(id = R.drawable.cryptoviews), contentDescription = null)

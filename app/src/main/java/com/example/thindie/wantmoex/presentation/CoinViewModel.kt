@@ -55,9 +55,9 @@ class CoinViewModel @Inject constructor(
         // savedStateHandle[VIEW_STATE] = viewState.value
     }
 
-    fun onRefresh() {
+    fun onRefresh(limit: Int) {
         viewModelScope.launch {
-            observeCoinList()
+            observeCoinList(limit)
         }
     }
 
@@ -169,7 +169,6 @@ class CoinViewModel @Inject constructor(
     companion object {
         private const val TO_LOAD_DATA = 2500L
         private const val TIMEOUT = 5000L
-        private const val INIT_COINS = 30
         private const val TOP_COINS = 10
         private const val VIEW_STATE = "viewState"
     }

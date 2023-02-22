@@ -17,7 +17,7 @@ class CryptoCoinsRepositoryImpl @Inject constructor(
 
 
     override fun observeAllCoins(limit: Int): Flow<Results<List<Coin>>> {
-        return remoteCoinRepository.observeAllCoins().mutateFlow {
+        return remoteCoinRepository.observeAllCoins(limit = limit).mutateFlow {
             it.map { it.map().map() }
         }.handleErrors()
     }

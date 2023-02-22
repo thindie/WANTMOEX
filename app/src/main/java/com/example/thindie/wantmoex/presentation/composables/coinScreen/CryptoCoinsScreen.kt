@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Star
@@ -21,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.R
 import com.example.thindie.wantmoex.presentation.CoinUIModel
-import com.example.thindie.wantmoex.presentation.CoinViewModel
 import com.example.thindie.wantmoex.presentation.composables.CoinInFocus
+import com.example.thindie.wantmoex.presentation.composables.Coins
 import com.example.thindie.wantmoex.presentation.composables.util.*
 import com.example.thindie.wantmoex.presentation.theme.md_theme_dark_onError
 import com.example.thindie.wantmoex.presentation.theme.md_theme_dark_surfaceTint
@@ -33,31 +34,32 @@ fun CryptoCoinsScreen(
     onFavoritesDeleted: (String) -> Unit,
     onFavoritesAdded: (String) -> Unit,
     onRefresh: () -> Unit,
-    state: CoinViewModel.CoinUIState,
+    isLoading: Boolean,
+    coinList: List<CoinUIModel>,
 ) {
     LoadingContent(
-        isLoading = state.isLoading,
-        isEmpty = state.coinsList.isEmpty(),
+        isLoading = isLoading,
+        isEmpty = coinList.isEmpty(),
         emptyContent = { ColorShimmer() },
         onRefresh = { onRefresh() }) {
 
-            LazyColumn(
-                modifier = Modifier
-                    .surfaceColor()
-                    .fillMaxSize()
-            )
-            {
-                items(state.coinsList) { coinItem ->
-                    CoinListElement(
-                        model = coinItem,
-                        isReveal = coinItem.isShowExpand,
-                        onFavoritesAdded = onFavoritesAdded,
-                        onFavoritesDeleted = onFavoritesDeleted,
-                        onClickCoin = { onClickCoin(CoinInFocus.route, coinItem.fromSymbol) }
-                    )
-                }
+        LazyColumn(
+            modifier = Modifier
+                .surfaceColor()
+                .fillMaxSize()
+        )
+        {
+            items(coinList) { coinItem ->
+                CoinListElement(
+                    model = coinItem,
+                    isReveal = coinItem.isShowExpand,
+                    onFavoritesAdded = onFavoritesAdded,
+                    onFavoritesDeleted = onFavoritesDeleted,
+                    onClickCoin = { onClickCoin(CoinInFocus.route, coinItem.fromSymbol) }
+                )
             }
         }
+    }
 
 
 }
@@ -90,9 +92,9 @@ fun CoinListElement(
                 )
             }
             Column(modifier = Modifier.eightStartPadding()) {
-                stringResource(  R.string.coin_id_ticker,  model.fromSymbol).HeadLine()
-                stringResource( R.string.coin_last_market,  model.lastMarket).Medium()
-                stringResource(  R.string.coin_last_updtated,   model.lastUpdate.toTime())
+                stringResource(R.string.coin_id_ticker, model.fromSymbol).HeadLine()
+                stringResource(R.string.coin_last_market, model.lastMarket).Medium()
+                stringResource(R.string.coin_last_updtated, model.lastUpdate.toTime())
                     .plus(stringResource(id = R.string.dot))
                     .Mini()
 
@@ -132,7 +134,7 @@ fun CoinListElement(
 
 
 @Composable
-fun CryptoCoinDetailScreen(coin: CoinUIModel) {
+fun CryptoCoinDetailScreen(coin: CoinUIModel, onClickBack: (String) -> Unit) {
 
     Surface(
         color = MaterialTheme.colorScheme.surface,
@@ -148,10 +150,19 @@ fun CryptoCoinDetailScreen(coin: CoinUIModel) {
                 .fillMaxHeight()
                 .padding(all = 16.dp)
         ) {
+            IconButton(onClick = { onClickBack(Coins.route) }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
             Spacer(modifier = Modifier.height(80.dp))
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 10.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 10.dp)
+            ) {
                 Column(modifier = Modifier.halfScreenColumns()) {
                     Image(
                         painter = rememberAsyncImagePainter(model = coin.imageUrl),
@@ -160,12 +171,12 @@ fun CryptoCoinDetailScreen(coin: CoinUIModel) {
                 }
                 Column(modifier = Modifier.halfScreenColumns()) {
                     stringResource(
-                         R.string.coin_last_updtated,
-                         coin.lastUpdate.toTime()
+                        R.string.coin_last_updtated,
+                        coin.lastUpdate.toTime()
                     ).Mini()
-                    stringResource(  R.string.price,  coin.price).HeadLine()
-                    stringResource(  R.string.coin_open_day,  coin.openDay).Medium()
-                    stringResource(  R.string.coin_last_market,   coin.market).Medium()
+                    stringResource(R.string.price, coin.price).HeadLine()
+                    stringResource(R.string.coin_open_day, coin.openDay).Medium()
+                    stringResource(R.string.coin_last_market, coin.market).Medium()
                 }
                 Column() {
                     if (coin.isGrowing) {
@@ -198,15 +209,17 @@ fun CryptoCoinDetailScreen(coin: CoinUIModel) {
                     .padding(bottom = 1.dp)
             )
 
-            Row(modifier = Modifier
-                .eightStartPadding()
-                .padding(top = 20.dp)) {
-                stringResource(  R.string.coin_id_ticker,  coin.fromSymbol).HeadLine()
+            Row(
+                modifier = Modifier
+                    .eightStartPadding()
+                    .padding(top = 20.dp)
+            ) {
+                stringResource(R.string.coin_id_ticker, coin.fromSymbol).HeadLine()
                 Spacer(modifier = Modifier.weight(0.4f))
                 stringResource(id = R.string.dot).Mini()
-                stringResource(  R.string.coin_low_today,   coin.lowDay).Body()
+                stringResource(R.string.coin_low_today, coin.lowDay).Body()
                 stringResource(id = R.string.dot).Mini()
-                stringResource( R.string.coin_high_today,  coin.highDay).Body()
+                stringResource(R.string.coin_high_today, coin.highDay).Body()
             }
 
         }

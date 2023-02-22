@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +39,7 @@ val list = listOf(
     R.integer.list_medium_size to true,
     R.integer.list_top_size to true
 )
+private const val INITIAL_COINS_CAPACITY = 10
 
 @Composable
 fun AppDrawer(
@@ -53,21 +55,27 @@ fun AppDrawer(
             .surfaceColor()
             .eightStartPadding()
     ) {
-
+        val capacity = rememberSaveable { mutableStateOf(INITIAL_COINS_CAPACITY) }
         val listState = remember { mutableStateListOf(BTC, ETH, DOGE, SHIBA, XRP) }
         val onApplyTags: () -> Unit = { onSelectTags(listState.toList()); closeDrawer() }
-        val onApplyLimits: (Int) -> Unit = { onSelectedLimit(it); closeDrawer() }
+
+
+        val onApplyLimits: (Int) -> Unit =
+            { onSelectedLimit(it); capacity.value = it; closeDrawer() }
 
 
 
         CryptoDrawerHeader()
+
         CryptoDrawerBody(
             onCheck = { if (!listState.contains(it)) listState.add(it) },
             onUncheck = { listState.remove(it) }) {
             onApplyTags()
         }
         Divider(thickness = Dp.Hairline)
-        CryptoDrawerCellar(onApplyLimits)
+
+        CryptoDrawerCellar(onApplyLimits, capacity.value.toString())
+
     }
 }
 
@@ -119,7 +127,7 @@ fun CryptoDrawerBody(
 }
 
 @Composable
-fun CryptoDrawerCellar(onSetLimit: (Int) -> Unit) {
+fun CryptoDrawerCellar(onSetLimit: (Int) -> Unit, capacity: String) {
 
     Column(
         modifier = Modifier
@@ -134,12 +142,21 @@ fun CryptoDrawerCellar(onSetLimit: (Int) -> Unit) {
             horizontalArrangement = Arrangement.Center
         ) {
             stringResource(id = R.string.apply_limits_tags).HeadLine()
+            stringResource(id = R.string.dot).Mini()
+            stringResource(id = R.string.capacity,capacity.Mini()      )
+            stringResource(id = R.string.dot).Mini()
         }
 
         CheckerList(list = list,
             checked = {
                 onSetLimit(it)
             })
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .onSurfaceColor()
+        )
+
     }
 }
 
@@ -149,10 +166,12 @@ fun CheckerList(list: List<Pair<Int, Boolean>>, checked: (Int) -> Unit) {
     LazyColumn() {
         items(list) { pair ->
             TagChecker<Int>(
-                onCheck = { val limit = integerResource(id = pair.first); checked(limit); Log.d("SERVICE_TAG", limit.toString()) },
-                onUncheck = { },
+                onCheck = {
+                    val limit = integerResource(id = pair.first); checked(limit)
+                },
+                  onUncheck = { },
                 tag = pair.first,
-                isSelected = pair.second
+                isSelected = false
             )
         }
     }
@@ -169,19 +188,17 @@ inline fun <reified T> TagChecker(
 ) {
 
     var isSelectedValue by remember { mutableStateOf(isSelected) }
-    val tagString = when (T::class) {
-        String::class -> stringResource(id = tag)
-        Int::class -> integerResource(id = tag)
-        else -> {
-            tag.toString()
-        }
+    var isClickedLimit by remember { mutableStateOf(false) }
+
+    val isInteger = when (T::class) {
+        String::class -> false
+        Int::class -> true
+        else -> throw Exception("unexpected resource")
     }
 
-    if (isSelectedValue) {
-        onCheck(tagString as T)
-    } else {
-        onUncheck(tagString as T);
-    }
+    val tagString = if (isInteger) integerResource(id = tag) else stringResource(id = tag)
+    if (isSelectedValue) onCheck(tagString as T) else onUncheck(tagString as T);
+    if (isClickedLimit) onCheck(tagString as T); isClickedLimit = false
 
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -195,12 +212,10 @@ inline fun <reified T> TagChecker(
         tagString.toString().Body()
         Spacer(modifier = modifier.weight(0.4f))
         RadioButton(
-            selected = when (T::class) {
-                Int::class -> {
-                    isSelectedValue = true; false
-                }; else -> isSelectedValue
+            selected = isSelectedValue,
+            onClick = {
+                if (!isInteger) isSelectedValue = !isSelectedValue else isClickedLimit = true
             },
-            onClick = { isSelectedValue = !isSelectedValue; },
             colors = RadioButtonDefaults.colors(
                 selectedColor = MaterialTheme.colorScheme.surfaceTint,
                 unselectedColor = MaterialTheme.colorScheme.onSurface

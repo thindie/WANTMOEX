@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit
   const val XRP = "XRP"
   const val DOGE = "DOGE"
   const val SHIBA = "SHIBA"
+private const val MILLIS = 1000L
 
 @Composable
 fun String.HeadLine() =
@@ -81,7 +82,7 @@ fun Long.toTime(): String {
         System.currentTimeMillis()
     }
 
-    val timeDifference = currentTime - this.times(1000)
+    val timeDifference = currentTime - this.times(MILLIS)
     return String.format(
         "%02d:%02d sec",
         TimeUnit.MILLISECONDS.toMinutes(timeDifference),
@@ -89,24 +90,3 @@ fun Long.toTime(): String {
                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeDifference))
     )
 }
-
-
-
-fun <T, R : T> Iterable<T>.approveCheck(r: R): List<T> {
-    val l = this.toMutableList()
-    if (!l.contains(r)) l.add(r) else l.remove(r)
-    return l
-}
-
-fun <T> Iterable<Pair<T, Boolean>>.reNew(it: Pair<T, Boolean>): Iterable<Pair<T, Boolean>> {
-    val l = this
-    val n = mutableListOf<Pair<T, Boolean>>()
-    l.forEach { pair ->
-        if(pair.first == it.first ){
-            n.add(Pair(it.first, !it.second))
-        }
-        n.add(pair)
-    }
-    return n
-}
-
