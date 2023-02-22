@@ -12,18 +12,25 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.thindie.wantmoex.R
 import com.example.thindie.wantmoex.presentation.CoinViewModel
 import com.example.thindie.wantmoex.presentation.composables.coinScreen.CryptoCoinDetailScreen
 import com.example.thindie.wantmoex.presentation.composables.coinScreen.CryptoCoinsScreen
+import com.example.thindie.wantmoex.presentation.composables.coinScreen.FavoriteCoinsList
 import com.example.thindie.wantmoex.presentation.composables.newsScreen.CryptoNewsScreen
 import com.example.thindie.wantmoex.presentation.composables.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 private const val INITIAL_COINS_CAPACITY = 10
+private const val NEWS = "news"
+private const val FAVORITES = "favorites"
+private const val COIN = "coin"
+private const val COINS = "coins"
 
 @Composable
 fun CryptoNavHost(
@@ -35,21 +42,16 @@ fun CryptoNavHost(
 ) {
 
     val state = viewModel.viewState.collectAsStateWithLifecycle()
-    var topAppLabel by remember { mutableStateOf(R.string.coins) }
+    var topAppLabel by remember { mutableStateOf(R.string.loading) }
     var newsTagListState = remember { mutableStateListOf<String>(BTC, ETH, DOGE, SHIBA, XRP) }
     var coinsLimitState by rememberSaveable { mutableStateOf(INITIAL_COINS_CAPACITY) }
     Log.d("SERVICE_TAG", coinsLimitState.toString())
 
     val reNewUi: (String, nullableParam: String?) -> Unit = { renewThat, param ->
         mapOf(
-            Coins.route to { viewModel.onShowList(coinsLimitState); topAppLabel = R.string.coins },
-            FavoriteCoins.route to {
-                viewModel.onShowFavorites(); topAppLabel = R.string.favorites
-            },
-            News.route to { topAppLabel = R.string.news },
-            CoinInFocus.route to {
-                viewModel.onChoseCoin(param!!); topAppLabel = R.string.coin_details
-            }
+            Coins.route to { viewModel.onShowList(coinsLimitState) },
+            FavoriteCoins.route to { viewModel.onShowFavorites()  },
+            CoinInFocus.route to { viewModel.onChoseCoin(param!!) }
         )[renewThat]?.invoke()
     }
 
@@ -88,7 +90,13 @@ fun CryptoNavHost(
                     .padding(it)
                     .surfaceColor()
             ) {
-                composable(route = Coins.route) {
+                composable(
+                    route = Coins.route,
+                    arguments = listOf(
+                        navArgument(COINS) { type = NavType.IntType; defaultValue = R.string.coins })
+                )
+                {
+                   topAppLabel = it.arguments?.getInt(COINS)!!
                     CryptoCoinsScreen(
                         onClickCoin = { route, id ->
                             reNewUi(route, id)
@@ -102,7 +110,12 @@ fun CryptoNavHost(
                     )
                 }
 
-                composable(route = CoinInFocus.route) {
+                composable(
+                    route = CoinInFocus.route,
+                    arguments = listOf(
+                        navArgument(COIN) { type = NavType.IntType; defaultValue = R.string.coin_details  })
+                ) {
+                    topAppLabel = it.arguments?.getInt(COIN)!!
                     state.value.coin?.let { coinUIModel ->
                         CryptoCoinDetailScreen(coin = coinUIModel) {
                             reNewUi(Coins.route, null)
@@ -111,10 +124,22 @@ fun CryptoNavHost(
                     }
                 }
 
-                composable(route = News.route) { CryptoNewsScreen(tagList = newsTagListState.toList()) }
+                composable(
+                    route = News.route,
+                    arguments = listOf(
+                        navArgument(NEWS) { type = NavType.IntType; defaultValue = R.string.news })
+                ) {
+                    topAppLabel = it.arguments?.getInt(NEWS)!!
+                    CryptoNewsScreen(tagList = newsTagListState.toList())
+                }
 
-                composable(route = FavoriteCoins.route) {
-                    CryptoCoinsScreen(
+                composable(
+                    route = FavoriteCoins.route,
+                    arguments = listOf(
+                        navArgument(FAVORITES) { type = NavType.IntType; defaultValue = R.string.favorites })
+                ) {
+                    topAppLabel = it.arguments?.getInt(FAVORITES)!!
+                    FavoriteCoinsList(
                         onClickCoin = { route, id ->
                             reNewUi(route, id)
                             navController.navigateSingleTopTo(route)

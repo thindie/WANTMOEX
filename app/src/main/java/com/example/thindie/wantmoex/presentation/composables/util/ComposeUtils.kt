@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.thindie.wantmoex.presentation.theme.WANTMOEXTheme
 import java.util.concurrent.TimeUnit
@@ -31,6 +33,32 @@ fun String.HeadLine() =
             color = MaterialTheme.colorScheme.onSurface
         )
     }
+@Composable
+fun String.HeadLineNews() =
+    WANTMOEXTheme() {
+        Text(
+            this,
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.surfaceTint.copy(0.5f),
+            softWrap = true,
+            textAlign = TextAlign.Justify
+        )
+    }
+
+@Composable
+fun String.News() =
+    WANTMOEXTheme() {
+        Text(
+            this,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface.copy(0.8f),
+            softWrap = true,
+            textAlign = TextAlign.Justify
+
+        )
+    }
+
+
 
 @Composable
 fun String.Body() =

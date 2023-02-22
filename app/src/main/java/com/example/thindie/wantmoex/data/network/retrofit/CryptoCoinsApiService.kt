@@ -25,10 +25,7 @@ interface CryptoCoinsApiService {
     @GET("v2/news/")
     suspend fun getLastestNews(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
-        @Query(
-            QUERY_PARAM_CATEGORIES,
-            encoded = true
-        ) topCoinFirst: (List<String>) -> String = { list -> queryBuilder(list) },
+        @Query(QUERY_PARAM_CATEGORIES,encoded = true) topCoinFirst: String,
         @Query(QUERY_PARAM_LANGUAGE) lang: String = LANGUAGE,
 
         ): NewsRawDTO

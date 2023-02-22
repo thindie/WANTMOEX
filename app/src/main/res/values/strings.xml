@@ -22,9 +22,10 @@
     <string name="SHIBA">SHIBA</string>
     <string name="coin_details">Coin</string>
     <string name="apply_news_tags">Apply Tags</string>
-    <string name="apply_limits_tags">Apply Limit</string>
+    <string name="apply_limits_tags">Applied Limit is  •</string>
     <integer name="start_list_size">10</integer>
     <integer name="list_medium_size">30</integer>
     <integer name="list_top_size">50</integer>
     <string name="capacity">Capacity: %s</string>
+    <string name="loading">Loading..</string>
 </resources>

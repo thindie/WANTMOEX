@@ -15,17 +15,17 @@ class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: Get
     ViewModel() {
 
     private val _news: MutableStateFlow<List<News>> = MutableStateFlow(emptyList())
-    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     var uiNewsState: StateFlow<NewsUiState> = combine(_news, _isLoading) { news, isLoading ->
         val newsUiState = if (!isLoading) {
             if (news.isEmpty()) {
-                NewsUiState(emptyList(), !isLoading)
-            } else NewsUiState(news, isLoading)
+                 NewsUiState(isLoading = isLoading)
+            } else   NewsUiState(news = news, isLoading = isLoading)
         } else {
+            _isLoading.value = false; _news.value = emptyList()
             NewsUiState()
         }
-        _isLoading.value = true; _news.value = emptyList()
         newsUiState
     }.stateIn(
         scope = viewModelScope,
@@ -36,14 +36,11 @@ class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: Get
 
     fun onLoadNews(list: List<String>) {
         viewModelScope.launch {
-            _isLoading.value = true
-            getAllActualNewsUseCase(list)
-                .collect { news ->
-                    news.unpackResult {
-                        _news.value = it
-                        _isLoading.value = false
-                    }
-                }
+      val newsFeed = getAllActualNewsUseCase.getAllNews(list).unpackResult {
+                it
+            } ?: emptyList()
+            _isLoading.value = false
+            _news.value = newsFeed
         }
     }
 

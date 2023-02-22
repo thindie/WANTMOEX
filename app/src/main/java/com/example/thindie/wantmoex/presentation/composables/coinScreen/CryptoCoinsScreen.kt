@@ -66,6 +66,26 @@ fun CryptoCoinsScreen(
 
 
 @Composable
+fun FavoriteCoinsList(
+    onClickCoin: (String, String) -> Unit,
+    onFavoritesDeleted: (String) -> Unit,
+    onFavoritesAdded: (String) -> Unit,
+    onRefresh: () -> Unit,
+    isLoading: Boolean,
+    coinList: List<CoinUIModel>,
+) {
+    CryptoCoinsScreen(
+        onClickCoin,
+        onFavoritesDeleted,
+        onFavoritesAdded,
+        onRefresh,
+        isLoading,
+        coinList,
+    )
+}
+
+
+@Composable
 fun CoinListElement(
     model: CoinUIModel,
     isReveal: Boolean,

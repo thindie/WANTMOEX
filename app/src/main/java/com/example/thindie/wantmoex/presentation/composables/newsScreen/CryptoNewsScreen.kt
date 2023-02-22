@@ -4,10 +4,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Divider
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Web
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,22 +23,28 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.thindie.wantmoex.domain.entities.News
 import com.example.thindie.wantmoex.presentation.NewsViewModel
 import com.example.thindie.wantmoex.presentation.composables.util.*
+import com.example.thindie.wantmoex.route.actionGoBrowse
+import com.example.thindie.wantmoex.route.actionShare
+
 
 @Composable
-
 fun CryptoNewsScreen(
     tagList: List<String>,
     newsViewModel: NewsViewModel = hiltViewModel(),
 ) {
     newsViewModel.onLoadNews(tagList)
     val newsState = newsViewModel.uiNewsState.collectAsStateWithLifecycle()
-    LoadingContent(
-        isLoading = newsState.value.isLoading,
+    LoadingContent(isLoading = newsState.value.isLoading,
         isEmpty = newsState.value.news.isEmpty(),
-        emptyContent = { /*TODO*/ },
+        emptyContent = { ColorShimmer(false) },
         onRefresh = { newsViewModel.onLoadNews(tagList) }) {
         LazyColumn() {
             items(newsState.value.news) {
+                Spacer(
+                    modifier = Modifier
+                        .surfaceColor()
+                        .size(60.dp)
+                )
                 CryptoNewsElement(article = it)
             }
         }
@@ -40,6 +53,7 @@ fun CryptoNewsScreen(
 
 @Composable
 fun CryptoNewsElement(article: News) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .surfaceColor()
@@ -49,15 +63,76 @@ fun CryptoNewsElement(article: News) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(rememberAsyncImagePainter(model = article.imageUrl), contentDescription = "")
-        article.title.HeadLine()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 250.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.eightEndPadding()) {
+                IconButton(onClick = {
+                    actionShare(
+                        contentUri = article.imageUrl,
+                        context = context,
+                        uri = article.url,
+                        title = article.title
+                    )
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.tertiaryContainer.copy(0.9f)
+                    )
+                }
+                Spacer(
+                    modifier = Modifier
+                        .surfaceColor()
+                        .padding(all = 10.dp)
+                )
+                IconButton(onClick = {
+                    actionGoBrowse(article.url, context)
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Web,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.tertiaryContainer
+                    )
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .surfaceColor()
+                    .eightStartPadding()
+                    .eightEndPadding()
+            ) {
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = article.imageUrl, contentScale = ContentScale.Fit
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(250.dp)
+                        .clip(ShapeDefaults.ExtraLarge.copy(CornerSize(30.dp)))
+                )
+            }
+        }
+
         Spacer(
             modifier = Modifier
-                .onSurfaceColor()
+                .surfaceColor()
+                .padding(all = 10.dp)
+        )
+
+        article.title.HeadLineNews()
+        Spacer(
+            modifier = Modifier
+                .surfaceColor()
                 .padding(all = 10.dp)
         )
         Divider(thickness = Dp.Hairline)
-        article.body.Body()
+        article.body.News()
         Divider()
         article.tags.Mini()
     }
