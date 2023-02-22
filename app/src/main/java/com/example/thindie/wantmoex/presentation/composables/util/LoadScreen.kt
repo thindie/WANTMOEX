@@ -2,13 +2,14 @@ package com.example.thindie.wantmoex.presentation.composables.util
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,7 +25,7 @@ import kotlinx.coroutines.delay
 fun LoadScreen(
     modifier: Modifier = Modifier,
     waitTime: Long,
-    onTimeout: @Composable () -> Unit,
+    onTimeout: () -> Unit,
 ) {
 
     Box(modifier = modifier.clip(CircleShape), contentAlignment = Alignment.Center) {
@@ -33,7 +34,7 @@ fun LoadScreen(
 
         LaunchedEffect(true) {
             delay(waitTime)
-            // currentTimeOut()
+             currentTimeOut()
         }
 
         Image(painterResource(id = R.drawable.cryptoviews), contentDescription = null)
@@ -42,8 +43,8 @@ fun LoadScreen(
                 .scale(0.3f)
                 .padding(top = 350.dp)
 
-        )
+            )
+        }
+
     }
 
-
-}

@@ -37,4 +37,9 @@ object CoinsExpandedView : CryptoDestination {
     override val route: String = "Stars"
 }
 
-val cryptoDestinations = listOf(Coins, CoinInFocus, FavoriteCoins, News)
+object Loading : CryptoDestination {
+    override val icon: ImageVector = Icons.Default.Star
+    override val route: String = "Stars"
+}
+
+val cryptoDestinations = listOf(Coins, CoinInFocus, FavoriteCoins, News, Loading)

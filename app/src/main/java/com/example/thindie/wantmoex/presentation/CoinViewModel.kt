@@ -47,7 +47,7 @@ class CoinViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(TIMEOUT),
-        initialValue = savedStateHandle.get<CoinUIState>(VIEW_STATE) ?: CoinUIState()
+        initialValue = savedStateHandle.get<CoinUIState>(VIEW_STATE) ?: CoinUIState(startLoading = true)
     )
 
 
@@ -164,6 +164,7 @@ class CoinViewModel @Inject constructor(
         val coinsList: List<CoinUIModel> = emptyList(),
         val isLoading: Boolean = true,
         val coin: CoinUIModel? = null,
+        val startLoading: Boolean = false
     )
 
     companion object {

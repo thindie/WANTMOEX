@@ -31,6 +31,9 @@ private const val NEWS = "news"
 private const val FAVORITES = "favorites"
 private const val COIN = "coin"
 private const val COINS = "coins"
+private const val TAGS = "tags"
+private val INIT_TAGS  =  arrayOf(BTC, ETH, DOGE, SHIBA, XRP)
+
 
 @Composable
 fun CryptoNavHost(
@@ -42,6 +45,9 @@ fun CryptoNavHost(
 ) {
 
     val state = viewModel.viewState.collectAsStateWithLifecycle()
+
+    var isFirstLaunch by rememberSaveable { mutableStateOf(true) }
+
     var topAppLabel by remember { mutableStateOf(R.string.loading) }
     var newsTagListState = remember { mutableStateListOf<String>(BTC, ETH, DOGE, SHIBA, XRP) }
     var coinsLimitState by rememberSaveable { mutableStateOf(INITIAL_COINS_CAPACITY) }
@@ -50,7 +56,8 @@ fun CryptoNavHost(
     val reNewUi: (String, nullableParam: String?) -> Unit = { renewThat, param ->
         mapOf(
             Coins.route to { viewModel.onShowList(coinsLimitState) },
-            FavoriteCoins.route to { viewModel.onShowFavorites()  },
+            FavoriteCoins.route to { viewModel.onShowFavorites() },
+            News.route to { },
             CoinInFocus.route to { viewModel.onChoseCoin(param!!) }
         )[renewThat]?.invoke()
     }
@@ -93,10 +100,15 @@ fun CryptoNavHost(
                 composable(
                     route = Coins.route,
                     arguments = listOf(
-                        navArgument(COINS) { type = NavType.IntType; defaultValue = R.string.coins })
+                        navArgument(COINS) {
+                            type = NavType.IntType; defaultValue = R.string.coins
+                        })
                 )
                 {
-                   topAppLabel = it.arguments?.getInt(COINS)!!
+                    if (isFirstLaunch) {
+                        viewModel.onShowList(coinsLimitState); isFirstLaunch = false
+                    }
+                    topAppLabel = it.arguments?.getInt(COINS)!!
                     CryptoCoinsScreen(
                         onClickCoin = { route, id ->
                             reNewUi(route, id)
@@ -113,7 +125,9 @@ fun CryptoNavHost(
                 composable(
                     route = CoinInFocus.route,
                     arguments = listOf(
-                        navArgument(COIN) { type = NavType.IntType; defaultValue = R.string.coin_details  })
+                        navArgument(COIN) {
+                            type = NavType.IntType; defaultValue = R.string.coin_details
+                        })
                 ) {
                     topAppLabel = it.arguments?.getInt(COIN)!!
                     state.value.coin?.let { coinUIModel ->
@@ -127,16 +141,21 @@ fun CryptoNavHost(
                 composable(
                     route = News.route,
                     arguments = listOf(
-                        navArgument(NEWS) { type = NavType.IntType; defaultValue = R.string.news })
+                        navArgument(NEWS) { type = NavType.IntType; defaultValue = R.string.news },
+                        navArgument(TAGS) { type = NavType.StringArrayType; defaultValue = INIT_TAGS }
+                    )
                 ) {
                     topAppLabel = it.arguments?.getInt(NEWS)!!
+
                     CryptoNewsScreen(tagList = newsTagListState.toList())
                 }
 
                 composable(
                     route = FavoriteCoins.route,
                     arguments = listOf(
-                        navArgument(FAVORITES) { type = NavType.IntType; defaultValue = R.string.favorites })
+                        navArgument(FAVORITES) {
+                            type = NavType.IntType; defaultValue = R.string.favorites
+                        })
                 ) {
                     topAppLabel = it.arguments?.getInt(FAVORITES)!!
                     FavoriteCoinsList(
@@ -151,9 +170,13 @@ fun CryptoNavHost(
                         coinList = state.value.coinsList
                     )
                 }
+
             }
         }
     }
 }
+
+
+
 
 
