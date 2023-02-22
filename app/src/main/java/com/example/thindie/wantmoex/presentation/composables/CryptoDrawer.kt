@@ -1,6 +1,5 @@
 package com.example.thindie.wantmoex.presentation.composables
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -143,7 +142,7 @@ fun CryptoDrawerCellar(onSetLimit: (Int) -> Unit, capacity: String) {
         ) {
             stringResource(id = R.string.apply_limits_tags).HeadLine()
             stringResource(id = R.string.dot).Mini()
-            stringResource(id = R.string.capacity,capacity.Mini()      )
+            stringResource(id = R.string.capacity, capacity.Mini())
             stringResource(id = R.string.dot).Mini()
         }
 
@@ -169,7 +168,7 @@ fun CheckerList(list: List<Pair<Int, Boolean>>, checked: (Int) -> Unit) {
                 onCheck = {
                     val limit = integerResource(id = pair.first); checked(limit)
                 },
-                  onUncheck = { },
+                onUncheck = { },
                 tag = pair.first,
                 isSelected = false
             )

@@ -16,9 +16,9 @@ data class CoinUIModel(
     val isFavorite: Boolean,
     val isShowExpand: Boolean,
     val isGrowing: Boolean,
-    val percentDelta: String
+    val percentDelta: String,
 
-)
+    )
 
 
 private val fromCoinToUImodel: (Boolean, Coin) -> CoinUIModel =
@@ -36,7 +36,7 @@ private val fromCoinToUImodel: (Boolean, Coin) -> CoinUIModel =
             domainModel.imageUrl,
             isFavorite = isFavorite,
             isShowExpand = false,
-            isGrowing =  domainModel.isGrowing,
+            isGrowing = domainModel.isGrowing,
             percentDelta = domainModel.percentDelta
         )
     }

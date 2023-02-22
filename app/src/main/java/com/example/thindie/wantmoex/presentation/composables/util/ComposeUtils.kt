@@ -10,17 +10,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.thindie.wantmoex.presentation.theme.WANTMOEXTheme
 import java.util.concurrent.TimeUnit
 
 
-  const val BTC = "BTC"
-  const val ETH = "ETH"
-  const val XRP = "XRP"
-  const val DOGE = "DOGE"
-  const val SHIBA = "SHIBA"
+const val BTC = "BTC"
+const val ETH = "ETH"
+const val XRP = "XRP"
+const val DOGE = "DOGE"
+const val SHIBA = "SHIBA"
 private const val MILLIS = 1000L
 
 @Composable
@@ -64,13 +63,12 @@ fun String.Medium() =
     }
 
 
-
 fun Modifier.eightEndPadding() = this.padding(end = 8.dp)
 fun Modifier.eightStartPadding() = this.padding(start = 8.dp)
 fun Modifier.surfaceColor() = composed { this.background(MaterialTheme.colorScheme.surface) }
 fun Modifier.onSurfaceColor() = composed { this.background(MaterialTheme.colorScheme.onSurface) }
 
-fun Modifier.halfScreenColumns() =  this.fillMaxWidth(0.5f)
+fun Modifier.halfScreenColumns() = this.fillMaxWidth(0.5f)
 fun Long.toTime(): String {
     val currentTime = try {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

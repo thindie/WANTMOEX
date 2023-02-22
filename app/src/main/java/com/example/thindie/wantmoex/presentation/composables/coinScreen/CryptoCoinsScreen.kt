@@ -77,7 +77,6 @@ fun CoinListElement(
 
 
     Surface(color = MaterialTheme.colorScheme.surface) {
-        Divider(Modifier.onSurfaceColor(), thickness = Dp.Hairline)
         Row(
             Modifier
                 .fillMaxWidth()

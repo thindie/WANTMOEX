@@ -11,9 +11,6 @@ import javax.inject.Singleton
 @Singleton
 class CryptoNewsRepositoryImpl @Inject constructor(private val cryptoCoinsApiService: CryptoCoinsApiService) :
     CryptoNewsRepository {
-    override fun observeNews(): Flow<Results<List<News>>> {
-        TODO("Not yet implemented")
-    }
 
     override fun observeNews(selectedTags: List<String>): Flow<Results<List<News>>> {
         TODO("Not yet implemented")

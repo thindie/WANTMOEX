@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,7 +19,7 @@ import com.example.thindie.wantmoex.presentation.composables.util.surfaceColor
 @Composable
 fun CryptoTopAppbar(
     @StringRes resource: Int,
-    onClickTopAppbar:  () -> Unit,
+    onClickTopAppbar: () -> Unit,
 ) {
     TopAppBar(
         modifier = Modifier

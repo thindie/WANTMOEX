@@ -2,7 +2,6 @@ package com.example.thindie.wantmoex.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.thindie.wantmoex.domain.Results
 import com.example.thindie.wantmoex.domain.entities.News
 import com.example.thindie.wantmoex.domain.unpackResult
 import com.example.thindie.wantmoex.domain.useCases.GetAllActualNewsUseCase
@@ -15,19 +14,20 @@ import javax.inject.Inject
 class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: GetAllActualNewsUseCase) :
     ViewModel() {
 
-    private val _news : MutableStateFlow<List<News>> = MutableStateFlow(emptyList())
-    private val _isLoading : MutableStateFlow<Boolean> = MutableStateFlow(true)
+    private val _news: MutableStateFlow<List<News>> = MutableStateFlow(emptyList())
+    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
-    var uiNewsState : StateFlow<NewsUiState> = combine( _news, _isLoading){
-        news, isLoading ->
-         val newsUiState = if (!isLoading){
-             if(news.isEmpty()){ NewsUiState(emptyList(), !isLoading) }
-             else NewsUiState(news, isLoading)
-         }
-        else{ NewsUiState() }
+    var uiNewsState: StateFlow<NewsUiState> = combine(_news, _isLoading) { news, isLoading ->
+        val newsUiState = if (!isLoading) {
+            if (news.isEmpty()) {
+                NewsUiState(emptyList(), !isLoading)
+            } else NewsUiState(news, isLoading)
+        } else {
+            NewsUiState()
+        }
         _isLoading.value = true; _news.value = emptyList()
         newsUiState
-     }.stateIn(
+    }.stateIn(
         scope = viewModelScope,
         initialValue = NewsUiState(),
         started = SharingStarted.WhileSubscribed(TIMEOUT)
@@ -38,18 +38,18 @@ class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: Get
         viewModelScope.launch {
             _isLoading.value = true
             getAllActualNewsUseCase(list)
-                .collect {
-                        it.unpackResult {
-                            _news.value = it ?: emptyList()
-                            _isLoading.value = false
-                        }
+                .collect { news ->
+                    news.unpackResult {
+                        _news.value = it
+                        _isLoading.value = false
+                    }
                 }
         }
     }
 
-companion object {
-    private const val TIMEOUT = 5000L
-}
+    companion object {
+        private const val TIMEOUT = 5000L
+    }
 }
 
 data class NewsUiState(

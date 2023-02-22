@@ -34,7 +34,7 @@ fun CryptoNavHost(
     viewModel: CoinViewModel = hiltViewModel(),
 ) {
 
-     val state = viewModel.viewState.collectAsStateWithLifecycle()
+    val state = viewModel.viewState.collectAsStateWithLifecycle()
     var topAppLabel by remember { mutableStateOf(R.string.coins) }
     var newsTagListState = remember { mutableStateListOf<String>(BTC, ETH, DOGE, SHIBA, XRP) }
     var coinsLimitState by rememberSaveable { mutableStateOf(INITIAL_COINS_CAPACITY) }
@@ -43,9 +43,13 @@ fun CryptoNavHost(
     val reNewUi: (String, nullableParam: String?) -> Unit = { renewThat, param ->
         mapOf(
             Coins.route to { viewModel.onShowList(coinsLimitState); topAppLabel = R.string.coins },
-            FavoriteCoins.route to { viewModel.onShowFavorites(); topAppLabel = R.string.favorites },
+            FavoriteCoins.route to {
+                viewModel.onShowFavorites(); topAppLabel = R.string.favorites
+            },
             News.route to { topAppLabel = R.string.news },
-            CoinInFocus.route to { viewModel.onChoseCoin(param!!); topAppLabel = R.string.coin_details }
+            CoinInFocus.route to {
+                viewModel.onChoseCoin(param!!); topAppLabel = R.string.coin_details
+            }
         )[renewThat]?.invoke()
     }
 
@@ -57,9 +61,13 @@ fun CryptoNavHost(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { CryptoTopAppbar(resource = topAppLabel) { coroutineScope.launch { scaffoldState.drawerState.open() } } },
-        bottomBar = { CryptoCoinsBottomBar(onSelectedDestination = { reNewUi(it,null)
-                     navController.navigateSingleTopTo(it) },
-            onExpandCoins = { viewModel.onExpandCoinsList(state.value.coinsList) })},
+        bottomBar = {
+            CryptoCoinsBottomBar(onSelectedDestination = {
+                reNewUi(it, null)
+                navController.navigateSingleTopTo(it)
+            },
+                onExpandCoins = { viewModel.onExpandCoinsList(state.value.coinsList) })
+        },
         drawerContent = {
             AppDrawer(
                 onSelectTags = {

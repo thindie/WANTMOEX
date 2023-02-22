@@ -7,7 +7,6 @@ import com.example.thindie.wantmoex.domain.entities.Coin
 import com.example.thindie.wantmoex.domain.entities.News
 
 
-
 fun CoinDBModel.map(): Coin {
     return Coin(
         market = this.market,

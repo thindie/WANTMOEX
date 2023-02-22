@@ -13,11 +13,7 @@ class GetAllActualNewsUseCase @Inject constructor(
     private val cryptoNewsRepository: CryptoNewsRepository,
     @DispatchersModule.IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-    operator fun invoke(list: List<String>): Flow<Results<List<News>?>> {
-        return cryptoNewsRepository.observeNews().flowOn(ioDispatcher)
-    }
-
-    fun observeAllNews(list: List<String>): Flow<Results<List<News>>> {
+    operator fun invoke(list: List<String>): Flow<Results<List<News>>> {
         return cryptoNewsRepository.observeNews(list).flowOn(ioDispatcher)
     }
 
