@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.text.style.TextAlign
@@ -25,68 +24,74 @@ const val SHIBA = "SHIBA"
 private const val MILLIS = 1000L
 
 @Composable
-fun String.HeadLine() =
+fun String.HeadLine(modifier: Modifier = Modifier) =
     WANTMOEXTheme() {
         Text(
             this,
             style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = modifier
         )
     }
+
 @Composable
-fun String.HeadLineNews() =
+fun String.HeadLineNews(modifier: Modifier = Modifier) =
     WANTMOEXTheme() {
         Text(
             this,
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.surfaceTint.copy(0.5f),
             softWrap = true,
-            textAlign = TextAlign.Justify
+            textAlign = TextAlign.Justify,
+            modifier = modifier
         )
     }
 
 @Composable
-fun String.News() =
+fun String.News(modifier: Modifier = Modifier) =
     WANTMOEXTheme() {
         Text(
             this,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface.copy(0.8f),
             softWrap = true,
-            textAlign = TextAlign.Justify
+            textAlign = TextAlign.Justify,
+            modifier = modifier
 
         )
     }
 
 
-
 @Composable
-fun String.Body() =
+fun String.Body(modifier: Modifier = Modifier) =
     WANTMOEXTheme() {
         Text(
             this,
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = modifier
         )
     }
 
 @Composable
-fun String.Mini() =
+fun String.Mini(modifier: Modifier = Modifier) =
     WANTMOEXTheme() {
         Text(
             this,
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = modifier
         )
     }
 
 @Composable
-fun String.Medium() =
+fun String.Medium(modifier: Modifier = Modifier) =
     WANTMOEXTheme() {
         Text(
             this,
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = modifier
         )
     }
 
@@ -110,7 +115,7 @@ fun Long.toTime(): String {
 
     val timeDifference = currentTime - this.times(MILLIS)
     return String.format(
-        "%02d:%02d sec",
+        "%02dm :%02ds",
         TimeUnit.MILLISECONDS.toMinutes(timeDifference),
         TimeUnit.MILLISECONDS.toSeconds(timeDifference) -
                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeDifference))

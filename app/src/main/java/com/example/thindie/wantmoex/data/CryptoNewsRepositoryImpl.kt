@@ -43,7 +43,7 @@ class CryptoNewsRepositoryImpl @Inject constructor(private val cryptoCoinsApiSer
     }
 
     override suspend fun getNews(): Results<List<News>> {
-       return getNews(TAGS_LIST)
+        return getNews(TAGS_LIST)
     }
 
     companion object {

@@ -72,7 +72,7 @@ fun CryptoNewsElement(article: News) {
             Column(modifier = Modifier.eightEndPadding()) {
                 IconButton(onClick = {
                     actionShare(
-                        contentUri = article.imageUrl,
+                        contentUri = article.url,
                         context = context,
                         uri = article.url,
                         title = article.title
@@ -125,15 +125,24 @@ fun CryptoNewsElement(article: News) {
                 .padding(all = 10.dp)
         )
 
-        article.title.HeadLineNews()
+        article.title.HeadLineNews(
+            Modifier
+                .eightEndPadding()
+                .eightStartPadding())
         Spacer(
             modifier = Modifier
                 .surfaceColor()
                 .padding(all = 10.dp)
         )
         Divider(thickness = Dp.Hairline)
-        article.body.News()
+        article.body.News(
+            Modifier
+                .eightEndPadding()
+                .eightStartPadding())
         Divider()
-        article.tags.Mini()
+        article.tags.Mini(
+            Modifier
+                .eightEndPadding()
+                .eightStartPadding())
     }
 }

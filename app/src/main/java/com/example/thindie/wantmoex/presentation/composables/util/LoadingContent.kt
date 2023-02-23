@@ -206,9 +206,11 @@ fun ShimmerNewsElement(brush: Brush) {
             .padding(all = 20.dp)
             .background(brush)
     )
-    Divider(modifier = Modifier
-        .fillMaxWidth()
-        .background(brush))
+    Divider(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(brush)
+    )
     Spacer(
         modifier = Modifier
             .fillMaxWidth()
@@ -216,9 +218,11 @@ fun ShimmerNewsElement(brush: Brush) {
             .padding(all = 20.dp)
             .background(brush)
     )
-    Divider(modifier = Modifier
-        .fillMaxWidth()
-        .background(brush))
+    Divider(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(brush)
+    )
 
 }
 

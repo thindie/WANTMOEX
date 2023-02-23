@@ -37,7 +37,7 @@ fun CoinDTO.map(): CoinDBModel {
     )
 }
 
-fun String.trimPrice() = if (this.length > 10) this.subSequence(0, 7).toString() else this
+fun String.trimPrice() = if (this.length > 7) this.subSequence(0, 7).toString() else this
 
 
 fun Coin.map(): CoinDBModel {

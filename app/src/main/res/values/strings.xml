@@ -28,4 +28,7 @@
     <integer name="list_top_size">50</integer>
     <string name="capacity">Capacity: %s</string>
     <string name="loading">Loading..</string>
+    <string name="add_coin_details">To Favorites</string>
+    <string name="read_coin_news">Read more</string>
+
 </resources>

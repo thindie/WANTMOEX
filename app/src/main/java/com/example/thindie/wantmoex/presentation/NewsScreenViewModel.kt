@@ -20,8 +20,8 @@ class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: Get
     var uiNewsState: StateFlow<NewsUiState> = combine(_news, _isLoading) { news, isLoading ->
         val newsUiState = if (!isLoading) {
             if (news.isEmpty()) {
-                 NewsUiState(isLoading = isLoading)
-            } else   NewsUiState(news = news, isLoading = isLoading)
+                NewsUiState(isLoading = isLoading)
+            } else NewsUiState(news = news, isLoading = isLoading)
         } else {
             _isLoading.value = false; _news.value = emptyList()
             NewsUiState()
@@ -36,7 +36,7 @@ class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: Get
 
     fun onLoadNews(list: List<String>) {
         viewModelScope.launch {
-      val newsFeed = getAllActualNewsUseCase.getAllNews(list).unpackResult {
+            val newsFeed = getAllActualNewsUseCase.getAllNews(list).unpackResult {
                 it
             } ?: emptyList()
             _isLoading.value = false

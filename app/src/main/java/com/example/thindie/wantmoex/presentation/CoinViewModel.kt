@@ -1,6 +1,5 @@
 package com.example.thindie.wantmoex.presentation
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thindie.wantmoex.domain.result
@@ -20,7 +19,6 @@ class CoinViewModel @Inject constructor(
     private val doAddCoinToFavoritesUseCase: DoAddCoinToFavoritesUseCase,
     private val doDeleteCoinFromFavoritesUseCase: DoDeleteCoinFromFavoritesUseCase,
     private val getAllFavoriteCoinsUseCase: GetAllFavoriteCoinsUseCase,
-    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
 
@@ -47,13 +45,9 @@ class CoinViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(TIMEOUT),
-        initialValue = savedStateHandle.get<CoinUIState>(VIEW_STATE) ?: CoinUIState(startLoading = true)
+        initialValue = CoinUIState(startLoading = true)
     )
 
-
-    private fun saveState() {
-        // savedStateHandle[VIEW_STATE] = viewState.value
-    }
 
     fun onRefresh(limit: Int) {
         viewModelScope.launch {
@@ -164,7 +158,7 @@ class CoinViewModel @Inject constructor(
         val coinsList: List<CoinUIModel> = emptyList(),
         val isLoading: Boolean = true,
         val coin: CoinUIModel? = null,
-        val startLoading: Boolean = false
+        val startLoading: Boolean = false,
     )
 
     companion object {

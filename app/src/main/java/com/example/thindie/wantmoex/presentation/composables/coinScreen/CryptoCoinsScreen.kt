@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -106,8 +107,12 @@ fun CoinListElement(
         ) {
             Column() {
                 Image(
-                    painter = rememberAsyncImagePainter(model = model.imageUrl),
-                    contentDescription = ""
+                    painter = rememberAsyncImagePainter(
+                        model = model.imageUrl,
+                        contentScale = ContentScale.Fit
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier.size(66.dp)
                 )
             }
             Column(modifier = Modifier.eightStartPadding()) {
@@ -153,7 +158,12 @@ fun CoinListElement(
 
 
 @Composable
-fun CryptoCoinDetailScreen(coin: CoinUIModel, onClickBack: (String) -> Unit) {
+fun CryptoCoinDetailScreen(
+    coin: CoinUIModel,
+    onFavoritesAdded: () -> Unit,
+    onReadNewsAbout: () -> Unit,
+    onClickBack: (String) -> Unit,
+) {
 
     Surface(
         color = MaterialTheme.colorScheme.surface,
@@ -176,7 +186,21 @@ fun CryptoCoinDetailScreen(coin: CoinUIModel, onClickBack: (String) -> Unit) {
                     tint = MaterialTheme.colorScheme.onSurface
                 )
             }
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(30.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.eightEndPadding()
+            ) {
+                androidx.compose.material3.OutlinedButton(onClick = { onReadNewsAbout() }) {
+                    stringResource(id = R.string.read_coin_news).Body()
+                }
+                Spacer(modifier = Modifier.eightEndPadding())
+                androidx.compose.material3.OutlinedButton(onClick = { onFavoritesAdded() }) {
+                    stringResource(id = R.string.add_coin_details).Body()
+                }
+            }
+            Spacer(modifier = Modifier.height(30.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -3,7 +3,6 @@ package com.example.thindie.wantmoex.domain
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
 
 sealed class Results<out R> {
 
@@ -57,15 +56,22 @@ fun <T> Flow<T>.handleErrors(): Flow<T> =
     catch { e -> Log.d("SERVICE_TAG", "$e") }
 
 
-fun <T, R> Flow<Results<T>>.mutateFlow(mapper: (T) -> R): Flow<Results<R>> {
-    val f = this
-    return flow {
-        f.collect {
-            val t = it.result { r -> mapper(r) }
-            emit(t)
+suspend fun <T, R> Results<T>.reDirectSource(
+    redirect: suspend () -> Results<R>,
+    mapper: (T) -> R,
+): Results<R> {
+    var r: Results<R>? = null
+    this.unpackResult {
+        when (it) {
+            is Results.Success<*> -> {
+                r = Results.Success(mapper(it))
+            }
+            else -> {}
         }
     }
+    return r ?: redirect()
 }
+
 
 fun <T, R : Any> Results<T>.unpackResult(mapper: (T) -> R): R? {
     when (this) {
@@ -90,7 +96,4 @@ fun <T, R : Any> Results<T>.unpackResult(mapper: (T) -> R): R? {
 
 }
 
-fun <T, R> Results<T>.transformResultHandle(mapper: (T) -> R): Results<R> {
-    return this.result { mapper(it) }
-}
 

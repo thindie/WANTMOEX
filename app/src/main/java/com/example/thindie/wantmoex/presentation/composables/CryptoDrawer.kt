@@ -62,10 +62,7 @@ fun AppDrawer(
         val onApplyLimits: (Int) -> Unit =
             { onSelectedLimit(it); capacity.value = it; closeDrawer() }
 
-
-
         CryptoDrawerHeader()
-
         CryptoDrawerBody(
             onCheck = { if (!listState.contains(it)) listState.add(it) },
             onUncheck = { listState.remove(it) }) {
@@ -75,7 +72,10 @@ fun AppDrawer(
 
         CryptoDrawerCellar(onApplyLimits, capacity.value.toString())
 
+
     }
+
+
 }
 
 

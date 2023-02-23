@@ -23,7 +23,8 @@ import com.example.thindie.wantmoex.presentation.composables.util.surfaceColor
 @Composable
 fun CryptoTopAppbar(
     @StringRes resource: Int,
-    tags: List<String> = emptyList(),
+    tags: List<String>,
+    destination: CryptoDestination,
     onClickTopAppbar: () -> Unit,
 ) {
     TopAppBar(
@@ -40,8 +41,12 @@ fun CryptoTopAppbar(
         }
         stringResource(id = resource).HeadLine()
         Spacer(modifier = Modifier.weight(0.8f))
-        val string = if (tags.isEmpty()) "" else tags.joinToString(separator = " ,") { it }
-        string.Mini()
-        Spacer(modifier = Modifier.eightEndPadding().size(1.dp))
+        if (destination.route == News.route) {
+            val string = if (tags.isEmpty()) "" else tags.joinToString(separator = " ,") { it }
+            string.Mini()
+        }
+        Spacer(modifier = Modifier
+            .eightEndPadding()
+            .size(1.dp))
     }
 }

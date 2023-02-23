@@ -32,7 +32,7 @@ private const val FAVORITES = "favorites"
 private const val COIN = "coin"
 private const val COINS = "coins"
 private const val TAGS = "tags"
-private val INIT_TAGS  =  arrayOf(BTC, ETH, DOGE, SHIBA, XRP)
+private val INIT_TAGS = arrayOf(BTC, ETH, DOGE, SHIBA, XRP)
 
 
 @Composable
@@ -43,17 +43,22 @@ fun CryptoNavHost(
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     viewModel: CoinViewModel = hiltViewModel(),
 ) {
+    var isFirstLaunch by rememberSaveable { mutableStateOf(true) }
+    if (isFirstLaunch) {
+        viewModel.onStart(); isFirstLaunch = false
+    }
+
 
     val state = viewModel.viewState.collectAsStateWithLifecycle()
 
-    var isFirstLaunch by rememberSaveable { mutableStateOf(true) }
 
     var topAppLabel by remember { mutableStateOf(R.string.loading) }
-    var newsTagListState = remember { mutableStateListOf<String>(BTC, ETH, DOGE, SHIBA, XRP) }
+    val newsTagListState = remember { mutableStateListOf<String>(BTC, ETH, DOGE, SHIBA, XRP) }
     var coinsLimitState by rememberSaveable { mutableStateOf(INITIAL_COINS_CAPACITY) }
     Log.d("SERVICE_TAG", coinsLimitState.toString())
 
     val reNewUi: (String, nullableParam: String?) -> Unit = { renewThat, param ->
+
         mapOf(
             Coins.route to { viewModel.onShowList(coinsLimitState) },
             FavoriteCoins.route to { viewModel.onShowFavorites() },
@@ -69,7 +74,13 @@ fun CryptoNavHost(
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { CryptoTopAppbar(resource = topAppLabel) { coroutineScope.launch { scaffoldState.drawerState.open() } } },
+        topBar = {
+            CryptoTopAppbar(
+                resource = topAppLabel,
+                tags = newsTagListState.toList(),
+                destination = startDestination
+            ) { coroutineScope.launch { scaffoldState.drawerState.open() } }
+        },
         bottomBar = {
             CryptoCoinsBottomBar(onSelectedDestination = {
                 reNewUi(it, null)
@@ -80,7 +91,8 @@ fun CryptoNavHost(
         drawerContent = {
             AppDrawer(
                 onSelectTags = {
-                    newsTagListState = it.toMutableStateList();
+                    newsTagListState.clear()
+                    it.forEach { newsTagListState.add(it) }
                 },
                 onSelectedLimit = { coinsLimitState = it },
                 closeDrawer = { coroutineScope.launch { scaffoldState.drawerState.close() } },
@@ -105,9 +117,9 @@ fun CryptoNavHost(
                         })
                 )
                 {
-                    if (isFirstLaunch) {
-                        viewModel.onShowList(coinsLimitState); isFirstLaunch = false
-                    }
+                    /* if (isFirstLaunch) {
+                         viewModel.onShowList(coinsLimitState); isFirstLaunch = false
+                     }*/
                     topAppLabel = it.arguments?.getInt(COINS)!!
                     CryptoCoinsScreen(
                         onClickCoin = { route, id ->
@@ -131,7 +143,14 @@ fun CryptoNavHost(
                 ) {
                     topAppLabel = it.arguments?.getInt(COIN)!!
                     state.value.coin?.let { coinUIModel ->
-                        CryptoCoinDetailScreen(coin = coinUIModel) {
+                        CryptoCoinDetailScreen(coin = coinUIModel,
+                            onFavoritesAdded = { addFavoriteCoin(coinUIModel.fromSymbol) },
+                            onReadNewsAbout = {
+                                newsTagListState.clear();
+                                newsTagListState.add(coinUIModel.fromSymbol);
+                                navController.navigateSingleTopTo(News.route)
+                            }
+                        ) {
                             reNewUi(Coins.route, null)
                             navController.navigateSingleTopTo(it)
                         }
@@ -142,11 +161,12 @@ fun CryptoNavHost(
                     route = News.route,
                     arguments = listOf(
                         navArgument(NEWS) { type = NavType.IntType; defaultValue = R.string.news },
-                        navArgument(TAGS) { type = NavType.StringArrayType; defaultValue = INIT_TAGS }
+                        navArgument(TAGS) {
+                            type = NavType.StringArrayType; defaultValue = INIT_TAGS
+                        }
                     )
                 ) {
                     topAppLabel = it.arguments?.getInt(NEWS)!!
-                    val tags = it.arguments?.get(TAGS)
                     CryptoNewsScreen(tagList = newsTagListState.toList())
                 }
 
