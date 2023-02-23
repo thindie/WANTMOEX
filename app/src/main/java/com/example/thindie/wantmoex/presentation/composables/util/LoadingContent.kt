@@ -6,11 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Web
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.runtime.Composable
@@ -19,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.thindie.wantmoex.presentation.theme.Shapes
@@ -139,94 +133,128 @@ fun ShimmerNewsElement(brush: Brush) {
     Column(
         modifier = Modifier
             .surfaceColor()
-            .fillMaxWidth()
-            .eightStartPadding()
-            .eightEndPadding(),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
-            modifier = Modifier
+            Modifier
+                .padding(top = 20.dp)
                 .fillMaxWidth()
-                .heightIn(min = 250.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .height(280.dp)
         ) {
-            Column(modifier = Modifier.eightEndPadding()) {
-
-                Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = null,
-                    tint = Color.Transparent,
-                    modifier = Modifier.background(brush)
-                )
-
+            Column(
+                Modifier
+                    .width(80.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.size(80.dp))
                 Spacer(
                     modifier = Modifier
-                        .surfaceColor()
-                        .padding(all = 10.dp)
+                        .size(50.dp)
+                        .eightStartPadding()
+                        .clip(CircleShape)
+                        .background(brush)
+                        .padding(bottom = 20.dp)
+                )
+                Spacer(modifier = Modifier.size(20.dp).padding(top = 5.dp, bottom = 5.dp))
+                Spacer(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .eightStartPadding()
+                        .clip(CircleShape)
+                        .background(brush)
+                        .padding(bottom = 20.dp)
                 )
 
-                Icon(
-                    imageVector = Icons.Default.Web,
-                    contentDescription = null,
-                    tint = Color.Transparent,
-                    modifier = Modifier.background(brush)
+            }
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(
+                    modifier = Modifier
+                        .size(width = 300.dp, height = 280.dp)
+                        .clip(ShapeDefaults.Medium.copy(CornerSize(10)))
+                        .eightStartPadding()
+                        .eightEndPadding()
+                        .background(brush)
+
                 )
             }
         }
-        Box(
+        Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight()
-                .surfaceColor()
-                .eightStartPadding()
-                .eightEndPadding()
-        ) {
-            Spacer(
-                modifier = Modifier
-                    .size(250.dp)
-                    .clip(ShapeDefaults.ExtraLarge.copy(CornerSize(30.dp)))
-                    .background(brush)
-            )
+                .height(20.dp)
+        )
+        Row(Modifier.fillMaxWidth()) {
+            Column(
+                Modifier
+                    .fillMaxHeight()
+                    .eightStartPadding()
+                    .eightEndPadding()
+            ) {
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .eightStartPadding()
+                        .eightEndPadding()
+                        .padding(top = 20.dp, bottom = 20.dp)
+                        .clip(ShapeDefaults.ExtraLarge.copy(CornerSize(20)))
+                        .background(brush)
+                        .height(60.dp)
+                )
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .eightStartPadding()
+                        .eightEndPadding()
+                        .padding(top = 5.dp, bottom = 5.dp)
+                        .clip(ShapeDefaults.ExtraLarge.copy(CornerSize(20)))
+                        .background(brush)
+                        .height(50.dp)
+                )
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .eightStartPadding()
+                        .eightEndPadding()
+                        .padding(top = 20.dp, bottom = 20.dp)
+                        .clip(ShapeDefaults.ExtraLarge.copy(CornerSize(20)))
+                        .background(brush)
+                        .height(30.dp)
+                )
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .eightStartPadding()
+                        .eightEndPadding()
+                        .padding(top = 5.dp, bottom = 5.dp)
+                        .height(10.dp)
+                )
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .eightStartPadding()
+                        .eightEndPadding()
+                        .padding(top = 20.dp, bottom = 20.dp)
+                        .clip(ShapeDefaults.ExtraLarge.copy(CornerSize(20)))
+                        .background(brush)
+                        .height(20.dp)
+                )
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .eightStartPadding()
+                        .eightEndPadding()
+                        .padding(top = 5.dp, bottom = 5.dp)
+                        .height(10.dp)
+                )
+            }
         }
     }
-
-    Spacer(
-        modifier = Modifier
-            .fillMaxWidth()
-            .surfaceColor()
-            .padding(all = 10.dp)
-    )
-
-    Spacer(
-        modifier = Modifier
-            .fillMaxWidth()
-            .surfaceColor()
-            .size(300.dp)
-            .padding(all = 20.dp)
-            .background(brush)
-    )
-    Divider(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(brush)
-    )
-    Spacer(
-        modifier = Modifier
-            .fillMaxWidth()
-            .surfaceColor()
-            .padding(all = 20.dp)
-            .background(brush)
-    )
-    Divider(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(brush)
-    )
-
 }
-
-
-
 
 
