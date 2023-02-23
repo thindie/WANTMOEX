@@ -146,7 +146,7 @@ fun CryptoNavHost(
                     )
                 ) {
                     topAppLabel = it.arguments?.getInt(NEWS)!!
-
+                    val tags = it.arguments?.get(TAGS)
                     CryptoNewsScreen(tagList = newsTagListState.toList())
                 }
 
