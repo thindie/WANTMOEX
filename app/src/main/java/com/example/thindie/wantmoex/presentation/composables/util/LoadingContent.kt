@@ -41,7 +41,7 @@ fun LoadingContent(
 }
 
 @Composable
-fun ColorShimmer(newsList: Boolean = true) {
+fun ColorShimmer(isForNewsList: Boolean = true) {
     val color = MaterialTheme.colorScheme.surfaceVariant
     val shimmers = listOf(
         color.copy(0.6f), color.copy(0.2f), color.copy(0.6f)
@@ -58,7 +58,7 @@ fun ColorShimmer(newsList: Boolean = true) {
         start = Offset.Zero,
         end = Offset(x = translateAnimation.value, y = translateAnimation.value)
     )
-    if (newsList) {
+    if (isForNewsList) {
         LazyColumn(modifier = Modifier.surfaceColor()) {
             items(9) {
                 ShimmerElement(brush = brush)

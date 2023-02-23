@@ -36,9 +36,11 @@ private const val PERCENTAGE_PLUS = "+"
 private const val PERCENTAGE_MINUS = "-"
 private const val PERCENT = "%"
 private const val ON_PERCENTS = 100
+private const val PERCENT_STRING_ = 0
+private const val RANGE = 3
 
 fun Boolean.percentDelta(currentPrice: Double, openPrice: Double): String {
-    fun Double.asPercentageString() = this.toString().subSequence(0, 3).toString()
+    fun Double.asPercentageString() = this.toString().subSequence(PERCENT_STRING_, RANGE).toString()
     return if (this) {
 
         String.format(

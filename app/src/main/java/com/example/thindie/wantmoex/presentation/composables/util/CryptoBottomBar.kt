@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.presentation.composables
+package com.example.thindie.wantmoex.presentation.composables.util
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +8,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.thindie.wantmoex.presentation.composables.*
 
 @Composable
 fun CryptoCoinsBottomBar(

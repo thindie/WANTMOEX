@@ -1,6 +1,5 @@
 package com.example.thindie.wantmoex.presentation.composables
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -55,7 +54,7 @@ fun CryptoNavHost(
     var topAppLabel by remember { mutableStateOf(R.string.loading) }
     val newsTagListState = remember { mutableStateListOf<String>(BTC, ETH, DOGE, SHIBA, XRP) }
     var coinsLimitState by rememberSaveable { mutableStateOf(INITIAL_COINS_CAPACITY) }
-    Log.d("SERVICE_TAG", coinsLimitState.toString())
+
 
     val reNewUi: (String, nullableParam: String?) -> Unit = { renewThat, param ->
 
@@ -117,9 +116,6 @@ fun CryptoNavHost(
                         })
                 )
                 {
-                    /* if (isFirstLaunch) {
-                         viewModel.onShowList(coinsLimitState); isFirstLaunch = false
-                     }*/
                     topAppLabel = it.arguments?.getInt(COINS)!!
                     CryptoCoinsScreen(
                         onClickCoin = { route, id ->

@@ -1,4 +1,4 @@
-package com.example.thindie.wantmoex.presentation.composables
+package com.example.thindie.wantmoex.presentation.composables.util
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,10 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.thindie.wantmoex.presentation.composables.util.HeadLine
-import com.example.thindie.wantmoex.presentation.composables.util.Mini
-import com.example.thindie.wantmoex.presentation.composables.util.eightEndPadding
-import com.example.thindie.wantmoex.presentation.composables.util.surfaceColor
+import com.example.thindie.wantmoex.presentation.composables.CryptoDestination
+import com.example.thindie.wantmoex.presentation.composables.News
 
 @Composable
 fun CryptoTopAppbar(

@@ -141,9 +141,9 @@ fun CryptoDrawerCellar(onSetLimit: (Int) -> Unit, capacity: String) {
             horizontalArrangement = Arrangement.Center
         ) {
             stringResource(id = R.string.apply_limits_tags).HeadLine()
-            stringResource(id = R.string.dot).Mini()
-            stringResource(id = R.string.capacity, capacity.Mini())
-            stringResource(id = R.string.dot).Mini()
+
+            stringResource(id = R.string.capacity, capacity.HeadLine())
+
         }
 
         CheckerList(list = list,

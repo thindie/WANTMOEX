@@ -22,6 +22,7 @@ const val XRP = "XRP"
 const val DOGE = "DOGE"
 const val SHIBA = "SHIBA"
 private const val MILLIS = 1000L
+private const val TIME_PATTERN = "%02dm :%02ds"
 
 @Composable
 fun String.HeadLine(modifier: Modifier = Modifier) =
@@ -115,7 +116,7 @@ fun Long.toTime(): String {
 
     val timeDifference = currentTime - this.times(MILLIS)
     return String.format(
-        "%02dm :%02ds",
+        TIME_PATTERN,
         TimeUnit.MILLISECONDS.toMinutes(timeDifference),
         TimeUnit.MILLISECONDS.toSeconds(timeDifference) -
                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeDifference))

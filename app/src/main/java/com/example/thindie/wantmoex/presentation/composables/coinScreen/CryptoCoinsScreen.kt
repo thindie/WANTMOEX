@@ -119,7 +119,6 @@ fun CoinListElement(
                 stringResource(R.string.coin_id_ticker, model.fromSymbol).HeadLine()
                 stringResource(R.string.coin_last_market, model.lastMarket).Medium()
                 stringResource(R.string.coin_last_updtated, model.lastUpdate.toTime())
-                    .plus(stringResource(id = R.string.dot))
                     .Mini()
 
                 Spacer(modifier = Modifier.eightStartPadding())
