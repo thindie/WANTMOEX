@@ -11,17 +11,10 @@ import javax.inject.Inject
 
 class GetAllActualNewsUseCase @Inject constructor(
     private val cryptoNewsRepository: CryptoNewsRepository,
-    @DispatchersModule.IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-    operator fun invoke(list: List<String>): Flow<Results<List<News>>> {
-        return cryptoNewsRepository.observeNews(list).flowOn(ioDispatcher)
-    }
 
-    suspend fun getAllNews(list: List<String>): Results<List<News>> {
+    suspend operator fun invoke(list: List<String>): Results<List<News>> {
         return cryptoNewsRepository.getNews(list)
     }
 
-    suspend fun getAllNews(): Results<List<News>> {
-        return cryptoNewsRepository.getNews()
-    }
 }

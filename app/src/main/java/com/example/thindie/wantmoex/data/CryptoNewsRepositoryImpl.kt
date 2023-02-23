@@ -18,40 +18,13 @@ import javax.inject.Singleton
 class CryptoNewsRepositoryImpl @Inject constructor(private val cryptoCoinsApiService: CryptoCoinsApiService) :
     CryptoNewsRepository {
 
-    override fun observeNews(selectedTags: List<String>): Flow<Results<List<News>>> {
-        return flow {
-            val newsList = parseRawNewsDTOtoNewsDTO(
-                cryptoCoinsApiService
-                    .getLastestNews(topCoinFirst = queryBuilder(selectedTags))
-            ).map {
-                it.map()
-            }
-            emit(newsList.encapsulateResult())
-        }.handleErrors()
-    }
 
     override suspend fun getNews(selectedTags: List<String>): Results<List<News>> {
-        return parseRawNewsDTOtoNewsDTO(
-            cryptoCoinsApiService.getLastestNews(
-                topCoinFirst = queryBuilder(
-                    selectedTags
-                )
-            )
-        ).map {
-            it.map()
-        }.encapsulateResult()
-    }
-
-    override suspend fun getNews(): Results<List<News>> {
-        return getNews(TAGS_LIST)
-    }
-
-    companion object {
-        private const val BTC = "BTC"
-        private const val ETH = "ETH"
-        private const val XRP = "XRP"
-        private const val DOGE = "DOGE"
-        private const val SHIBA = "SHIBA"
-        private val TAGS_LIST = listOf(BTC, ETH, DOGE, SHIBA, XRP)
+        return try {
+            parseRawNewsDTOtoNewsDTO(
+                cryptoCoinsApiService.getLastestNews(topCoinFirst = queryBuilder( selectedTags))).map {
+                it.map()
+            }.encapsulateResult()
+        }catch (e : Exception){ return Results.Error(e)}
     }
 }

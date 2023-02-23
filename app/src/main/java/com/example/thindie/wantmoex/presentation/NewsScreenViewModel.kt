@@ -36,7 +36,7 @@ class NewsViewModel @Inject constructor(private val getAllActualNewsUseCase: Get
 
     fun onLoadNews(list: List<String>) {
         viewModelScope.launch {
-            val newsFeed = getAllActualNewsUseCase.getAllNews(list).unpackResult {
+            val newsFeed = getAllActualNewsUseCase(list).unpackResult {
                 it
             } ?: emptyList()
             _isLoading.value = false

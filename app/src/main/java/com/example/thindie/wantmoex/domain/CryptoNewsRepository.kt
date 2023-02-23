@@ -5,6 +5,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface CryptoNewsRepository {
     suspend fun getNews(selectedTags: List<String>): Results<List<News>>
-    fun observeNews(selectedTags: List<String>): Flow<Results<List<News>>>
-    suspend fun getNews(): Results<List<News>>
 }
