@@ -1,3 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WANTMOEX</string>
+    <string name="app_name">CryptoView</string>
+    <string name="title_activity_news">NewsActivity</string>
+    <string name="share">Share with</string>
+    <string name="coin_id_ticker">∘ %s</string>
+    <string name="dot"> • </string>
+    <string name="price">$꞉ %s</string>
+    <string name="coin_last_market">•market: %s</string>
+    <string name="coin_low_today">️ low today: %s $𓏧</string>
+    <string name="coin_high_today"> high today: %s $</string>
+    <string name="coin_last_updtated">⚡ upd.: %s</string>
+    <string name="coin_on_currency"> to %s</string>
+    <string name="coin_open_day">• opened today: %s $</string>
+    <string name="favorites">❤️️ Favorites</string>
+    <string name="coins">Coins</string>
+    <string name="news">News</string>
+    <string name="BTC">BTC</string>
+    <string name="ETH">ETH</string>
+    <string name="XRP">XRP</string>
+    <string name="DOGE">DOGE</string>
+    <string name="SHIBA">SHIBA</string>
+    <string name="coin_details">Coin</string>
+    <string name="apply_news_tags">Apply Tags</string>
+    <string name="apply_limits_tags">Applied Limit𓏧</string>
+    <integer name="start_list_size">10</integer>
+    <integer name="list_medium_size">30</integer>
+    <integer name="list_top_size">50</integer>
+    <string name="capacity">Capacity: %s</string>
+    <string name="loading">Loading</string>
+    <string name="add_coin_details">To Favorites</string>
+    <string name="read_coin_news">Read more</string>
 </resources>
