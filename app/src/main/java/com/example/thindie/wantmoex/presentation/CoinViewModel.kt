@@ -123,13 +123,13 @@ class CoinViewModel @Inject constructor(
             val ids = mutableListOf<String>()
             val coins = mutableListOf<CoinUIModel>()
             getAllFavoriteCoinsUseCase().onEach {
-                it.unpackResult { it }
+               ids.addAll(it.unpackResult { it } ?: emptyList())
             }.launchIn(viewModelScope)
 
             getAllCryptoCoinsUseCase.observeAllCoins(coinsSize).onEach {
                 it.result { coins.addAll(it.map { it.mapToUiModel { ids.contains(it) } }) }
             }.launchIn(viewModelScope)
-            delay(TO_LOAD_DATA)
+           delay(TO_LOAD_DATA)
 
             _isLoading.value = false
             _coinList.value = emptyList()
@@ -162,10 +162,9 @@ class CoinViewModel @Inject constructor(
     )
 
     companion object {
-        private const val TO_LOAD_DATA = 2500L
+        private const val TO_LOAD_DATA = 300L
         private const val TIMEOUT = 5000L
         private const val TOP_COINS = 10
-        private const val VIEW_STATE = "viewState"
     }
 }
 
