@@ -96,4 +96,26 @@ fun <T, R : Any> Results<T>.unpackResult(mapper: (T) -> R): R? {
 
 }
 
+fun <T> Results<T>.unpackResult(): T? {
+    when (this) {
+        is Results.Success -> {
+            if (this.data == null) {
+                return null
+            }
+            if (this.data is Collection<*>) {
+                return if ((this.data as Collection<*>).isEmpty()) {
+                    null
+                } else this.data
+            }
+            if (this.data !is Collection<*>) {
+                return this.data
+            }
+            return this.data
+        }
+        is Results.Error -> {
+            return null
+        }
+    }
+
+}
 

@@ -6,10 +6,10 @@
     <string name="coin_id_ticker">∘ %s</string>
     <string name="dot"> • </string>
     <string name="price">$꞉ %s</string>
-    <string name="coin_last_market">• traded on: %s</string>
+    <string name="coin_last_market">•market: %s</string>
     <string name="coin_low_today">️ low today: %s $𓏧</string>
     <string name="coin_high_today"> high today: %s $</string>
-    <string name="coin_last_updtated">⚡ updated: %s</string>
+    <string name="coin_last_updtated">⚡ upd.: %s</string>
     <string name="coin_on_currency"> to %s</string>
     <string name="coin_open_day">• opened today: %s $</string>
     <string name="favorites">❤️️ Favorites</string>

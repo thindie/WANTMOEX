@@ -43,8 +43,10 @@ fun CryptoTopAppbar(
             val string = if (tags.isEmpty()) "" else tags.joinToString(separator = " ,") { it }
             string.Mini()
         }
-        Spacer(modifier = Modifier
-            .eightEndPadding()
-            .size(1.dp))
+        Spacer(
+            modifier = Modifier
+                .eightEndPadding()
+                .size(1.dp)
+        )
     }
 }

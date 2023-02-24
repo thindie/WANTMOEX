@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -129,7 +128,8 @@ fun CryptoNewsElement(article: News) {
         article.title.HeadLineNews(
             Modifier
                 .eightEndPadding()
-                .eightStartPadding())
+                .eightStartPadding()
+        )
         Spacer(
             modifier = Modifier
                 .surfaceColor()
@@ -139,11 +139,13 @@ fun CryptoNewsElement(article: News) {
         article.body.News(
             Modifier
                 .eightEndPadding()
-                .eightStartPadding())
+                .eightStartPadding()
+        )
         Divider()
         article.tags.Mini(
             Modifier
                 .eightEndPadding()
-                .eightStartPadding())
+                .eightStartPadding()
+        )
     }
 }
