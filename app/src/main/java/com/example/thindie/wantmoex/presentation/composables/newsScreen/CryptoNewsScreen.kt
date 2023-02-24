@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.*
@@ -81,7 +82,7 @@ fun CryptoNewsElement(article: News) {
                     Icon(
                         imageVector = Icons.Default.Share,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.tertiaryContainer.copy(0.9f)
+                        tint = MaterialTheme.colorScheme.surfaceTint.copy(0.5f)
                     )
                 }
                 Spacer(
@@ -93,9 +94,9 @@ fun CryptoNewsElement(article: News) {
                     actionGoBrowse(article.url, context)
                 }) {
                     Icon(
-                        imageVector = Icons.Default.Web,
+                        imageVector = Icons.Default.OpenInBrowser,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.tertiaryContainer
+                        tint = MaterialTheme.colorScheme.surfaceTint.copy(0.5f)
                     )
                 }
             }

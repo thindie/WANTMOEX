@@ -1,10 +1,7 @@
 package com.example.thindie.wantmoex.presentation.composables
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Newspaper
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
 
 interface CryptoDestination {
@@ -13,7 +10,7 @@ interface CryptoDestination {
 }
 
 object Coins : CryptoDestination {
-    override val icon: ImageVector = Icons.Default.List
+    override val icon: ImageVector = Icons.Default.FormatListBulleted
     override val route: String = "Coins"
 }
 
@@ -33,7 +30,7 @@ object News : CryptoDestination {
 }
 
 object CoinsExpandedView : CryptoDestination {
-    override val icon: ImageVector = Icons.Default.Star
+    override val icon: ImageVector = Icons.Default.Bookmark
     override val route: String = "Stars"
 }
 

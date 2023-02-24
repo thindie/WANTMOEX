@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import javax.inject.Singleton
 
 @Singleton
-@Database(entities = [CoinDBModel::class], version = 1, exportSchema = false)
+@Database(entities = [CoinDBModel::class], version = 2, exportSchema = false)
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun coinListDao(): CoinDao
@@ -28,7 +28,7 @@ abstract class AppDataBase : RoomDatabase() {
                 application,
                 AppDataBase::class.java,
                 DB_NAME
-            ).build()
+            ).fallbackToDestructiveMigration().build()
             INSTANCE = db
             return db
         }

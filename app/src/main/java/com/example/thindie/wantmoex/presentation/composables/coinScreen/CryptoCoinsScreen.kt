@@ -10,11 +10,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -38,8 +39,7 @@ fun CryptoCoinsScreen(
     isLoading: Boolean,
     coinList: List<CoinUIModel>,
 ) {
-    LoadingContent(
-        isLoading = isLoading,
+    LoadingContent(isLoading = isLoading,
         isEmpty = coinList.isEmpty(),
         emptyContent = { ColorShimmer() },
         onRefresh = { onRefresh() }) {
@@ -48,16 +48,13 @@ fun CryptoCoinsScreen(
             modifier = Modifier
                 .surfaceColor()
                 .fillMaxSize()
-        )
-        {
+        ) {
             items(coinList) { coinItem ->
-                CoinListElement(
-                    model = coinItem,
+                CoinListElement(model = coinItem,
                     isReveal = coinItem.isShowExpand,
                     onFavoritesAdded = onFavoritesAdded,
                     onFavoritesDeleted = onFavoritesDeleted,
-                    onClickCoin = { onClickCoin(CoinInFocus.route, coinItem.fromSymbol) }
-                )
+                    onClickCoin = { onClickCoin(CoinInFocus.route, coinItem.fromSymbol) })
             }
         }
     }
@@ -103,26 +100,23 @@ fun CoinListElement(
                 .fillMaxWidth()
                 .height(80.dp)
                 .padding(all = 10.dp)
-                .clickable { onClickCoin(model.fromSymbol) }
-        ) {
+                .clickable { onClickCoin(model.fromSymbol) }) {
             Column() {
                 Image(
                     painter = rememberAsyncImagePainter(
-                        model = model.imageUrl,
-                        contentScale = ContentScale.Fit
-                    ),
-                    contentDescription = "",
-                    modifier = Modifier.size(66.dp)
+                        model = model.imageUrl, contentScale = ContentScale.Fit
+                    ), contentDescription = "", modifier = Modifier.size(66.dp)
                 )
             }
-            Column(modifier = Modifier.eightStartPadding()) {
+            Column(modifier = Modifier.eightStartPadding().widthIn(120.dp, max = 125.dp)) {
                 stringResource(R.string.coin_id_ticker, model.fromSymbol).HeadLine()
                 stringResource(R.string.coin_last_market, model.lastMarket).Medium()
-                stringResource(R.string.coin_last_updtated, model.lastUpdate.toTime())
-                    .Mini()
-
-                Spacer(modifier = Modifier.eightStartPadding())
+                stringResource(R.string.coin_last_updtated, model.lastUpdate.toTime()).Mini()
             }
+            Spacer(
+                modifier = Modifier
+                    .padding(start = 40.dp)
+            )
             Column(modifier = Modifier.eightEndPadding()) {
                 stringResource(id = R.string.price, model.price).HeadLine()
                 Text(
@@ -131,20 +125,25 @@ fun CoinListElement(
                     color = if (model.isGrowing) Color.Green else Color.Red
                 )
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Column(horizontalAlignment = Alignment.End) {
+            Spacer(modifier = Modifier.weight(0.5f))
+            Column(
+                horizontalAlignment = Alignment.End,
+                modifier = Modifier
+                    .width(40.dp)
+                    .eightEndPadding()
+                    .eightEndPadding()
+            ) {
                 if (isReveal) {
                     IconButton(onClick = {
                         isFavorite = !isFavorite; addOrDeleteToFavorites(
-                        model,
-                        onFavoritesDeleted,
-                        onFavoritesAdded
+                        model, onFavoritesDeleted, onFavoritesAdded
                     )
                     }) {
                         Icon(
-                            imageVector = Icons.Default.Star,
+                            imageVector = Icons.Default.Favorite,
                             contentDescription = null,
-                            tint = if (isFavorite) md_theme_dark_onError else md_theme_dark_surfaceTint
+                            tint = if (isFavorite) md_theme_dark_onError else md_theme_dark_surfaceTint,
+                            modifier = Modifier.scale(0.5f)
                         )
                     }
                 }
@@ -165,8 +164,7 @@ fun CryptoCoinDetailScreen(
 ) {
 
     Surface(
-        color = MaterialTheme.colorScheme.surface,
-        modifier = Modifier
+        color = MaterialTheme.colorScheme.surface, modifier = Modifier
             .surfaceColor()
             .fillMaxSize()
     ) {
@@ -213,8 +211,7 @@ fun CryptoCoinDetailScreen(
                 }
                 Column(modifier = Modifier.halfScreenColumns()) {
                     stringResource(
-                        R.string.coin_last_updtated,
-                        coin.lastUpdate.toTime()
+                        R.string.coin_last_updtated, coin.lastUpdate.toTime()
                     ).Mini()
                     stringResource(R.string.price, coin.price).HeadLine()
                     stringResource(R.string.coin_open_day, coin.openDay).Medium()
@@ -245,8 +242,7 @@ fun CryptoCoinDetailScreen(
 
             }
             Divider(
-                thickness = Dp.Hairline,
-                modifier = Modifier
+                thickness = Dp.Hairline, modifier = Modifier
                     .onSurfaceColor()
                     .padding(bottom = 1.dp)
             )
@@ -258,10 +254,10 @@ fun CryptoCoinDetailScreen(
             ) {
                 stringResource(R.string.coin_id_ticker, coin.fromSymbol).HeadLine()
                 Spacer(modifier = Modifier.weight(0.4f))
-                stringResource(id = R.string.dot).Mini()
-                stringResource(R.string.coin_low_today, coin.lowDay).Body()
-                stringResource(id = R.string.dot).Mini()
-                stringResource(R.string.coin_high_today, coin.highDay).Body()
+
+                stringResource(R.string.coin_low_today, coin.lowDay).Medium()
+                Spacer(modifier = Modifier.padding(start = 3.dp))
+                stringResource(R.string.coin_high_today, coin.highDay).Medium()
             }
 
         }

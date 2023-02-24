@@ -65,7 +65,12 @@ fun ColorShimmer(isForNewsList: Boolean = true) {
             }
         }
     } else {
-        ShimmerNewsElement(brush = brush)
+        LazyColumn(){
+            items(2){
+                ShimmerNewsElement(brush = brush)
+            }
+        }
+
     }
 
 
@@ -158,7 +163,9 @@ fun ShimmerNewsElement(brush: Brush) {
                         .background(brush)
                         .padding(bottom = 20.dp)
                 )
-                Spacer(modifier = Modifier.size(20.dp).padding(top = 5.dp, bottom = 5.dp))
+                Spacer(modifier = Modifier
+                    .size(20.dp)
+                    .padding(top = 5.dp, bottom = 5.dp))
                 Spacer(
                     modifier = Modifier
                         .size(50.dp)
