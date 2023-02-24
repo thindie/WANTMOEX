@@ -37,6 +37,7 @@ fun CryptoCoinsScreen(
     onFavoritesAdded: (String) -> Unit,
     onRefresh: () -> Unit,
     isLoading: Boolean,
+    isExpanded: Boolean,
     coinList: List<CoinUIModel>,
 ) {
     LoadingContent(isLoading = isLoading,
@@ -51,7 +52,7 @@ fun CryptoCoinsScreen(
         ) {
             items(coinList) { coinItem ->
                 CoinListElement(model = coinItem,
-                    isReveal = coinItem.isShowExpand,
+                    isReveal = isExpanded,
                     onFavoritesAdded = onFavoritesAdded,
                     onFavoritesDeleted = onFavoritesDeleted,
                     onClickCoin = { onClickCoin(CoinInFocus.route, coinItem.fromSymbol) })
@@ -78,6 +79,7 @@ fun FavoriteCoinsList(
         onFavoritesAdded,
         onRefresh,
         isLoading,
+        isExpanded = true,
         coinList,
     )
 }

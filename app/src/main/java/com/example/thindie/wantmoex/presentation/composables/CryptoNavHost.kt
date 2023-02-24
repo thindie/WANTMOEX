@@ -52,9 +52,9 @@ fun CryptoNavHost(
 
 
     var topAppLabel by remember { mutableStateOf(R.string.loading) }
-    val newsTagListState = remember { mutableStateListOf<String>(BTC, ETH, DOGE, SHIBA, XRP) }
+    val newsTagListState = remember { mutableStateListOf(BTC, ETH, DOGE, SHIBA, XRP) }
     var coinsLimitState by rememberSaveable { mutableStateOf(INITIAL_COINS_CAPACITY) }
-
+    var expandedCoins by rememberSaveable { mutableStateOf(false) }
 
     val reNewUi: (String, nullableParam: String?) -> Unit = { renewThat, param ->
 
@@ -85,7 +85,7 @@ fun CryptoNavHost(
                 reNewUi(it, null)
                 navController.navigateSingleTopTo(it)
             },
-                onExpandCoins = { viewModel.onExpandCoinsList(state.value.coinsList) })
+                onExpandCoins = {  expandedCoins = !expandedCoins })
         },
         drawerContent = {
             AppDrawer(
@@ -126,7 +126,8 @@ fun CryptoNavHost(
                         onFavoritesAdded = { addFavoriteCoin(it) },
                         onFavoritesDeleted = { deleteFavoriteCoin(it) },
                         isLoading = state.value.isLoading,
-                        coinList = state.value.coinsList
+                        coinList = state.value.coinsList,
+                        isExpanded = expandedCoins
                     )
                 }
 
@@ -142,8 +143,8 @@ fun CryptoNavHost(
                         CryptoCoinDetailScreen(coin = coinUIModel,
                             onFavoritesAdded = { addFavoriteCoin(coinUIModel.fromSymbol) },
                             onReadNewsAbout = {
-                                newsTagListState.clear();
-                                newsTagListState.add(coinUIModel.fromSymbol);
+                                newsTagListState.clear()
+                                newsTagListState.add(coinUIModel.fromSymbol)
                                 navController.navigateSingleTopTo(News.route)
                             }
                         ) {

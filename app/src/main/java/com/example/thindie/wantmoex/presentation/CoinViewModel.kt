@@ -77,11 +77,6 @@ class CoinViewModel @Inject constructor(
         }
     }
 
-    fun onExpandCoinsList(list: List<CoinUIModel>) {
-        _coinList.value = list.map {
-            it.copy(isShowExpand = !it.isShowExpand)
-        }
-    }
 
     fun onShowFavorites() {
         _isLoading.value = true
@@ -127,6 +122,7 @@ class CoinViewModel @Inject constructor(
             }.launchIn(viewModelScope)
 
             getAllCryptoCoinsUseCase.observeAllCoins(coinsSize).onEach {
+
                 it.result { coins.addAll(it.map { it.mapToUiModel { ids.contains(it) } }) }
             }.launchIn(viewModelScope)
            delay(TO_LOAD_DATA)
@@ -162,7 +158,7 @@ class CoinViewModel @Inject constructor(
     )
 
     companion object {
-        private const val TO_LOAD_DATA = 300L
+        private const val TO_LOAD_DATA = 1600L
         private const val TIMEOUT = 5000L
         private const val TOP_COINS = 10
     }
