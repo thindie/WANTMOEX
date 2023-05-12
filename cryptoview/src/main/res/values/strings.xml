@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">cryptoview</string>
+    <string name="title_coin">coin</string>
+    <string name="focus_coin">coin</string>
+</resources>

@@ -13,4 +13,27 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "WANTMOEX"
-include ':app'
+include ':cryptoview'
+include ':core'
+include ':core:network'
+include ':core:data'
+include ':core:data:coin'
+include ':core:domain'
+include ':core:domain:domain-coin'
+include ':core:presentation'
+include ':core:presentation:ui-coin'
+include ':core:common'
+include ':core:database'
+include ':core:design-elements'
+include ':core:domain:domain-coins-list'
+include ':core:data:coin-list'
+include ':core:data:ui-state-settings'
+include ':core:domain:domain-settings'
+include ':core:presentation:ui-coins-list'
+include ':core:presentation:ui-newsfeed'
+include ':core:domain:domain-newsfeed'
+include ':core:data:newsfeed'
+
+include ':core:domain:domain-favorites'
+include ':core:data:favorites'
+include ':core:presentation:ui-settings'
