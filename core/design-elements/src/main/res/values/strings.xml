@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CryptoView</string>
+    <string name="title_activity_news">NewsActivity</string>
+    <string name="share">"Share with"</string>
+    <string name="coin_id_ticker">"∘ %s"</string>
+    <string name="dot">" • "</string>
+    <string name="price">"$꞉ %s"</string>
+    <string name="coin_last_market">"at: %s"</string>
+    <string name="coin_low_today">"️low day:
+        %s $ "</string>
+    <string name="coin_high_today">"high day:
+        %s $ "</string>
+    <string name="coin_last_upd">"upd.: %s"</string>
+    <string name="coin_on_currency">" to %s"</string>
+    <string name="coin_open_day">"• opened today: %s $"</string>
+    <string name="coin_details">Coin</string>
+    <string name="apply_news_tags">" tags: "</string>
+    <string name="apply_capacity">" capacity: "</string>
+    <string name="apply_list_sort">" "</string>
+    <string name="capacity">"capacity"</string>
+    <string name="loading">Loading</string>
+    <string name="add_coin_details">"To Favorites"</string>
+    <string name="read_coin_news">"Read more"</string>
+    <string name="coins_label">coins</string>
+    <string name="expand_label">expand</string>
+    <string name="favorite_label">favorites</string>
+    <string name="news_label">news</string>
+    <string name="focus_coin">coin</string>
+    <string name="sort_by">"sort by:"</string>
+    <string name="sort_price">"price 0–9"</string>
+    <string name="sort_price_desc">"price 9–0"</string>
+    <string name="sort_ticker">"ticker A-Z"</string>
+    <string name="sort_ticker_desc">"ticker Z-A"</string>
+    <string name="sort_update">"update 0–9"</string>
+    <string name="sort_update_desc">"update 9–0"</string>
+    <string name="sort_grow">"grow 0–9"</string>
+    <string name="sort_grow_desc">"grow 9–0""</string>
+    <string name="news_tags_all">"all tags"</string>
+    <string name="news_tags_popular">"popular tags"</string>
+    <string name="capacity_basic">10</string>
+    <string name="capacity_advanced">30</string>
+    <string name="capacity_expert">50</string>
+
+</resources>
