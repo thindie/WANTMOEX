@@ -1,28 +1,8 @@
 package com.example.core.designelements.icons
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowDownward
-import androidx.compose.material.icons.filled.ArrowUpward
-import androidx.compose.material.icons.filled.Bookmarks
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Newspaper
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Share
 import com.example.core.designelements.R
 
-
 object ShortHandedIcons {
-    val heart = Icons.Default.Favorite
-    val list = Icons.Default.Home
-    val newsPaper = Icons.Default.Newspaper
-    val bulleted = Icons.Default.Bookmarks
-    val upArrow = Icons.Default.ArrowUpward
-    val arrowBack = Icons.Default.ArrowBack
-    val downArrow = Icons.Default.ArrowDownward
-    val share = Icons.Default.Share
-    val net = Icons.Default.Search
 
     val capacityBasic = R.drawable.capacity_basic
     val capacityAdvanced = R.drawable.capacity_advanced
@@ -38,4 +18,3 @@ object ShortHandedIcons {
     val timeNatural = R.drawable.time_up
     val timeReverse = R.drawable.time_down
 }
-

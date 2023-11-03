@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface CoinDao {
 
     @Query("SELECT fromSymbol FROM coins")
-    suspend fun getTickers(): List<String>
+    fun getTickers(): List<String>
 
     @Query("SELECT * FROM coins LIMIT :capacity")
     fun observeAllCoins(
@@ -17,11 +17,11 @@ interface CoinDao {
     ): Flow<List<CoinDbModel>>
 
     @Query("SELECT * FROM coins WHERE fromSymbol == :ticker LIMIT 1")
-    suspend fun getCoin(ticker: String): CoinDbModel
+    fun getCoin(ticker: String): CoinDbModel
 
     @Upsert
-    suspend fun upsertList(list: List<CoinDbModel>)
+    fun upsertList(list: List<CoinDbModel>)
 
     @Upsert
-    suspend fun upsertCoin(coin: CoinDbModel)
+    fun upsertCoin(coin: CoinDbModel)
 }

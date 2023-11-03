@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace 'com.example.core.designelements'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 24
-        targetSdk 33
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -45,12 +45,11 @@ dependencies {
     def composeBom = platform('androidx.compose:compose-bom:2022.12.00')
     implementation composeBom
     androidTestImplementation composeBom
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
     implementation 'androidx.compose.material3:material3'
-    implementation "androidx.navigation:navigation-compose:2.5.3"
+    implementation "androidx.navigation:navigation-compose:2.7.5"
     implementation 'androidx.compose.ui:ui-tooling-preview'
-    implementation 'androidx.compose.material:material-icons-core:1.4.2'
-    implementation 'androidx.compose.material:material-icons-extended:1.4.2'
+    implementation 'androidx.compose.material:material-icons-extended:1.5.4'
 
 
     implementation("io.coil-kt:coil-compose:2.2.2")
