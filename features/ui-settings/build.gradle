@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.core.presentation.uinewsfeed'
+    namespace 'com.example.core.presentation.uisettings'
     compileSdk 33
 
     defaultConfig {
@@ -37,9 +37,8 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion "1.4.0"
         dependencies {
-            implementation project(path: ':domain:domain-newsfeed')
+            implementation project(path: ':domain:domain-settings')
             implementation project(path: ':new_core:common')
-            implementation project(path: ':new_core:presentation')
             implementation project(path: ':new_core:design-elements')
 
 
@@ -79,6 +78,7 @@ android {
 
             implementation("io.coil-kt:coil-compose:2.2.2")
             testImplementation 'junit:junit:4.13.2'
+
 
             testImplementation 'junit:junit:4.13.2'
             androidTestImplementation 'androidx.test.ext:junit:1.1.5'

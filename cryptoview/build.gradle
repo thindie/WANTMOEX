@@ -82,12 +82,10 @@ dependencies {
     implementation project(path: ':domain:domain-settings')
     implementation project(path: ':domain:domain-favorites')
 
-
-    implementation project(path: ':new_core:presentation')
-    implementation project(path: ':new_core:presentation:ui-newsfeed')
-    implementation project(path: ':new_core:presentation:ui-coins-list')
-    implementation project(path: ':new_core:presentation:ui-coin')
-    implementation project(path: ':new_core:presentation:ui-settings')
+    implementation project(path: ':features:ui-newsfeed')
+    implementation project(path: ':features:ui-coins-list')
+    implementation project(path: ':features:ui-coin')
+    implementation project(path: ':features:ui-settings')
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'

@@ -42,7 +42,6 @@ android {
             implementation project(path: ':domain:domain-coins-list')
             implementation project(path: ':new_core:common')
             implementation project(path: ':new_core:design-elements')
-            implementation project(path: ':new_core:presentation')
             implementation project(path: ':domain:domain-favorites')
 
 

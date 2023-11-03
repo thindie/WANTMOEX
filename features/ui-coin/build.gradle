@@ -43,7 +43,6 @@ dependencies {
     implementation project(path: ':domain:domain-coin')
     implementation project(path: ':new_core:common')
     implementation project(path: ':new_core:design-elements')
-    implementation project(path: ':new_core:presentation')
     implementation project(path: ':domain:domain-settings')
     implementation project(path: ':domain:domain-favorites')
 
