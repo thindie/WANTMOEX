@@ -6,7 +6,7 @@ import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-internal data class CoinFullInfoDto(
+data class CoinFullInfoDto(
     @SerializedName(CURRENCY)
     @Expose
     val jsonObject: JsonObject?,

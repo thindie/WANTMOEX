@@ -10,7 +10,6 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.core.view.WindowCompat
-import com.example.core.designelements.theme.CryptoViewTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,16 +22,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val isDarkTheme = isSystemInDarkTheme()
-            val expanded = checkWindowSizeIsExpanded()
-            CryptoViewTheme(
-                useDarkTheme = isDarkTheme
-            ) {
-                CryptoViewApp(
-                    isLandscapeOrExtraWide = expanded,
-                    isSystemDarkThemed = isDarkTheme,
-                    executeIntent = { intent -> this.startActivity(intent) }
-                )
-            }
+
         }
     }
 
@@ -44,6 +34,7 @@ class MainActivity : ComponentActivity() {
             WindowWidthSizeClass.Expanded -> {
                 true
             }
+
             else -> false
         }
     }

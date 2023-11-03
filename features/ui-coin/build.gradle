@@ -40,11 +40,8 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':domain:domain-coin')
     implementation project(path: ':new_core:common')
-    implementation project(path: ':new_core:design-elements')
-    implementation project(path: ':domain:domain-settings')
-    implementation project(path: ':domain:domain-favorites')
+    implementation project(path: ':new_core:design-system')
 
 
     def composeBom = platform('androidx.compose:compose-bom:2022.12.00')

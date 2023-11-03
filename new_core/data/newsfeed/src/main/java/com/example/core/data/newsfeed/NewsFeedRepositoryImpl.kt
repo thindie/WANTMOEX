@@ -4,7 +4,6 @@ import android.util.Log
 import com.example.core.data.newsfeed.mapper.toNews
 import com.example.core.domain.domainnewsfeed.entity.News
 import com.example.core.domain.domainnewsfeed.repository.NewsFeedRepository
-import com.example.core.network.retrofit.NetworkService
 import com.example.domain.domainsettings.repository.SettingsStateProvider
 import javax.inject.Inject
 import javax.inject.Singleton
