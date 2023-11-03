@@ -16,15 +16,14 @@ rootProject.name = "WANTMOEX"
 include ':cryptoview'
 include ':domain'
 
-include ':new_core'
 include ':new_core:network'
-
-include ':new_core:data:newsfeed'
 include ':new_core:common'
 include ':new_core:database'
 include ':new_core:design-system'
-include ':new_core:data:coins'
-include ':new_core:data:settings'
+
+include ':data:coins'
+include ':data:settings'
+include ':data:newsfeed'
 
 include ':features:ui-settings'
 include ':features:ui-coin'
