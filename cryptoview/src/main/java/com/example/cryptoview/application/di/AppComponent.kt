@@ -3,6 +3,7 @@ package com.example.cryptoview.application.di
 import android.content.Context
 import com.example.core.network.di.NetworkComponent
 import com.example.core.network.di.NetworkProvider
+import com.example.cryptoview.activity.ActivityMain
 import dagger.BindsInstance
 import dagger.Component
 
@@ -25,4 +26,6 @@ interface AppComponent : DependenciesProvider {
             networkProvider: NetworkProvider,
         ): AppComponent
     }
+
+    fun inject(activity: ActivityMain)
 }
