@@ -1,4 +1,4 @@
-package com.example.core.network.di
+package com.example.core.network.apiservice.di
 
 import dagger.Component
 
@@ -6,8 +6,7 @@ import dagger.Component
 interface NetworkComponent : NetworkProvider {
     companion object {
         fun init(): NetworkComponent {
-            return DaggerNetworkComponent
-                .factory()
+            return DaggerNetworkComponent.factory()
                 .create()
         }
     }
