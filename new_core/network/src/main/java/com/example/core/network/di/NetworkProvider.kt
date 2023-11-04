@@ -1,4 +1,4 @@
-package com.example.core.network.di
+package com.example.core.network.apiservice.di
 
 import com.example.core.network.apiservice.ApiService
 
