@@ -10,18 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WANTMOEX">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.ActivityMain"
             android:exported="true"
             android:theme="@style/Theme.WANTMOEX">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <data android:scheme="http" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
