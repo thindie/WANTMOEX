@@ -64,8 +64,9 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:' + daggerVersion
 
 
-    implementation project(path: ':new_core:design-system')
+    implementation(project(':domain'))
 
+    implementation project(path: ':new_core:design-system')
     implementation project(path: ':new_core:common')
     implementation project(path: ':new_core:database')
     implementation project(path: ':new_core:common')

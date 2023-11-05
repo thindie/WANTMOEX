@@ -42,8 +42,9 @@ dependencies {
     implementation project(path: ':new_core:common')
     implementation project(path: ':new_core:network')
     implementation project(path: ':data:settings')
+    implementation project(":domain")
 
-
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

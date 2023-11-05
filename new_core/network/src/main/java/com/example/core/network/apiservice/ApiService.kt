@@ -1,33 +1,44 @@
 package com.example.core.network.apiservice
 
-import com.example.core.network.dto.lastNews.NewsRawDto
-import com.example.core.network.dto.multifull.CoinRawMultiFullResponseDto
-import com.example.core.network.dto.totalvolfull.CoinRawTotalVolFullResponseDto
+import com.example.core.network.apiservice.oneurocurrency.TotalVolumeEURO
+import com.example.core.network.apiservice.onjpycurrency.TotalVolumeJPY
+import com.example.core.network.apiservice.onrubcurrency.TotalVolumeRUB
+import com.example.core.network.apiservice.onusdcurrency.TotalVolumeUSD
 import retrofit2.http.GET
 import retrofit2.http.Query
+
 interface ApiService {
 
     @GET("top/totalvolfull")
-    suspend fun getTopCoins(
+    suspend fun getTopCoinsUSD(
         @Query(QUERY_PARAM_COINS_LIST_LIMIT) limit: Int,
-        @Query(QUERY_PARAM_TO_CURRENCY) currency: String = CURRENCY,
-    ): CoinRawTotalVolFullResponseDto
+        @Query(QUERY_PARAM_TO_CURRENCY) currency: String = CURRENCY_USD,
+    ): TotalVolumeUSD
 
-    @GET("pricemultifull")
-    suspend fun getCoin(
-        @Query(QUERY_PARAM_TO_CURRENCIES) currency: String = CURRENCY,
-        @Query(QUERY_PARAM_COIN_TICKER, encoded = true) tickers: String,
-    ): CoinRawMultiFullResponseDto
+    @GET("top/totalvolfull")
+    suspend fun getTopCoinsJPY(
+        @Query(QUERY_PARAM_COINS_LIST_LIMIT) limit: Int,
+        @Query(QUERY_PARAM_TO_CURRENCY) currency: String = CURRENCY_JPY,
+    ): TotalVolumeJPY
 
-    @GET("v2/news/")
-    suspend fun getLastestNews(
-        @Query(QUERY_PARAM_NEWS_TAGS_CATEGORIES, encoded = true) topCoinFirst: String,
-        @Query(QUERY_PARAM_LANGUAGE) lang: String = LANGUAGE,
-    ): NewsRawDto
+    @GET("top/totalvolfull")
+    suspend fun getTopCoinsRUB(
+        @Query(QUERY_PARAM_COINS_LIST_LIMIT) limit: Int,
+        @Query(QUERY_PARAM_TO_CURRENCY) currency: String = CURRENCY_RUB,
+    ): TotalVolumeRUB
+
+    @GET("top/totalvolfull")
+    suspend fun getTopCoinsEURO(
+        @Query(QUERY_PARAM_COINS_LIST_LIMIT) limit: Int,
+        @Query(QUERY_PARAM_TO_CURRENCY) currency: String = CURRENCY_EUR,
+    ): TotalVolumeEURO
 
     companion object {
 
-        const val CURRENCY = "USD"
+        private const val CURRENCY_USD = "USD"
+        private const val CURRENCY_RUB = "RUB"
+        private const val CURRENCY_EUR = "EUR"
+        private const val CURRENCY_JPY = "JPY"
 
         // NEWS
         private const val LANGUAGE = "EN"
