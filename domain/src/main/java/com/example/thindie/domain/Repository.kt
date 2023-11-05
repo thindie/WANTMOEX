@@ -1,6 +1,8 @@
 package com.example.thindie.domain
 
-interface Repository {
-    fun request(request: SimpleRequest)
-    fun <T> observeEvent(): Event<T>
+import kotlinx.coroutines.flow.Flow
+
+interface Repository<T> {
+    suspend fun request(request: SimpleRequest)
+    fun observeEvent(): Flow<Event<T>>
 }
