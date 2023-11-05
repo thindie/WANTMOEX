@@ -1,5 +1,6 @@
 package com.example.core.network.apiservice.onusdcurrency
 
+import com.example.core.network.apiservice.ApiService
 import com.example.core.network.apiservice.PopulateAble
 import com.example.core.network.dto.CoinDto
 import com.google.gson.Gson
@@ -18,7 +19,8 @@ data class TotalVolumeUSD(
             .map { data ->
                 val raw = data.RAW.USD
                 val parsedRaw = Gson().toJson(raw)
-                Gson().fromJson(parsedRaw, CoinDto::class.java)
+                val coin = Gson().fromJson(parsedRaw, CoinDto::class.java)
+                coin.copy(imageUrl = ApiService.BASE_URL_FOR_COIN_IMAGE.plus(coin.imageUrl))
             }
     }
 }
