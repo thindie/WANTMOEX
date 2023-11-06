@@ -4,10 +4,14 @@ import android.content.Context
 import com.example.core.data.coinlist.di.CoinRepositoriesProvider
 import com.example.core.data.coinlist.di.CoinsComponent
 import com.example.cryptoview.activity.ActivityMain
+import com.example.cryptoview.application.viewmodelfactory.ViewModelFactoryModule
 import dagger.BindsInstance
 import dagger.Component
 
-@Component(dependencies = [CoinRepositoriesProvider::class])
+@Component(
+    dependencies = [CoinRepositoriesProvider::class],
+    modules = [ViewModelFactoryModule::class, MainViewModelModule::class]
+)
 interface AppComponent : DependenciesProvider {
 
     companion object {
