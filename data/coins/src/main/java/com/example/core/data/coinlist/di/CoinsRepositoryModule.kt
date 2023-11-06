@@ -6,10 +6,12 @@ import com.example.thindie.domain.Coin
 import com.example.thindie.domain.Repository
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 internal class CoinsRepositoryModule {
     @Provides
+    @Singleton
     fun bindCoinsRepository(service: ApiService): Repository<List<Coin>> {
         return CoinsRepositoryImpl(service)
     }
