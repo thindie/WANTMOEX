@@ -1,4 +1,4 @@
-package com.example.thindie.domain
+package com.example.thindie.domain.entities
 
 data class Coin(
     val type: String,

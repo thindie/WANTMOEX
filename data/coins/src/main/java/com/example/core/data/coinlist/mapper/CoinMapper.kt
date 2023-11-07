@@ -1,7 +1,7 @@
 package com.example.core.data.coinlist.mapper
 
 import com.example.core.network.dto.CoinDto
-import com.example.thindie.domain.Coin
+import com.example.thindie.domain.entities.Coin
 
 internal fun CoinDto.coinDtoToCoin() =
     Coin(
