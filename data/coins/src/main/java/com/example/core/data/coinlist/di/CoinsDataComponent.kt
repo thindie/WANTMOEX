@@ -1,24 +1,22 @@
 package com.example.core.data.coinlist.di
 
-import com.example.core.network.apiservice.di.NetworkComponent
 import com.example.core.network.apiservice.di.NetworkProvider
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [CoinsRepositoryModule::class], dependencies = [NetworkProvider::class])
-interface CoinsComponent : CoinRepositoriesProvider {
+interface CoinsDataComponent : CoinRepositoriesProvider {
     companion object {
-        fun init(): CoinsComponent {
-            val networkComponent = NetworkComponent.init()
-            return DaggerCoinsComponent
+        fun init(networkProvider: NetworkProvider): CoinsDataComponent {
+            return DaggerCoinsDataComponent
                 .factory()
-                .create(networkComponent)
+                .create(networkProvider)
         }
     }
 
     @Component.Factory
     interface Factory {
-        fun create(provider: NetworkProvider): CoinsComponent
+        fun create(provider: NetworkProvider): CoinsDataComponent
     }
 }

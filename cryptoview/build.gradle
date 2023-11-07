@@ -76,6 +76,7 @@ dependencies {
     implementation project(path: ':data:coins')
     implementation project(path: ':data:newsfeed')
     implementation project(path: ':data:settings')
+    implementation project(path: ':features:ui-coin')
 
 
     implementation 'androidx.core:core-ktx:1.12.0'

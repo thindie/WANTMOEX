@@ -1,24 +1,20 @@
 package com.example.core.presentation.uicoin.di
 
-import com.example.cryptoview.application.di.DependenciesProvider
-import com.example.cryptoview.application.viewmodelfactory.ViewModelFactory
 import dagger.Component
 
-@Component(dependencies = [DependenciesProvider::class], modules = [CoinsViewModelModule::class])
+@Component(modules = [CoinsViewModelModule::class])
 @CoinsScope
-interface CoinFeatureComponent {
+interface CoinFeatureComponent : CoinFeatureProvider {
     companion object {
-        fun init(dependenciesProvider: DependenciesProvider): CoinFeatureComponent {
+        fun init(): CoinFeatureComponent {
             return DaggerCoinFeatureComponent
                 .factory()
-                .create(dependenciesProvider)
+                .create()
         }
     }
 
     @Component.Factory
     interface Factory {
-        fun create(dependenciesProvider: DependenciesProvider): CoinFeatureComponent
+        fun create(): CoinFeatureComponent
     }
-
-    fun viewModelsFactory(): ViewModelFactory
 }
