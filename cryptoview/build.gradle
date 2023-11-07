@@ -71,16 +71,12 @@ dependencies {
     implementation project(path: ':new_core:design-system')
     implementation project(path: ':new_core:common')
     implementation project(path: ':new_core:database')
-    implementation project(path: ':new_core:common')
     implementation project(path: ':new_core:network')
 
     implementation project(path: ':data:coins')
     implementation project(path: ':data:newsfeed')
     implementation project(path: ':data:settings')
 
-    implementation project(path: ':features:ui-newsfeed')
-    implementation project(path: ':features:ui-coin')
-    implementation project(path: ':features:ui-settings')
 
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
