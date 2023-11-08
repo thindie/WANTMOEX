@@ -5,5 +5,8 @@ import com.example.core.data.uistatesettings.di.SettingsProvider
 import com.example.core.network.apiservice.di.NetworkProvider
 import com.example.core.presentation.uicoin.di.CoinFeatureProvider
 
-interface DependenciesProvider : NetworkProvider, CoinRepositoriesProvider, SettingsProvider,
+interface DependenciesProvider :
+    NetworkProvider,
+    CoinRepositoriesProvider,
+    SettingsProvider,
     CoinFeatureProvider

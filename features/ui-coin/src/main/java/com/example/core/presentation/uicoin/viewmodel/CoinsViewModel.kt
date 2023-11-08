@@ -21,7 +21,7 @@ class CoinsViewModel @Inject constructor(
         }
     }
 
-    val observe =
+    internal val observe =
         observeCoinsListUseCase().stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5_000L),
