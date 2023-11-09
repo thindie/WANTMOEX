@@ -6,10 +6,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private fun CryptoViewColors(boolean: Boolean): ColorScheme {
-    return if (!boolean) LightColors else DarkColors
+private fun CryptoViewColors(isDarkThemed: Boolean): ColorScheme {
+    return if (isDarkThemed) DarkColors else LightColors
 }
 
 private val LightColors = lightColorScheme(
@@ -79,11 +78,10 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun CryptoViewTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit,
+    content:
+    @Composable()
+        () -> Unit,
 ) {
-    val systemUIcontroller = rememberSystemUiController()
-    systemUIcontroller.setSystemBarsColor(CryptoViewColors(useDarkTheme).surface)
-
     MaterialTheme(
         colorScheme = CryptoViewColors(useDarkTheme),
         content = content,

@@ -9,10 +9,10 @@ import androidx.compose.ui.unit.sp
 import com.example.core.designelements.R
 
 
-private val light = Font(R.font.sf_pro, FontWeight.W300)
-private val regular = Font(R.font.sf_pro, FontWeight.W400)
-private val medium = Font(R.font.sf_pro, FontWeight.W500)
-private val semibold = Font(R.font.sf_pro, FontWeight.W600)
+private val light = Font(R.font.koulen_regular, FontWeight.W300)
+private val regular = Font(R.font.koulen_regular, FontWeight.W400)
+private val medium = Font(R.font.koulen_regular, FontWeight.W500)
+private val semibold = Font(R.font.koulen_regular, FontWeight.W600)
 
 private val CryptoViewTypo = FontFamily(fonts = listOf(light, regular, medium, semibold))
 
