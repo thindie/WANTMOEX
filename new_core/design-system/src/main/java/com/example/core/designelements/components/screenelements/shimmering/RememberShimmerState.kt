@@ -11,7 +11,7 @@ fun rememberShimmerState(
     transition: InfiniteTransition = rememberInfiniteTransition(label = ""),
     shimmeringColor: Color,
 ): ShimmerState {
-    return remember(transition) {
+    return remember {
         ShimmerState(
             transition,
             shimmerColor = shimmeringColor
